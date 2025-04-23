@@ -11,11 +11,11 @@ const DashboardPage = () => {
 
   return (
     <div className="flex">
-      {/* Sidebar */}
+      {/* Sidebar (Fixed) */}
       <Sidebar onSelect={handleSelectView} />
 
       {/* Main Content */}
-      <main className="ml-64 w-full p-6 overflow-y-auto">
+      <main className="flex-1 ml-64 p-6 overflow-y-auto">
         <h1 className="text-2xl font-semibold mb-4">User Dashboard</h1>
 
         {/* Conditional Rendering based on selected view */}
@@ -32,6 +32,7 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
+
 
 
 
