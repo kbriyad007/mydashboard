@@ -8,8 +8,8 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onSelect }) => {
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 h-screen p-6 shadow-sm flex flex-col">
-      <h2 className="text-lg font-semibold text-gray-800 mb-6">Dashboard</h2>
+    <aside className="w-64 bg-white border-r border-gray-200 h-screen p-4 shadow-sm flex flex-col">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4">Dashboard</h2>
       <nav className="flex flex-col gap-2 flex-grow">
         <button
           onClick={() => onSelect("requests")}
