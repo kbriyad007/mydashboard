@@ -14,7 +14,7 @@ interface RequestData {
   "Phone-Number": string;
   Address: string;
   Courier: string;
-  "Product-Name": string[];
+  "Product-Name": string[]; // Ensure it's an array
   Quantity: string;
   Time: { seconds: number };
 }
@@ -30,7 +30,7 @@ const RequestTable = () => {
       querySnapshot.forEach((doc) => {
         requestsData.push({ id: doc.id, ...doc.data() } as RequestData); // Adding Firestore data to the array with proper type
       });
-      setRequests(requestsData); // Updating state with fetched data
+      setRequests(requestsData); // Update the state with the fetched data
     };
 
     fetchRequests(); // Fetch data on component mount
@@ -39,6 +39,7 @@ const RequestTable = () => {
   return (
     <div>
       <h2>Requests</h2>
+      {/* Ensure the data is available before attempting to map */}
       <table>
         <thead>
           <tr>
@@ -53,18 +54,22 @@ const RequestTable = () => {
           </tr>
         </thead>
         <tbody>
-          {requests.map((request) => (
-            <tr key={request.id}>
-              <td>{request["Customer-Name"]}</td>
-              <td>{request["User-Email"]}</td>
-              <td>{request["Phone-Number"]}</td>
-              <td>{request["Address"]}</td>
-              <td>{request["Courier"]}</td>
-              <td>{request["Product-Name"].join(", ")}</td> {/* Assuming "Product-Name" is an array */}
-              <td>{request["Quantity"]}</td>
-              <td>{new Date(request["Time"].seconds * 1000).toLocaleString()}</td> {/* Convert Firestore timestamp */}
-            </tr>
-          ))}
+          {requests && requests.length > 0 ? (
+            requests.map((request) => (
+              <tr key={request.id}>
+                <td>{request["Customer-Name"]}</td>
+                <td>{request["User-Email"]}</td>
+                <td>{request["Phone-Number"]}</td>
+                <td>{request["Address"]}</td>
+                <td>{request["Courier"]}</td>
+                <td>{Array.isArray(request["Product-Name"]) ? request["Product-Name"].join(", ") : request["Product-Name"]}</td>
+                <td>{request["Quantity"]}</td>
+                <td>{new Date(request["Time"].seconds * 1000).toLocaleString()}</td>
+              </tr>
+            ))
+          ) : (
+            <tr><td colSpan={8}>No data available</td></tr> // Show a message if no requests
+          )}
         </tbody>
       </table>
     </div>
