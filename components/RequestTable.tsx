@@ -5,16 +5,30 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../lib/firebase"; // Import Firebase configuration
 
+// Define a TypeScript interface for the request data
+interface RequestData {
+  id: string;
+  "Customer-Name": string;
+  "User-Email": string;
+  "Phone-Number": string;
+  Address: string;
+  Courier: string;
+  "Product-Name": string[];
+  Quantity: string;
+  Time: { seconds: number };
+}
+
 const RequestTable = () => {
-  const [requests, setRequests] = useState<any[]>([]);
+  // Use the RequestData interface for the requests state
+  const [requests, setRequests] = useState<RequestData[]>([]);
 
   useEffect(() => {
     // Fetch data from Firestore
     const fetchRequests = async () => {
       const querySnapshot = await db.collection("user_request").get(); // Query Firestore
-      const requestsData: any[] = [];
+      const requestsData: RequestData[] = [];
       querySnapshot.forEach((doc) => {
-        requestsData.push({ id: doc.id, ...doc.data() });
+        requestsData.push({ id: doc.id, ...doc.data() } as RequestData); // Casting the data to RequestData
       });
       setRequests(requestsData); // Update state with fetched data
     };
@@ -58,3 +72,4 @@ const RequestTable = () => {
 };
 
 export default RequestTable;
+
