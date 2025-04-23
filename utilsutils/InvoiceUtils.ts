@@ -1,4 +1,4 @@
-// InvoiceUtils.ts
+// utils/InvoiceUtils.ts
 
 // Function to generate a QR code URL for an invoice
 export const generateQRCode = (data: string): string => {
@@ -53,8 +53,10 @@ export const generateInvoiceHTML = (req: any): string => {
 
 // Function to generate WhatsApp message link
 export const generateWhatsAppMessage = (req: any): string => {
-  const phone = (req["Phone-Number"] || "").replace(/\D/g, "");
+  const phone = (req["Phone-Number"] || "").replace(/\D/g, ""); // Remove non-digit characters
   const date = req.Time?.seconds ? new Date(req.Time.seconds * 1000).toLocaleDateString() : "N/A";
+
+  // Formatting the message
   const message = `
     Hello ${req["Customer-Name"]}, 👋
 
@@ -67,5 +69,12 @@ export const generateWhatsAppMessage = (req: any): string => {
 
     Thank you!
   `;
+  
   return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+};
+
+// Function to get value from the request safely
+export const getValue = (req: any, key: string): string => {
+  const value = req[key];
+  return value !== undefined && value !== null ? String(value) : "—";
 };
