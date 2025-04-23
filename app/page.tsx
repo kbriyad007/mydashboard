@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import RequestTable from "../components/RequestTable";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/sidebar";
 
 const DashboardPage = () => {
   const [activeView, setActiveView] = useState("requests");
