@@ -6,7 +6,7 @@ import RequestTable from "../components/RequestTable"; // Import the RequestTabl
 const DashboardPage = () => {
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>User Dashboard</h1>
       <RequestTable /> {/* This renders the RequestTable component */}
     </div>
   );
