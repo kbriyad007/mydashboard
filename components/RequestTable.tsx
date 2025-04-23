@@ -1,23 +1,26 @@
 // components/RequestTable.tsx
+
+"use client"; // Add this line to mark the file as a client component
+
 import React, { useEffect, useState } from "react";
-import { db } from "../lib/firebase"; // Importing firebase from the shared config file
+import { db } from "../lib/firebase"; // Import Firebase configuration
 
 const RequestTable = () => {
   const [requests, setRequests] = useState<any[]>([]);
 
   useEffect(() => {
-    // Fetching the user request data from Firestore
+    // Fetch data from Firestore
     const fetchRequests = async () => {
-      const querySnapshot = await db.collection("user_request").get(); // Query Firestore for documents
+      const querySnapshot = await db.collection("user_request").get(); // Query Firestore
       const requestsData: any[] = [];
       querySnapshot.forEach((doc) => {
-        requestsData.push({ id: doc.id, ...doc.data() }); // Pushing data into an array
+        requestsData.push({ id: doc.id, ...doc.data() });
       });
-      setRequests(requestsData); // Setting state with the data
+      setRequests(requestsData); // Update state with fetched data
     };
 
-    fetchRequests(); // Call the fetch function when the component mounts
-  }, []); // Empty array means this will run only once when the component is mounted
+    fetchRequests(); // Run fetch function on component mount
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
   return (
     <div>
@@ -55,4 +58,3 @@ const RequestTable = () => {
 };
 
 export default RequestTable;
-
