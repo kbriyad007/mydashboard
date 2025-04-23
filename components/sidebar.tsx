@@ -8,25 +8,24 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ onSelect }) => {
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 h-screen p-6 shadow-sm">
+    <aside className="w-64 bg-white border-r border-gray-200 h-screen p-6 shadow-sm flex flex-col">
       <h2 className="text-lg font-semibold text-gray-800 mb-6">Dashboard</h2>
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-2 flex-grow">
         <button
           onClick={() => onSelect("requests")}
           className="text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
         >
           Requests
         </button>
-        {/* Add more menu items below */}
-        {/* 
-        <button onClick={() => onSelect("invoices")} className="...">
-          Invoices
-        </button> 
-        */}
+        <button
+          onClick={() => onSelect("analytics")}
+          className="text-left px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
+        >
+          Analytics
+        </button>
       </nav>
     </aside>
   );
 };
 
 export default Sidebar;
-
