@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/sidebar";
 import RequestTable from "../components/RequestTable"; // Import the RequestTable component
 
 const DashboardPage = () => {
