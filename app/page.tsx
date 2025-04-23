@@ -1,3 +1,5 @@
+"use client"; // Add this to mark the component as client-side
+
 import React from "react";
 import Sidebar from "../components/sidebar";
 import RequestTable from "../components/RequestTable"; // Import the RequestTable component
