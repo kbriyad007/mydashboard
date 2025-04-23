@@ -1,29 +1,37 @@
-"use client";
-
-import React, { useState } from "react";
-import RequestTable from "../components/RequestTable";
-import Sidebar from "../components/sidebar";
+import React from "react";
+import Sidebar from "../components/Sidebar";
+import RequestTable from "../components/RequestTable"; // Import the RequestTable component
 
 const DashboardPage = () => {
-  const [activeView, setActiveView] = useState("requests");
+  const [selectedView, setSelectedView] = React.useState<string>("requests");
 
-  const renderContent = () => {
-    switch (activeView) {
-      case "requests":
-        return <RequestTable />;
-      default:
-        return <div className="p-6 text-gray-600">Select a view</div>;
-    }
+  const handleSelectView = (view: string) => {
+    setSelectedView(view);
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar onSelect={setActiveView} />
-      <main className="flex-1 p-6 overflow-y-auto">{renderContent()}</main>
+    <div className="flex">
+      {/* Sidebar */}
+      <Sidebar onSelect={handleSelectView} />
+
+      {/* Main Content */}
+      <main className="ml-64 w-full p-6 overflow-y-auto">
+        <h1 className="text-2xl font-semibold mb-4">User Dashboard</h1>
+
+        {/* Conditional Rendering based on selected view */}
+        {selectedView === "requests" && <RequestTable />}
+        {selectedView === "analytics" && (
+          <div>
+            <h2>Analytics</h2>
+            {/* Your analytics content */}
+          </div>
+        )}
+      </main>
     </div>
   );
 };
 
 export default DashboardPage;
+
 
 
