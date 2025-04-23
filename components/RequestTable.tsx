@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowDown, ArrowUp, FileText } from "lucide-react";
-import { generateInvoice, generateWhatsAppInvoiceLink, getValue } from "@/utils/InvoiceUtils";
+import { generateInvoice, generateWhatsAppInvoiceLink, getValue } from "@/utilsutils/InvoiceUtils";
 import { RequestData } from "@/types";
 
 type Props = {
