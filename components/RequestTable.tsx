@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useTable, usePagination } from "react-table";
 import { useFirestoreQuery } from "../hooks/useFirestoreQuery"; // Your custom hook for Firestore data
 
 const RequestTable: React.FC = () => {
