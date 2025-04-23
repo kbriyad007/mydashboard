@@ -33,75 +33,51 @@ const RequestTable = () => {
   }, []);
 
   return (
-    <div className="p-4 flex justify-center">
-      <div className="w-[900px]">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">
-          User Requests
-        </h2>
-        <div className="overflow-x-auto rounded-2xl shadow-lg border border-gray-200 bg-white">
-          <table className="min-w-full text-sm text-gray-700">
-            <thead className="bg-gray-100 text-gray-600 uppercase tracking-wider text-xs">
-              <tr>
-                <th className="px-5 py-3 text-left">Customer</th>
-                <th className="px-5 py-3 text-left">Email</th>
-                <th className="px-5 py-3 text-left">Phone</th>
-                <th className="px-5 py-3 text-left">Address</th>
-                <th className="px-5 py-3 text-left">Courier</th>
-                <th className="px-5 py-3 text-left">Product</th>
-                <th className="px-5 py-3 text-left">Quantity</th>
-                <th className="px-5 py-3 text-left">Time</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {requests.length > 0 ? (
-                requests.map((request) => (
-                  <tr
-                    key={request.id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {request["Customer-Name"]}
-                    </td>
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {request["User-Email"]}
-                    </td>
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {request["Phone-Number"]}
-                    </td>
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {request["Address"]}
-                    </td>
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {request["Courier"]}
-                    </td>
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {Array.isArray(request["Product-Name"])
-                        ? request["Product-Name"].join(", ")
-                        : request["Product-Name"]}
-                    </td>
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {request["Quantity"]}
-                    </td>
-                    <td className="px-5 py-2 whitespace-nowrap">
-                      {new Date(
-                        request["Time"].seconds * 1000
-                      ).toLocaleString()}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={8}
-                    className="px-5 py-4 text-center text-gray-400"
-                  >
-                    No data available
+    <div className="w-full">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">User Requests</h2>
+      <div className="overflow-x-auto bg-white shadow-lg rounded-2xl border border-gray-200">
+        <table className="w-full text-sm text-gray-800 divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-3 py-2 text-left font-medium">Customer</th>
+              <th className="px-3 py-2 text-left font-medium">Email</th>
+              <th className="px-3 py-2 text-left font-medium">Phone</th>
+              <th className="px-3 py-2 text-left font-medium">Address</th>
+              <th className="px-3 py-2 text-left font-medium">Courier</th>
+              <th className="px-3 py-2 text-left font-medium">Product</th>
+              <th className="px-3 py-2 text-left font-medium">Quantity</th>
+              <th className="px-3 py-2 text-left font-medium">Time</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {requests.length > 0 ? (
+              requests.map((request) => (
+                <tr key={request.id} className="hover:bg-gray-50 transition">
+                  <td className="px-3 py-2">{request["Customer-Name"]}</td>
+                  <td className="px-3 py-2">{request["User-Email"]}</td>
+                  <td className="px-3 py-2">{request["Phone-Number"]}</td>
+                  <td className="px-3 py-2">{request["Address"]}</td>
+                  <td className="px-3 py-2">{request["Courier"]}</td>
+                  <td className="px-3 py-2">
+                    {Array.isArray(request["Product-Name"])
+                      ? request["Product-Name"].join(", ")
+                      : request["Product-Name"]}
+                  </td>
+                  <td className="px-3 py-2">{request["Quantity"]}</td>
+                  <td className="px-3 py-2">
+                    {new Date(request["Time"].seconds * 1000).toLocaleString()}
                   </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="px-4 py-4 text-center text-gray-400">
+                  No data available
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
