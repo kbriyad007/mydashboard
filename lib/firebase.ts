@@ -1,9 +1,8 @@
-// lib/firebase.ts
+// lib/firebase.js
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore"; // Import Firestore for later use
 
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-
-// Firebase config (use the one you provided)
+// Firebase configuration (replace with your own config from Firebase console)
 const firebaseConfig = {
   apiKey: "AIzaSyBj6QysY8iakOIolvgxdVIQFISrkWKLSls",
   authDomain: "user-data-ff2ef.firebaseapp.com",
@@ -14,7 +13,10 @@ const firebaseConfig = {
   measurementId: "G-V3BQPCTJGG"
 };
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = getFirestore(app); // Get Firestore instance
 
 export { db };
