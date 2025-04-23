@@ -1,11 +1,12 @@
 // components/RequestTable.tsx
 
-"use client"; // Add this line to mark the file as a client component
+"use client"; // Mark this file as a client component
 
 import React, { useEffect, useState } from "react";
-import { db } from "../lib/firebase"; // Import Firebase configuration
+import { db } from "../lib/firebase"; // Import the Firestore instance
+import { collection, getDocs } from "firebase/firestore"; // Firestore modular methods
 
-// Define a TypeScript interface for the request data
+// TypeScript interface for the request data
 interface RequestData {
   id: string;
   "Customer-Name": string;
@@ -19,22 +20,21 @@ interface RequestData {
 }
 
 const RequestTable = () => {
-  // Use the RequestData interface for the requests state
   const [requests, setRequests] = useState<RequestData[]>([]);
 
   useEffect(() => {
     // Fetch data from Firestore
     const fetchRequests = async () => {
-      const querySnapshot = await db.collection("user_request").get(); // Query Firestore
+      const querySnapshot = await getDocs(collection(db, "user_request")); // Firestore query to fetch all documents in 'user_request'
       const requestsData: RequestData[] = [];
       querySnapshot.forEach((doc) => {
-        requestsData.push({ id: doc.id, ...doc.data() } as RequestData); // Casting the data to RequestData
+        requestsData.push({ id: doc.id, ...doc.data() } as RequestData); // Adding Firestore data to the array with proper type
       });
-      setRequests(requestsData); // Update state with fetched data
+      setRequests(requestsData); // Updating state with fetched data
     };
 
-    fetchRequests(); // Run fetch function on component mount
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+    fetchRequests(); // Fetch data on component mount
+  }, []); // Empty dependency array to run the effect once on mount
 
   return (
     <div>
@@ -60,9 +60,9 @@ const RequestTable = () => {
               <td>{request["Phone-Number"]}</td>
               <td>{request["Address"]}</td>
               <td>{request["Courier"]}</td>
-              <td>{request["Product-Name"].join(", ")}</td> {/* Assuming it's an array */}
+              <td>{request["Product-Name"].join(", ")}</td> {/* Assuming "Product-Name" is an array */}
               <td>{request["Quantity"]}</td>
-              <td>{new Date(request["Time"].seconds * 1000).toLocaleString()}</td> {/* Convert timestamp */}
+              <td>{new Date(request["Time"].seconds * 1000).toLocaleString()}</td> {/* Convert Firestore timestamp */}
             </tr>
           ))}
         </tbody>
@@ -72,4 +72,3 @@ const RequestTable = () => {
 };
 
 export default RequestTable;
-
