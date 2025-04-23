@@ -36,17 +36,17 @@ const RequestTable = () => {
     <div className="p-4 sm:p-6 md:p-8">
       <h2 className="text-xl sm:text-2xl font-semibold mb-4">User Requests</h2>
       <div className="overflow-x-auto bg-white shadow rounded-2xl border border-gray-200">
-        <table className="min-w-full divide-y divide-gray-200 text-sm text-gray-700">
+        <table className="min-w-full divide-y divide-gray-200 text-sm text-gray-900">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-3 text-left font-medium">Customer</th>
-              <th className="px-4 py-3 text-left font-medium">Email</th>
-              <th className="px-4 py-3 text-left font-medium">Phone</th>
-              <th className="px-4 py-3 text-left font-medium">Address</th>
-              <th className="px-4 py-3 text-left font-medium">Courier</th>
-              <th className="px-4 py-3 text-left font-medium">Product</th>
-              <th className="px-4 py-3 text-left font-medium">Quantity</th>
-              <th className="px-4 py-3 text-left font-medium">Time</th>
+              <th className="px-2 py-1 text-left font-medium">Customer</th>
+              <th className="px-2 py-1 text-left font-medium">Email</th>
+              <th className="px-2 py-1 text-left font-medium">Phone</th>
+              <th className="px-2 py-1 text-left font-medium">Address</th>
+              <th className="px-2 py-1 text-left font-medium">Courier</th>
+              <th className="px-2 py-1 text-left font-medium">Product</th>
+              <th className="px-2 py-1 text-left font-medium">Quantity</th>
+              <th className="px-2 py-1 text-left font-medium">Time</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
