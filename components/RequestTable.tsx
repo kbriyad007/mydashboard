@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import InvoiceModal from "./InvoiceModal"; // Import the Invoice Modal component
 
 interface RequestData {
   id: string;
@@ -18,6 +19,8 @@ interface RequestData {
 
 const RequestTable = () => {
   const [requests, setRequests] = useState<RequestData[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedInvoiceData, setSelectedInvoiceData] = useState<RequestData | null>(null);
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -31,6 +34,12 @@ const RequestTable = () => {
 
     fetchRequests();
   }, []);
+
+  // Function to handle opening the invoice modal
+  const handleInvoiceClick = (request: RequestData) => {
+    setSelectedInvoiceData(request);
+    setIsModalOpen(true);
+  };
 
   return (
     <div className="w-full">
@@ -47,6 +56,7 @@ const RequestTable = () => {
               <th className="px-3 py-2 text-left font-medium">Product</th>
               <th className="px-3 py-2 text-left font-medium">Quantity</th>
               <th className="px-3 py-2 text-left font-medium">Time</th>
+              <th className="px-3 py-2 text-left font-medium">Actions</th> {/* New Actions column */}
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -67,11 +77,19 @@ const RequestTable = () => {
                   <td className="px-3 py-2">
                     {new Date(request["Time"].seconds * 1000).toLocaleString()}
                   </td>
+                  <td className="px-3 py-2">
+                    <button
+                      onClick={() => handleInvoiceClick(request)}
+                      className="text-blue-600 hover:underline"
+                    >
+                      📄 View Invoice
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={8} className="px-4 py-4 text-center text-gray-400">
+                <td colSpan={9} className="px-4 py-4 text-center text-gray-400">
                   No data available
                 </td>
               </tr>
@@ -79,6 +97,15 @@ const RequestTable = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Invoice Modal */}
+      {selectedInvoiceData && (
+        <InvoiceModal
+          data={selectedInvoiceData}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
