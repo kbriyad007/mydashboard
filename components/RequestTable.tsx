@@ -1,10 +1,11 @@
-// components/RequestTable.tsx
+
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import InvoiceModal from "./InvoiceModal"; // Ensure this path is correct
+import { FaFileInvoice } from "react-icons/fa"; // Importing an invoice icon from react-icons
 
 // Define the RequestData type
 interface RequestData {
@@ -81,9 +82,9 @@ const RequestTable = () => {
                   <td className="px-3 py-2">
                     <button
                       onClick={() => handleInvoiceClick(request)}
-                      className="text-blue-600 hover:underline"
+                      className="text-blue-600 hover:underline flex items-center gap-2"
                     >
-                      📄 View Invoice
+                      <FaFileInvoice className="text-xl" /> Create Invoice
                     </button>
                   </td>
                 </tr>
