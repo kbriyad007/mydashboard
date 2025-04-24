@@ -1,4 +1,4 @@
-// RequestTable.tsx
+// components/RequestTable.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -6,6 +6,7 @@ import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import InvoiceModal from "./InvoiceModal"; // Ensure this path is correct
 
+// Define the RequestData type
 interface RequestData {
   id: string;
   "Customer-Name": string;
