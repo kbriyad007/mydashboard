@@ -37,7 +37,7 @@ const RequestTable = () => {
       <h2 className="text-2xl font-bold text-gray-800 mb-6">User Requests</h2>
       <div className="overflow-x-auto bg-white shadow-lg rounded-2xl border border-gray-200">
         <table className="w-full text-sm text-gray-800 divide-y divide-gray-200">
-          <thead className="bg-black">
+          <thead className="bg-blue-500">
             <tr>
               <th className="px-3 py-2 text-left font-medium">Customer</th>
               <th className="px-3 py-2 text-left font-medium">Email</th>
