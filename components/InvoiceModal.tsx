@@ -1,7 +1,7 @@
 // components/InvoiceModal.tsx
 import React from "react";
 
-// Define a proper type for the props
+// Properly define types for the invoice data
 interface InvoiceData {
   "Customer-Name": string;
   "User-Email": string;
