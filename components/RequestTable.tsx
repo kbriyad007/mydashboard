@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import InvoiceModal from "./InvoiceModal"; // Ensure this path is correct
-import { FaFileInvoice } from "react-icons/fa"; // Importing an invoice icon from react-icons
 
 // Define the RequestData type
 interface RequestData {
