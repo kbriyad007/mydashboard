@@ -1,9 +1,10 @@
+// RequestTable.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import InvoiceModal from "./InvoiceModal"; // Import the Invoice Modal component
+import InvoiceModal from "./InvoiceModal"; // Ensure this path is correct
 
 interface RequestData {
   id: string;
@@ -35,7 +36,6 @@ const RequestTable = () => {
     fetchRequests();
   }, []);
 
-  // Function to handle opening the invoice modal
   const handleInvoiceClick = (request: RequestData) => {
     setSelectedInvoiceData(request);
     setIsModalOpen(true);
@@ -56,7 +56,7 @@ const RequestTable = () => {
               <th className="px-3 py-2 text-left font-medium">Product</th>
               <th className="px-3 py-2 text-left font-medium">Quantity</th>
               <th className="px-3 py-2 text-left font-medium">Time</th>
-              <th className="px-3 py-2 text-left font-medium">Actions</th> {/* New Actions column */}
+              <th className="px-3 py-2 text-left font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
