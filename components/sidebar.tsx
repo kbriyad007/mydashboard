@@ -23,6 +23,18 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelect }) => {
         >
           📊 Analytics
         </button>
+        <button
+          onClick={() => onSelect("finance")}
+          className="text-left px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
+        >
+          💰 Finance
+        </button>
+        <button
+          onClick={() => onSelect("customers")}
+          className="text-left px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
+        >
+          👥 Customers
+        </button>
       </nav>
     </aside>
   );
