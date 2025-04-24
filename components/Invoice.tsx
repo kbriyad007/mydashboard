@@ -1,51 +1,57 @@
 // components/Invoice.tsx
-import React from 'react';
 
-interface InvoiceProps {
-  data: any; // Adjust the type for your data
+import React from "react";
+
+// Define the structure of the data we expect to receive
+interface InvoiceData {
+  "Customer-Name": string;
+  "User-Email": string;
+  "Phone-Number": string;
+  Address: string;
+  Courier: string;
+  "Product-Name": string[] | string;
+  Quantity: string;
+  Time: { seconds: number };
 }
 
-const Invoice: React.FC<InvoiceProps> = ({ data }) => {
+interface InvoiceProps {
+  data: InvoiceData;  // Type the data prop with InvoiceData
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const Invoice: React.FC<InvoiceProps> = ({ data, isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  // Format the time
+  const formattedDate = new Date(data["Time"].seconds * 1000).toLocaleString();
+
   return (
-    <div className="invoice-container p-6 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
-      <h2 className="text-3xl font-bold text-gray-900 text-center mb-6">Invoice</h2>
-
-      <div className="invoice-header mb-6">
-        <div className="text-left">
-          <p className="text-lg font-semibold">Customer: {data.customerName}</p>
-          <p className="text-sm text-gray-600">Email: {data.customerEmail}</p>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-30"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white p-8 rounded-lg w-96 max-w-full"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+      >
+        <h2 className="text-2xl font-bold mb-4">Invoice</h2>
+        <div className="space-y-4">
+          <p><strong>Customer Name:</strong> {data["Customer-Name"]}</p>
+          <p><strong>Email:</strong> {data["User-Email"]}</p>
+          <p><strong>Phone:</strong> {data["Phone-Number"]}</p>
+          <p><strong>Address:</strong> {data["Address"]}</p>
+          <p><strong>Courier:</strong> {data["Courier"]}</p>
+          <p><strong>Products:</strong> {Array.isArray(data["Product-Name"]) ? data["Product-Name"].join(", ") : data["Product-Name"]}</p>
+          <p><strong>Quantity:</strong> {data["Quantity"]}</p>
+          <p><strong>Date:</strong> {formattedDate}</p>
         </div>
-        <div className="text-right">
-          <p className="text-lg font-semibold">Invoice Date: {data.date}</p>
-          <p className="text-sm text-gray-600">Due Date: {data.dueDate}</p>
-        </div>
-      </div>
-
-      <div className="invoice-items mb-6">
-        <table className="w-full table-auto text-left border-collapse">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b text-sm font-medium text-gray-700">Item</th>
-              <th className="py-2 px-4 border-b text-sm font-medium text-gray-700">Quantity</th>
-              <th className="py-2 px-4 border-b text-sm font-medium text-gray-700">Price</th>
-              <th className="py-2 px-4 border-b text-sm font-medium text-gray-700">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.items.map((item: any, index: number) => (
-              <tr key={index}>
-                <td className="py-2 px-4 border-b text-sm text-gray-700">{item.name}</td>
-                <td className="py-2 px-4 border-b text-sm text-gray-700">{item.quantity}</td>
-                <td className="py-2 px-4 border-b text-sm text-gray-700">${item.price}</td>
-                <td className="py-2 px-4 border-b text-sm text-gray-700">${(item.quantity * item.price).toFixed(2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="invoice-footer flex justify-between items-center">
-        <p className="text-lg font-semibold">Total: ${data.total}</p>
+        <button
+          className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          onClick={onClose}
+        >
+          Close
+        </button>
       </div>
     </div>
   );
