@@ -1,4 +1,3 @@
-// components/sidebar.tsx
 import Link from "next/link";
 
 const sidebar = () => {
