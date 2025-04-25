@@ -1,9 +1,9 @@
-// UserRequests.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import LoadingSpinner from "./LoadingSpinner"; // Import the LoadingSpinner component
 
 type RequestData = {
   id: string;
@@ -18,7 +18,7 @@ type RequestData = {
   "Product-Links"?: string[];
 };
 
-export default function UserRequests() {
+const UserRequests = () => {
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +34,7 @@ export default function UserRequests() {
         setRequests(data);
       } catch (error) {
         setError("Failed to fetch data.");
-        console.error("Failed to fetch data", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -44,36 +44,51 @@ export default function UserRequests() {
   }, []);
 
   return (
-    <div className="user-requests-container">
-      <h1 className="user-requests-heading">User Requests</h1>
-      {loading ? (
-        <LoadingSpinner />
-      ) : error ? (
-        <p className="error-message">{error}</p>
-      ) : (
-        <table className="requests-table">
-          <thead>
+    <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+      <table className="min-w-full table-auto">
+        <thead className="bg-gray-200 text-gray-700">
+          <tr>
+            <th className="px-6 py-4 text-sm font-semibold">Customer</th>
+            <th className="px-6 py-4 text-sm font-semibold">Email</th>
+            <th className="px-6 py-4 text-sm font-semibold">Phone</th>
+            <th className="px-6 py-4 text-sm font-semibold">Courier</th>
+            <th className="px-6 py-4 text-sm font-semibold">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
             <tr>
-              <th>Customer</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Courier</th>
-              <th>Quantity</th>
+              <td colSpan={5} className="px-6 py-4 text-center">
+                <LoadingSpinner />
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {requests.map((req) => (
-              <tr key={req.id}>
-                <td>{req["Customer-Name"]}</td>
-                <td>{req["User-Email"]}</td>
-                <td>{req["Phone-Number"]}</td>
-                <td>{req.Courier}</td>
-                <td>{req.Quantity}</td>
+          ) : error ? (
+            <tr>
+              <td colSpan={5} className="px-6 py-4 text-center text-red-600">
+                {error}
+              </td>
+            </tr>
+          ) : requests.length > 0 ? (
+            requests.map((req) => (
+              <tr key={req.id} className="hover:bg-gray-50 transition-colors">
+                <td className="px-6 py-4 text-sm">{req["Customer-Name"]}</td>
+                <td className="px-6 py-4 text-sm">{req["User-Email"]}</td>
+                <td className="px-6 py-4 text-sm">{req["Phone-Number"] || "N/A"}</td>
+                <td className="px-6 py-4 text-sm">{req.Courier || "N/A"}</td>
+                <td className="px-6 py-4 text-sm">{req.Quantity}</td>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
+                No user requests found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
+
+export default UserRequests;
