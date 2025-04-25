@@ -1,42 +1,32 @@
-"use client";
+// components/Sidebar.tsx
+import Link from "next/link";
 
-import React from "react";
-
-interface SidebarProps {
-  onSelect: (view: string) => void;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ onSelect }) => {
+const Sidebar = () => {
   return (
-    <aside className="w-64 fixed top-0 left-0 h-screen bg-white border-r border-gray-200 shadow-lg flex flex-col z-20 p-6">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h2>
-      <nav className="flex flex-col gap-3">
-        <button
-          onClick={() => onSelect("requests")}
-          className="text-left px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
-        >
-          📋 Requests
-        </button>
-        <button
-          onClick={() => onSelect("analytics")}
-          className="text-left px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
-        >
-          📊 Analytics
-        </button>
-        <button
-          onClick={() => onSelect("finance")}
-          className="text-left px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
-        >
-          💰 Finance
-        </button>
-        <button
-          onClick={() => onSelect("customers")}
-          className="text-left px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
-        >
-          👥 Customers
-        </button>
+    <div className="h-screen w-64 bg-gray-800 text-white p-4">
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold">Dashboard</h2>
+      </div>
+      <nav>
+        <ul>
+          <li className="mb-4">
+            <Link href="/user-requests">
+              <a className="text-lg hover:text-gray-300">User Requests</a>
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link href="/user-data">
+              <a className="text-lg hover:text-gray-300">User Data</a>
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link href="/other-section">
+              <a className="text-lg hover:text-gray-300">Other Section</a>
+            </Link>
+          </li>
+        </ul>
       </nav>
-    </aside>
+    </div>
   );
 };
 
