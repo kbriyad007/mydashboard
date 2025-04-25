@@ -91,12 +91,12 @@ Product(s): ${productLinksText}
         <head>
           <title>Invoice - ${req["Customer-Name"]}</title>
           <style>
-            body { font-family: sans-serif; padding: 40px; background: #f4f6f8; }
-            .invoice-box { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; }
-            h1 { color: #333; font-size: 20px; }
+            body { font-family: sans-serif; padding: 40px; background: #fff; color: #333; }
+            .invoice-box { max-width: 800px; margin: auto; background: #f9f9f9; padding: 30px; border-radius: 10px; border: 1px solid #ddd; }
+            h1 { font-size: 22px; }
             .row { margin-bottom: 10px; font-size: 14px; }
             .qr { text-align: center; margin-top: 20px; }
-            .qr img { border: 1px solid #ddd; padding: 6px; border-radius: 10px; }
+            .qr img { border: 1px solid #ccc; padding: 6px; border-radius: 10px; }
           </style>
         </head>
         <body>
@@ -166,12 +166,12 @@ Thank you!
 
   return (
     <Layout>
-      <div className="p-4 space-y-4 max-w-[95vw] mx-auto text-white">
+      <div className="p-6 space-y-4 max-w-[95vw] mx-auto text-gray-800 bg-white min-h-screen">
         <div className="flex justify-between items-center text-sm">
-          <h1 className="text-xl font-semibold">User Requests</h1>
+          <h1 className="text-2xl font-semibold">User Requests</h1>
           <button
             onClick={() => setShowMinimal((prev) => !prev)}
-            className="px-3 py-1 bg-blue-600 rounded hover:bg-blue-700"
+            className="px-3 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             {showMinimal ? "Full View" : "Minimal View"}
           </button>
@@ -180,7 +180,7 @@ Thank you!
         <input
           type="text"
           placeholder="Search..."
-          className="w-full max-w-md px-3 py-1.5 border rounded text-sm text-black"
+          className="w-full max-w-md px-3 py-2 border border-gray-300 rounded text-sm"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -188,17 +188,17 @@ Thank you!
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
-          <p className="text-red-400">{error}</p>
+          <p className="text-red-600">{error}</p>
         ) : (
-          <div className="overflow-x-auto border border-gray-700 rounded-lg text-xs">
-            <table className="min-w-full text-left text-gray-200">
-              <thead className="bg-gray-900 text-gray-300 uppercase">
+          <div className="overflow-x-auto border border-gray-200 rounded-lg text-xs">
+            <table className="min-w-full text-left text-gray-700">
+              <thead className="bg-gray-100 text-gray-600 uppercase">
                 <tr>
                   {columns.map((key) => (
                     <th
                       key={key}
                       onClick={() => key !== "Message" && key !== "Status" && handleSort(key as keyof RequestData)}
-                      className={`px-3 py-2 cursor-pointer hover:text-blue-300 whitespace-nowrap ${
+                      className={`px-3 py-2 cursor-pointer hover:text-blue-600 whitespace-nowrap ${
                         key === "Quantity" ? "w-12 text-center" : ""
                       }`}
                     >
@@ -209,12 +209,12 @@ Thank you!
                   ))}
                 </tr>
               </thead>
-              <tbody className="bg-gray-950 divide-y divide-gray-800">
+              <tbody className="bg-white divide-y divide-gray-100">
                 {sorted.map((req) => (
-                  <tr key={req.id} className="hover:bg-gray-800">
+                  <tr key={req.id} className="hover:bg-gray-50">
                     {columns.map((key) =>
                       key === "Product-Links" ? (
-                        <td key={key} className="px-3 py-1 text-blue-400">
+                        <td key={key} className="px-3 py-2 text-blue-600">
                           {(req["Product-Links"] ?? []).map((link, i) => (
                             <div key={i}>
                               <a
@@ -224,7 +224,7 @@ Thank you!
                                   e.preventDefault();
                                   window.open(link, "popup", "width=800,height=600");
                                 }}
-                                className="underline hover:text-blue-300"
+                                className="underline hover:text-blue-800"
                               >
                                 Link-{i + 1}
                               </a>
@@ -232,17 +232,17 @@ Thank you!
                           ))}
                         </td>
                       ) : key === "Time" ? (
-                        <td key={key} className="px-3 py-1">
+                        <td key={key} className="px-3 py-2">
                           {req.Time?.seconds
                             ? new Date(req.Time.seconds * 1000).toLocaleString()
                             : "—"}
                         </td>
                       ) : key === "Message" ? (
-                        <td key={key} className="px-3 py-1 space-y-1">
+                        <td key={key} className="px-3 py-2 space-y-1">
                           <a
                             href={generateWhatsAppInvoiceLink(req)}
                             target="_blank"
-                            className="text-green-400 underline block hover:text-green-300"
+                            className="text-green-600 underline block hover:text-green-800"
                             onClick={() =>
                               setStatusMap((prev) => ({
                                 ...prev,
@@ -254,36 +254,36 @@ Thank you!
                           </a>
                           <button
                             onClick={() => generateInvoice(req)}
-                            className="text-blue-300 underline hover:text-blue-200"
+                            className="text-blue-600 underline hover:text-blue-800"
                           >
                             <FileText size={14} className="inline mr-1" />
                             Invoice
                           </button>
                         </td>
                       ) : key === "Phone-Number" ? (
-                        <td key={key} className="px-3 py-1">
+                        <td key={key} className="px-3 py-2">
                           <a
                             href={`tel:${req["Phone-Number"]?.replace(/\D/g, "")}`}
-                            className="text-blue-300 underline hover:text-blue-200"
+                            className="text-blue-600 underline hover:text-blue-800"
                           >
                             {req["Phone-Number"]}
                           </a>
                         </td>
                       ) : key === "User-Email" ? (
-                        <td key={key} className="px-3 py-1">
+                        <td key={key} className="px-3 py-2">
                           <a
                             href={`mailto:${req["User-Email"]}`}
-                            className="text-blue-300 underline hover:text-blue-200"
+                            className="text-blue-600 underline hover:text-blue-800"
                           >
                             {req["User-Email"]}
                           </a>
                         </td>
                       ) : key === "Status" ? (
-                        <td key={key} className="px-3 py-1 text-yellow-300">
+                        <td key={key} className="px-3 py-2 text-yellow-700 font-medium">
                           {statusMap[req.id] || "—"}
                         </td>
                       ) : (
-                        <td key={key} className={`px-3 py-1 ${key === "Quantity" ? "text-center" : ""}`}>
+                        <td key={key} className={`px-3 py-2 ${key === "Quantity" ? "text-center" : ""}`}>
                           {getValue(req, key)}
                         </td>
                       )
