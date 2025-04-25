@@ -4,7 +4,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { LoadingSpinner } from "./LoadingSpinner"; // Import the spinner component
 
 type RequestData = {
   id: string;
