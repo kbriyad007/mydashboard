@@ -1,7 +1,7 @@
 "use client";
 
 import UserRequests from "../components/UserRequests";
-import sidebar from "../components/sidebar"; // Ensure the correct import
+import Sidebar from "../components/Sidebar"; // Ensure the correct import
 
 export default function Home() {
   return (
