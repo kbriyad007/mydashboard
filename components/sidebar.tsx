@@ -27,5 +27,4 @@ const sidebar = () => {
     </div>
   );
 };
-
 export default sidebar;
