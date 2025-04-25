@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import LoadingSpinner from "./LoadingSpinner"; // Import the LoadingSpinner component
+import LoadingSpinner from "./LoadingSpinner";
 
 type RequestData = {
   id: string;
@@ -44,49 +44,55 @@ const UserRequests = () => {
   }, []);
 
   return (
-    <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
-      <table className="min-w-full table-auto">
-        <thead className="bg-gray-200 text-gray-700">
-          <tr>
-            <th className="px-6 py-4 text-sm font-semibold">Customer</th>
-            <th className="px-6 py-4 text-sm font-semibold">Email</th>
-            <th className="px-6 py-4 text-sm font-semibold">Phone</th>
-            <th className="px-6 py-4 text-sm font-semibold">Courier</th>
-            <th className="px-6 py-4 text-sm font-semibold">Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
+    <div className="w-full max-w-6xl mx-auto mt-10 rounded-2xl bg-white shadow-lg overflow-hidden">
+      <div className="px-6 py-4 border-b border-gray-200">
+        <h2 className="text-xl font-semibold text-gray-800">User Requests</h2>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-sm text-gray-800">
+          <thead className="bg-gray-50 text-left font-medium text-gray-700">
             <tr>
-              <td colSpan={5} className="px-6 py-4 text-center">
-                <LoadingSpinner />
-              </td>
+              <th className="px-6 py-4">Customer</th>
+              <th className="px-6 py-4">Email</th>
+              <th className="px-6 py-4">Phone</th>
+              <th className="px-6 py-4">Courier</th>
+              <th className="px-6 py-4">Quantity</th>
             </tr>
-          ) : error ? (
-            <tr>
-              <td colSpan={5} className="px-6 py-4 text-center text-red-600">
-                {error}
-              </td>
-            </tr>
-          ) : requests.length > 0 ? (
-            requests.map((req) => (
-              <tr key={req.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 text-sm">{req["Customer-Name"]}</td>
-                <td className="px-6 py-4 text-sm">{req["User-Email"]}</td>
-                <td className="px-6 py-4 text-sm">{req["Phone-Number"] || "N/A"}</td>
-                <td className="px-6 py-4 text-sm">{req.Courier || "N/A"}</td>
-                <td className="px-6 py-4 text-sm">{req.Quantity}</td>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={5} className="px-6 py-8 text-center">
+                  <LoadingSpinner />
+                </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={5} className="px-6 py-4 text-center text-gray-500">
-                No user requests found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            ) : error ? (
+              <tr>
+                <td colSpan={5} className="px-6 py-4 text-center text-red-600">
+                  {error}
+                </td>
+              </tr>
+            ) : requests.length > 0 ? (
+              requests.map((req) => (
+                <tr key={req.id} className="hover:bg-gray-50 border-t border-gray-100 transition">
+                  <td className="px-6 py-4">{req["Customer-Name"]}</td>
+                  <td className="px-6 py-4">{req["User-Email"]}</td>
+                  <td className="px-6 py-4">{req["Phone-Number"] || "N/A"}</td>
+                  <td className="px-6 py-4">{req.Courier || "N/A"}</td>
+                  <td className="px-6 py-4">{req.Quantity}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="px-6 py-6 text-center text-gray-500">
+                  No user requests found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
