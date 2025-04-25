@@ -1,3 +1,5 @@
+"use client";  // This ensures the component is client-side rendered
+
 import Link from "next/link";
 
 const sidebar = () => {
