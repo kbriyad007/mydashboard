@@ -1,7 +1,4 @@
 "use client";  // This ensures the component is client-side rendered
-
-import Link from "next/link";
-
 const sidebar = () => {
   return (
     <div className="h-screen w-64 bg-gray-800 text-white p-4">
