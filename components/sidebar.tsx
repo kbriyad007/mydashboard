@@ -1,7 +1,7 @@
-// components/Sidebar.tsx
+// components/sidebar.tsx
 import Link from "next/link";
 
-const Sidebar = () => {
+const sidebar = () => {
   return (
     <div className="h-screen w-64 bg-gray-800 text-white p-4">
       <div className="mb-8">
@@ -30,4 +30,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default sidebar;
