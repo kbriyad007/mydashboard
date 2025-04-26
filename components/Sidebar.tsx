@@ -1,28 +1,28 @@
-"use client";  // This ensures the component is client-side rendered
+"use client";
 
 import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="h-screen w-64 bg-gray-800 text-white p-4">
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold">Dashboard</h2>
+    <div className="h-full w-full p-6">
+      <div className="mb-10">
+        <h2 className="text-2xl font-bold text-white">Dashboard</h2>
       </div>
       <nav>
-        <ul>
-          <li className="mb-4">
-            <Link href="/user-requests">
-              <a className="text-lg hover:text-gray-300">User Requests</a>
+        <ul className="space-y-6">
+          <li>
+            <Link href="/user-requests" className="text-lg hover:text-gray-300 block">
+              User Requests
             </Link>
           </li>
-          <li className="mb-4">
-            <Link href="/user-data">
-              <a className="text-lg hover:text-gray-300">User Data</a>
+          <li>
+            <Link href="/user-data" className="text-lg hover:text-gray-300 block">
+              User Data
             </Link>
           </li>
-          <li className="mb-4">
-            <Link href="/other-section">
-              <a className="text-lg hover:text-gray-300">Other Section</a>
+          <li>
+            <Link href="/other-section" className="text-lg hover:text-gray-300 block">
+              Other Section
             </Link>
           </li>
         </ul>
@@ -32,3 +32,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
