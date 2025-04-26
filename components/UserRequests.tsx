@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import LoadingSpinner from "./LoadingSpinner";
-import { generateInvoice } from "../utils/generateInvoice"; // Import the generateInvoice function
+import { generateInvoice } from "../utils/generateInvoice";
 import { sendWhatsApp } from "../utils/sendWhatsApp";
 
 type RequestData = {
@@ -46,13 +46,12 @@ const UserRequests = () => {
     fetchData();
   }, []);
 
-  // Toggle dark mode
   const toggleTheme = () => {
     setDarkMode((prevMode) => !prevMode);
   };
 
   return (
-    <div className={darkMode ? "dark" : ""}> {/* Toggle dark mode class */}
+    <div className={darkMode ? "dark" : ""}>
       <div className="w-full max-w-[1100px] mx-auto mt-10 rounded-2xl bg-white dark:bg-gray-800 shadow-xl overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-green-400 to-blue-500 dark:from-blue-700 dark:to-purple-600">
           <div className="flex items-center justify-between">
@@ -62,7 +61,7 @@ const UserRequests = () => {
               className="text-white bg-gray-600 p-2 rounded-full hover:bg-gray-500 transition-colors"
               title="Toggle Dark Mode"
             >
-              {darkMode ? "🌞" : "🌙"} {/* Sun for light mode, Moon for dark mode */}
+              {darkMode ? "🌞" : "🌙"}
             </button>
           </div>
         </div>
@@ -77,18 +76,19 @@ const UserRequests = () => {
                 <th className="px-6 py-4">Courier</th>
                 <th className="px-6 py-4">Quantity</th>
                 <th className="px-6 py-4">Invoice</th>
+                <th className="px-6 py-4">WhatsApp</th> {/* NEW WhatsApp column */}
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center">
+                  <td colSpan={7} className="px-6 py-8 text-center">
                     <LoadingSpinner />
                   </td>
                 </tr>
               ) : error ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-4 text-center text-red-600">
+                  <td colSpan={7} className="px-6 py-4 text-center text-red-600">
                     {error}
                   </td>
                 </tr>
@@ -105,18 +105,31 @@ const UserRequests = () => {
                     <td className="px-6 py-4">{req.Quantity}</td>
                     <td className="px-6 py-4">
                       <button
-                        onClick={() => generateInvoice(req)} // Call the imported function
+                        onClick={() => generateInvoice(req)}
                         className="text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-105"
                         title="Generate Invoice"
                       >
                         📄
                       </button>
                     </td>
+                    <td className="px-6 py-4">
+                      {req["Phone-Number"] ? (
+                        <button
+                          onClick={() => sendWhatsApp(req["Phone-Number"]!, req["Customer-Name"])}
+                          className="text-green-600 hover:text-green-800 transition duration-300 transform hover:scale-105"
+                          title="Send WhatsApp Message"
+                        >
+                          📱
+                        </button>
+                      ) : (
+                        "N/A"
+                      )}
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
+                  <td colSpan={7} className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
                     No user requests found.
                   </td>
                 </tr>
