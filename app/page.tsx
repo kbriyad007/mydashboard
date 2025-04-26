@@ -1,13 +1,13 @@
 "use client";
 
 import UserRequests from "../components/UserRequests";
-import Sidebar from "../components/Sidebar"; // Ensure the correct import
+import Sidebar from "../components/Sidebar"; // Correct import
 
 export default function Home() {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <sidebar />
+      <Sidebar />
 
       {/* Main Content */}
       <div className="flex-1 p-6 bg-gray-100">
