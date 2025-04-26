@@ -9,75 +9,90 @@ export const generateInvoice = (request: any) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Invoice</title>
         <style>
-          body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          /* General reset */
+          * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+          }
+          body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9f9f9;
             color: #333;
-            background-color: #f4f7fc;
           }
           .container {
-            width: 80%;
+            width: 70%;
             margin: 40px auto;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
           }
           h1 {
-            font-size: 32px;
+            font-size: 38px;
             color: #2c3e50;
             text-align: center;
-            margin-bottom: 10px;
+            font-weight: bold;
+            margin-bottom: 20px;
           }
           h2 {
             font-size: 24px;
-            color: #16a085;
+            color: #34495e;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            font-weight: normal;
           }
           .invoice-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 40px;
+            margin-bottom: 30px;
           }
           .invoice-details div {
-            padding: 10px;
-            background-color: #f9fafb;
-            border-radius: 6px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
           }
           .invoice-details p {
-            margin: 5px 0;
             font-size: 16px;
+            line-height: 1.5;
+            color: #7f8c8d;
+            margin-bottom: 8px;
           }
           .invoice-summary {
-            margin-top: 30px;
+            margin-top: 40px;
             padding-top: 20px;
-            border-top: 2px solid #f1f1f1;
+            border-top: 2px solid #ecf0f1;
           }
           .invoice-summary p {
-            font-size: 16px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #7f8c8d;
+            margin-bottom: 12px;
           }
           .footer {
             margin-top: 40px;
             text-align: center;
-            color: #7f8c8d;
+            color: #bdc3c7;
             font-size: 14px;
           }
           .btn-print {
             display: inline-block;
-            margin: 20px auto;
-            padding: 10px 20px;
+            margin: 30px auto;
+            padding: 12px 25px;
             background-color: #27ae60;
             color: white;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
             border-radius: 5px;
-            cursor: pointer;
+            text-align: center;
             text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
           }
           .btn-print:hover {
             background-color: #2ecc71;
+            transform: scale(1.05);
           }
           @media print {
             .btn-print {
@@ -85,6 +100,11 @@ export const generateInvoice = (request: any) => {
             }
             body {
               background-color: white;
+            }
+            .container {
+              width: 100%;
+              margin: 0;
+              padding: 20px;
             }
           }
         </style>
