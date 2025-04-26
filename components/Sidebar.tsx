@@ -4,11 +4,11 @@ import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="h-full w-full p-6">
+    <div className="h-full w-full p-6 flex flex-col">
       <div className="mb-10">
         <h2 className="text-2xl font-bold text-white">Dashboard</h2>
       </div>
-      <nav>
+      <nav className="flex-1">
         <ul className="space-y-6">
           <li>
             <Link href="/user-requests" className="text-lg hover:text-gray-300 block">
@@ -32,4 +32,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
