@@ -52,7 +52,7 @@ const UserRequests = () => {
 
   return (
     <div className={darkMode ? "dark" : ""}> {/* Toggle dark mode class */}
-      <div className="w-full max-w-[1000px] mx-auto mt-10 rounded-2xl bg-white dark:bg-gray-800 shadow-xl overflow-hidden">
+      <div className="w-full max-w-[1200px] mx-auto mt-10 rounded-2xl bg-white dark:bg-gray-800 shadow-xl overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-green-400 to-blue-500 dark:from-blue-700 dark:to-purple-600">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-white">User Requests</h2>
