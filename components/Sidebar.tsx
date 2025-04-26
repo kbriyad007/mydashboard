@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="fixed top-0 left-0 h-full w-50 bg-gray-800 text-white p-4 flex flex-col">
+    <div className="fixed top-0 left-0 h-full w-48 bg-gray-800 text-white p-4 flex flex-col">
       <div className="mb-8">
         <h2 className="text-xl font-bold">Dashboard</h2>
       </div>
