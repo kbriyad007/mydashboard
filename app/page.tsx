@@ -1,16 +1,16 @@
 "use client";
 
 import UserRequests from "../components/UserRequests";
-import Sidebar from "../components/Sidebar"; // Correct import
+import Sidebar from "../components/Sidebar";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 p-6 bg-gray-100">
+      <div className="ml-36 flex-1 p-6"> {/* Push content after fixed sidebar */}
         <UserRequests />
       </div>
     </div>
