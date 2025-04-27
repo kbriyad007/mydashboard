@@ -66,23 +66,25 @@ export default function UserDataPage() {
     : [];
 
   return (
-    <div className="flex">
+    <div className="flex bg-gray-50 dark:bg-gray-900 min-h-screen">
       <Sidebar />
-      <div className="ml-48 p-8 flex-1">
-        <h1 className="text-3xl font-bold mb-6">Courier Summary</h1>
+      <div className="ml-48 p-8 flex-1 overflow-y-auto">
+        <h1 className="text-4xl font-bold mb-6 text-indigo-600">Courier Summary</h1>
 
         {loading ? (
-          <p>Loading...</p>
+          <div className="flex justify-center items-center">
+            <div className="animate-spin border-t-4 border-blue-500 border-solid rounded-full w-16 h-16"></div>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
             {predefinedCouriers.map((courier) => (
               <div
                 key={courier}
-                className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow hover:shadow-lg transition-all cursor-pointer"
+                className="p-6 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:scale-105"
                 onClick={() => setSelectedCourier(courier)}
               >
-                <h2 className="text-lg font-semibold">{courier}</h2>
-                <p className="text-2xl font-bold">{courierCounts[courier]}</p>
+                <h2 className="text-2xl font-semibold">{courier}</h2>
+                <p className="text-3xl font-bold">{courierCounts[courier]}</p>
               </div>
             ))}
           </div>
@@ -90,9 +92,9 @@ export default function UserDataPage() {
 
         {/* Show table only if a courier is selected */}
         {selectedCourier && (
-          <div>
-            <h2 className="text-2xl font-bold mb-4">{selectedCourier} Orders</h2>
-            <div className="overflow-x-auto">
+          <div className="mt-8">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">{selectedCourier} Orders</h2>
+            <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
               <table className="min-w-full text-sm text-gray-800 dark:text-gray-100">
                 <thead className="bg-gray-100 dark:bg-gray-700 text-left font-medium text-gray-700 dark:text-gray-300">
                   <tr>
