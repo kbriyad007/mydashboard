@@ -18,13 +18,14 @@ type RequestData = {
   "Product-Links"?: string[];
 };
 
-const predefinedCouriers = ["steadfast", "Red X", "Pathao", "Paperfly", "Other"];
+const predefinedCouriers = ["Steadfast", "Red X", "Pathao", "Paperfly", "Other"];
 
 export default function UserDataPage() {
   const [courierCounts, setCourierCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [userRequests, setUserRequests] = useState<RequestData[]>([]);
   const [selectedCourier, setSelectedCourier] = useState<string | null>(null);
+  const [mostOrderedCustomer, setMostOrderedCustomer] = useState<RequestData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +51,20 @@ export default function UserDataPage() {
 
         setCourierCounts(finalCounts);
         setUserRequests(requests); // Store all requests
+
+        // Calculate the most ordered customer
+        const customerOrderCounts: Record<string, number> = {};
+        requests.forEach((request) => {
+          const customerEmail = request["User-Email"];
+          customerOrderCounts[customerEmail] = (customerOrderCounts[customerEmail] || 0) + 1;
+        });
+
+        const mostOrderedCustomerEmail = Object.keys(customerOrderCounts).reduce((a, b) =>
+          customerOrderCounts[a] > customerOrderCounts[b] ? a : b
+        );
+
+        const mostOrderedCustomerData = requests.find((req) => req["User-Email"] === mostOrderedCustomerEmail);
+        setMostOrderedCustomer(mostOrderedCustomerData || null); // Set the most ordered customer data
       } catch (error) {
         console.error("Failed to fetch user requests:", error);
       } finally {
@@ -66,35 +81,59 @@ export default function UserDataPage() {
     : [];
 
   return (
-    <div className="flex bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="flex">
       <Sidebar />
-      <div className="ml-48 p-8 flex-1 overflow-y-auto">
-        <h1 className="text-4xl font-bold mb-6 text-indigo-600">Courier Summary</h1>
+      <div className="ml-48 p-8 flex-1">
+        <h1 className="text-3xl font-bold mb-6">Courier Summary</h1>
 
         {loading ? (
-          <div className="flex justify-center items-center">
-            <div className="animate-spin border-t-4 border-blue-500 border-solid rounded-full w-16 h-16"></div>
-          </div>
+          <p>Loading...</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-            {predefinedCouriers.map((courier) => (
-              <div
-                key={courier}
-                className="p-6 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 text-white shadow-lg hover:shadow-xl transition-all cursor-pointer transform hover:scale-105"
-                onClick={() => setSelectedCourier(courier)}
+          <div>
+            {/* Button to show Most Ordered Customer details */}
+            <div className="mb-6">
+              <button
+                onClick={() => setMostOrderedCustomer((prev) => (prev ? null : mostOrderedCustomer))}
+                className="p-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
               >
-                <h2 className="text-2xl font-semibold">{courier}</h2>
-                <p className="text-3xl font-bold">{courierCounts[courier]}</p>
+                {mostOrderedCustomer ? "Hide Most Ordered Customer" : "Show Most Ordered Customer"}
+              </button>
+            </div>
+
+            {/* Show Most Ordered Customer details */}
+            {mostOrderedCustomer && (
+              <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow mb-6">
+                <h2 className="text-xl font-semibold mb-4">Most Ordered Customer</h2>
+                <p><strong>Customer Name:</strong> {mostOrderedCustomer["Customer-Name"]}</p>
+                <p><strong>Email:</strong> {mostOrderedCustomer["User-Email"]}</p>
+                <p><strong>Phone Number:</strong> {mostOrderedCustomer["Phone-Number"] || "N/A"}</p>
+                <p><strong>Address:</strong> {mostOrderedCustomer.Address}</p>
+                <p><strong>Orders Quantity:</strong> {customerOrderCounts[mostOrderedCustomer["User-Email"]]}</p>
+                <p><strong>Description:</strong> {mostOrderedCustomer.Description}</p>
               </div>
-            ))}
+            )}
+
+            {/* Displaying Courier Information */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+              {predefinedCouriers.map((courier) => (
+                <div
+                  key={courier}
+                  className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow hover:shadow-lg transition-all cursor-pointer"
+                  onClick={() => setSelectedCourier(courier)}
+                >
+                  <h2 className="text-lg font-semibold">{courier}</h2>
+                  <p className="text-2xl font-bold">{courierCounts[courier]}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
         {/* Show table only if a courier is selected */}
         {selectedCourier && (
-          <div className="mt-8">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">{selectedCourier} Orders</h2>
-            <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+          <div>
+            <h2 className="text-2xl font-bold mb-4">{selectedCourier} Orders</h2>
+            <div className="overflow-x-auto">
               <table className="min-w-full text-sm text-gray-800 dark:text-gray-100">
                 <thead className="bg-gray-100 dark:bg-gray-700 text-left font-medium text-gray-700 dark:text-gray-300">
                   <tr>
