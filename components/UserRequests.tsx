@@ -25,6 +25,7 @@ const UserRequests = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +52,23 @@ const UserRequests = () => {
     setDarkMode((prevMode) => !prevMode);
   };
 
+  // Handle search query change
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filtered requests based on search query
+  const filteredRequests = requests.filter((request) => {
+    const searchLowerCase = searchQuery.toLowerCase();
+    return (
+      request["Customer-Name"]?.toLowerCase().includes(searchLowerCase) ||
+      request["User-Email"]?.toLowerCase().includes(searchLowerCase) ||
+      request["Phone-Number"]?.toLowerCase().includes(searchLowerCase) ||
+      request.Courier?.toLowerCase().includes(searchLowerCase) ||
+      request.Address?.toLowerCase().includes(searchLowerCase)
+    );
+  });
+
   return (
     <div className={darkMode ? "dark" : ""}> {/* Toggle dark mode class */}
       <div className="w-full max-w-[1100px] mx-auto mt-10 rounded-2xl bg-white dark:bg-gray-800 shadow-xl overflow-hidden">
@@ -65,6 +83,17 @@ const UserRequests = () => {
               {darkMode ? "🌞" : "🌙"} {/* Sun for light mode, Moon for dark mode */}
             </button>
           </div>
+        </div>
+
+        {/* Search Box */}
+        <div className="px-6 py-4">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            placeholder="Search by name, email, phone, or courier"
+            className="w-full px-4 py-2 text-sm text-gray-800 dark:text-gray-100 bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         <div className="overflow-x-auto">
@@ -93,8 +122,8 @@ const UserRequests = () => {
                     {error}
                   </td>
                 </tr>
-              ) : requests.length > 0 ? (
-                requests.map((req) => (
+              ) : filteredRequests.length > 0 ? (
+                filteredRequests.map((req) => (
                   <tr
                     key={req.id}
                     className="hover:bg-gray-50 dark:hover:bg-gray-600 border-t border-gray-100 dark:border-gray-700 transition-all ease-in-out duration-300"
