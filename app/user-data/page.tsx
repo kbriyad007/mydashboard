@@ -1,16 +1,63 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { db } from "@/firebase";
+import { collection, getDocs } from "firebase/firestore";
 import Sidebar from "@/components/Sidebar";
 
+type RequestData = {
+  Courier?: string;
+};
+
 export default function UserDataPage() {
+  const [courierCounts, setCourierCounts] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "user_request"));
+        const counts: Record<string, number> = {};
+
+        snapshot.docs.forEach((doc) => {
+          const data = doc.data() as RequestData;
+          const courier = data.Courier || "Unknown";
+          counts[courier] = (counts[courier] || 0) + 1;
+        });
+
+        setCourierCounts(counts);
+      } catch (error) {
+        console.error("Failed to fetch user requests:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="flex">
       <Sidebar />
       <div className="ml-48 p-8 flex-1">
-        <h1 className="text-3xl font-bold mb-4">User Data</h1>
-        <p className="text-lg">This is the User Data page content.</p>
+        <h1 className="text-3xl font-bold mb-6">Courier Summary</h1>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {Object.entries(courierCounts).map(([courier, count]) => (
+              <div
+                key={courier}
+                className="p-6 rounded-lg bg-white dark:bg-gray-800 shadow hover:shadow-lg transition-all"
+              >
+                <h2 className="text-lg font-semibold">{courier}</h2>
+                <p className="text-2xl font-bold">{count}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
