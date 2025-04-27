@@ -11,7 +11,7 @@ const Sidebar = () => {
       <nav className="flex-1">
         <ul className="space-y-5">
           <li>
-            <Link href="https://mydashboard-eight-pi.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-base hover:text-gray-300 block">
+            <Link href="https://mydashboard-eight-pi.vercel.app/" className="text-base hover:text-gray-300 block">
               User Requests
             </Link>
           </li>
