@@ -18,7 +18,7 @@ type RequestData = {
   "Product-Links"?: string[];
 };
 
-const predefinedCouriers = ["Steadfast", "Red X", "Pathao", "Paperfly", "Other"];
+const predefinedCouriers = ["steadfast", "Red X", "Pathao", "Paperfly", "Other"];
 
 export default function UserDataPage() {
   const [courierCounts, setCourierCounts] = useState<Record<string, number>>({});
