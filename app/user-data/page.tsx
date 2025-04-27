@@ -10,7 +10,7 @@ type RequestData = {
 };
 
 // Define the couriers you want to always show
-const predefinedCouriers = ["Steadfast", "Red X", "Pathao", "Paperfly", "Other"];
+const predefinedCouriers = ["steadfast", "Red X", "Pathao", "Paperfly", "Other"];
 
 export default function UserDataPage() {
   const [courierCounts, setCourierCounts] = useState<Record<string, number>>({});
