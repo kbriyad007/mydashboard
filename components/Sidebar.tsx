@@ -1,9 +1,4 @@
 "use client";
-
-import { Button } from "shadcn";
-import { Card } from "shadcn";
-import Link from "next/link";
-
 const Sidebar = () => {
   return (
     <div className="fixed top-0 left-0 h-full w-60 bg-gray-800 text-white p-6 flex flex-col">
