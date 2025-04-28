@@ -23,6 +23,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.27.0",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "19.0.10",
