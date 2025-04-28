@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from "shadcn";
+import { Card } from "shadcn";
 import Link from "next/link";
 
 const Sidebar = () => {
