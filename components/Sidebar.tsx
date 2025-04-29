@@ -1,4 +1,7 @@
 "use client";
+
+import Link from "next/link";
+
 const Sidebar = () => {
   return (
     <div className="fixed top-0 left-0 h-full w-60 bg-gray-800 text-white p-6 flex flex-col">
@@ -12,52 +15,38 @@ const Sidebar = () => {
         <ul>
           {/* User Requests Link */}
           <li>
-            <Card className="bg-transparent shadow-none hover:bg-gray-700 rounded-md transition-all">
-              <Link href="https://mydashboard-eight-pi.vercel.app/">
-                <a className="flex items-center space-x-2 px-4 py-2 text-base text-white hover:text-gray-300 transition-all">
-                  <Button variant="link" className="w-full text-left">
-                    User Requests
-                  </Button>
-                </a>
+            <div className="hover:bg-gray-700 rounded-md transition-all">
+              <Link href="https://mydashboard-eight-pi.vercel.app/" className="block px-4 py-2 text-base text-white hover:text-gray-300">
+                User Requests
               </Link>
-            </Card>
+            </div>
           </li>
 
           {/* User Data Link */}
           <li>
-            <Card className="bg-transparent shadow-none hover:bg-gray-700 rounded-md transition-all">
-              <Link href="/user-data">
-                <a className="flex items-center space-x-2 px-4 py-2 text-base text-white hover:text-gray-300 transition-all">
-                  <Button variant="link" className="w-full text-left">
-                    User Data
-                  </Button>
-                </a>
+            <div className="hover:bg-gray-700 rounded-md transition-all">
+              <Link href="/user-data" className="block px-4 py-2 text-base text-white hover:text-gray-300">
+                User Data
               </Link>
-            </Card>
+            </div>
           </li>
 
           {/* Other Section Link */}
           <li>
-            <Card className="bg-transparent shadow-none hover:bg-gray-700 rounded-md transition-all">
-              <Link href="/other-section">
-                <a className="flex items-center space-x-2 px-4 py-2 text-base text-white hover:text-gray-300 transition-all">
-                  <Button variant="link" className="w-full text-left">
-                    Other Section
-                  </Button>
-                </a>
+            <div className="hover:bg-gray-700 rounded-md transition-all">
+              <Link href="/other-section" className="block px-4 py-2 text-base text-white hover:text-gray-300">
+                Other Section
               </Link>
-            </Card>
+            </div>
           </li>
         </ul>
       </nav>
 
-      {/* Optional: Add any other elements like profile info, logout button, etc. */}
+      {/* Logout Button */}
       <div className="mt-6">
-        <Card className="bg-transparent shadow-none hover:bg-gray-700 rounded-md transition-all">
-          <Button variant="outline" className="w-full text-white hover:bg-gray-600">
-            Logout
-          </Button>
-        </Card>
+        <button className="w-full py-2 px-4 border border-white text-white rounded-md hover:bg-gray-600 transition-all">
+          Logout
+        </button>
       </div>
     </div>
   );
