@@ -80,12 +80,24 @@ export default function UserDataPage() {
               <div
                 key={courier}
                 onClick={() => setSelectedCourier(courier)}
-                className="cursor-pointer backdrop-blur-md bg-white/40 dark:bg-gray-700/40 border border-white/30 dark:border-gray-600/30 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:scale-[1.03] transition-all"
+                className="relative p-6 rounded-xl bg-white/30 dark:bg-gray-800/30 border dark:border-gray-700 border-gray-200 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 cursor-pointer overflow-hidden"
               >
-                <h2 className="text-xl font-medium text-gray-700 dark:text-gray-100 mb-2 capitalize tracking-wide">
-                  {courier}
-                </h2>
-                <p className="text-4xl font-bold text-indigo-600 dark:text-teal-300">{courierCounts[courier]}</p>
+                {/* Blurred Background Logo */}
+                <img
+                  src={`/logos/${courier.toLowerCase()}.png`}
+                  alt={`${courier} logo`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-10 blur-lg pointer-events-none"
+                />
+
+                {/* Foreground content */}
+                <div className="relative z-10">
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white capitalize tracking-wide">
+                    {courier}
+                  </h2>
+                  <p className="text-4xl font-bold text-indigo-700 dark:text-teal-300 mt-2">
+                    {courierCounts[courier]}
+                  </p>
+                </div>
               </div>
             ))}
           </section>
@@ -93,11 +105,11 @@ export default function UserDataPage() {
 
         {selectedCourier && (
           <section className="mt-16">
-            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6">
+            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6 capitalize">
               {selectedCourier} Orders
             </h2>
 
-            <div className="overflow-x-auto rounded-xl shadow-xl backdrop-blur-md bg-white/60 dark:bg-gray-800/50">
+            <div className="overflow-x-auto rounded-xl shadow-2xl backdrop-blur-md bg-white/60 dark:bg-gray-800/50">
               <table className="min-w-full text-sm text-gray-800 dark:text-gray-100">
                 <thead className="bg-gray-100 dark:bg-gray-700 text-left uppercase tracking-wider text-gray-600 dark:text-gray-300 text-xs">
                   <tr>
