@@ -84,7 +84,7 @@ export default function UserDataPage() {
               >
                 {/* Blurred Background Logo */}
                 <img
-                  src={`/logos/${courier.toLowerCase()}.png`}
+                  src={`/logo.png`}
                   alt={`${courier} logo`}
                   className="absolute inset-0 w-full h-full object-contain opacity-10 blur-lg pointer-events-none"
                 />
