@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import LoadingSpinner from "./LoadingSpinner";
-import { generateInvoice } from "../utils/generateInvoice"; 
-import { sendWhatsApp } from "../utils/sendWhatsApp"; 
+import { generateInvoice } from "../utils/generateInvoice";
+import { sendWhatsApp } from "../utils/sendWhatsApp";
 
 type RequestData = {
   id: string;
@@ -25,7 +25,7 @@ const UserRequests = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +80,6 @@ const UserRequests = () => {
           </div>
         </div>
 
-        {/* Search Box */}
         <div className="px-4 py-3">
           <input
             type="text"
@@ -95,13 +94,13 @@ const UserRequests = () => {
           <table className="min-w-full text-sm text-gray-800 dark:text-gray-100">
             <thead className="bg-gray-100 dark:bg-gray-700 text-left font-medium text-gray-700 dark:text-gray-300">
               <tr>
-                <th className="px-3 py-3">Customer</th>
-                <th className="px-3 py-3">Email</th>
-                <th className="px-3 py-3">Phone</th>
-                <th className="px-3 py-3">Courier</th>
-                <th className="px-3 py-3">Quantity</th>
-                <th className="px-3 py-3">Invoice</th>
-                <th className="px-3 py-3">WhatsApp</th>
+                <th className="px-3 py-3 w-40">Customer</th>
+                <th className="px-3 py-3 w-56">Email</th>
+                <th className="px-3 py-3 w-32">Phone</th>
+                <th className="px-3 py-3 w-32">Courier</th>
+                <th className="px-3 py-3 w-20">Qty</th>
+                <th className="px-3 py-3 w-20">Invoice</th>
+                <th className="px-3 py-3 w-20">WhatsApp</th>
               </tr>
             </thead>
             <tbody>
@@ -123,12 +122,12 @@ const UserRequests = () => {
                     key={req.id}
                     className="hover:bg-gray-50 dark:hover:bg-gray-600 border-t border-gray-100 dark:border-gray-700 transition-all ease-in-out duration-300"
                   >
-                    <td className="px-4 py-3">{req["Customer-Name"]}</td>
-                    <td className="px-4 py-3">{req["User-Email"]}</td>
-                    <td className="px-4 py-3">{req["Phone-Number"] || "N/A"}</td>
-                    <td className="px-4 py-3">{req.Courier || "N/A"}</td>
-                    <td className="px-4 py-3">{req.Quantity}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 w-40">{req["Customer-Name"]}</td>
+                    <td className="px-4 py-3 w-56">{req["User-Email"]}</td>
+                    <td className="px-4 py-3 w-32">{req["Phone-Number"] || "N/A"}</td>
+                    <td className="px-4 py-3 w-32">{req.Courier || "N/A"}</td>
+                    <td className="px-4 py-3 w-20">{req.Quantity}</td>
+                    <td className="px-4 py-3 w-20">
                       <button
                         onClick={() => generateInvoice(req)}
                         className="text-blue-600 hover:text-blue-800 transition duration-300"
@@ -137,7 +136,7 @@ const UserRequests = () => {
                         📄
                       </button>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 w-20">
                       {req["Phone-Number"] ? (
                         <button
                           onClick={() =>
