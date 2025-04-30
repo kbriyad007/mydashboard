@@ -94,13 +94,13 @@ const UserRequests = () => {
           <table className="min-w-full text-sm text-gray-800 dark:text-gray-100">
             <thead className="bg-gray-100 dark:bg-gray-700 text-left font-medium text-gray-700 dark:text-gray-300">
                <tr>
-    <th className="px-3 py-3 w-1/4">Customer</th>
-    <th className="px-3 py-3 w-1/5">Email</th>
-    <th className="px-3 py-3 w-[15%]">Phone</th>
-    <th className="px-3 py-3 w-[15%]">Courier</th>
-    <th className="px-3 py-3 w-[10%]">Quantity</th>
-    <th className="px-3 py-3 w-[7.5%]">Invoice</th>
-    <th className="px-3 py-3 w-[7.5%]">WhatsApp</th>
+                <th className="px-3 py-3 w-[15%]">Customer</th>
+                <th className="px-3 py-3 w-[15%]">Email</th>
+                <th className="px-3 py-3 w-[15%]">Phone</th>
+                <th className="px-3 py-3 w-[15%]">Courier</th>
+                <th className="px-3 py-3 w-[15%]">Quantity</th>
+                <th className="px-3 py-3 w-[10%]">Invoice</th>
+                <th className="px-3 py-3 w-[15%]">WhatsApp</th>
   </tr>
             </thead>
             <tbody>
