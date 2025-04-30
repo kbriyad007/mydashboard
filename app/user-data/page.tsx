@@ -63,45 +63,43 @@ export default function UserDataPage() {
     : [];
 
   return (
-    <div className="flex bg-gradient-to-br from-gray-100 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen">
+    <div className="flex bg-gradient-to-br from-[#f5f7fa] to-[#c3cfe2] dark:from-gray-900 dark:to-gray-800 min-h-screen">
       <Sidebar />
       <main className="ml-48 p-10 w-full">
-        <h1 className="text-4xl font-extrabold text-gray-800 dark:text-white mb-8">
-          📦 Courier Summary
+        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-10">
+          🚚 Courier Dashboard
         </h1>
 
         {loading ? (
-          <div className="flex justify-center items-center py-24">
+          <div className="flex justify-center items-center py-32">
             <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {predefinedCouriers.map((courier) => (
               <div
                 key={courier}
                 onClick={() => setSelectedCourier(courier)}
-                className="cursor-pointer bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-md hover:shadow-xl transform hover:scale-[1.03] transition-all"
+                className="cursor-pointer backdrop-blur-md bg-white/40 dark:bg-gray-700/40 border border-white/30 dark:border-gray-600/30 rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:scale-[1.03] transition-all"
               >
-                <h2 className="text-lg font-semibold text-gray-700 dark:text-white mb-2 capitalize">
+                <h2 className="text-xl font-medium text-gray-700 dark:text-gray-100 mb-2 capitalize tracking-wide">
                   {courier}
                 </h2>
-                <p className="text-3xl font-bold text-blue-600 dark:text-teal-400">
-                  {courierCounts[courier]}
-                </p>
+                <p className="text-4xl font-bold text-indigo-600 dark:text-teal-300">{courierCounts[courier]}</p>
               </div>
             ))}
           </section>
         )}
 
         {selectedCourier && (
-          <section className="mt-12">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">
+          <section className="mt-16">
+            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6">
               {selectedCourier} Orders
             </h2>
 
-            <div className="overflow-x-auto rounded-lg shadow-lg bg-white dark:bg-gray-900">
-              <table className="min-w-full text-sm text-left text-gray-700 dark:text-gray-200">
-                <thead className="bg-gray-200 dark:bg-gray-700 text-sm uppercase tracking-wide text-gray-600 dark:text-gray-300">
+            <div className="overflow-x-auto rounded-xl shadow-xl backdrop-blur-md bg-white/60 dark:bg-gray-800/50">
+              <table className="min-w-full text-sm text-gray-800 dark:text-gray-100">
+                <thead className="bg-gray-100 dark:bg-gray-700 text-left uppercase tracking-wider text-gray-600 dark:text-gray-300 text-xs">
                   <tr>
                     <th className="px-6 py-4">Customer</th>
                     <th className="px-6 py-4">Email</th>
@@ -116,7 +114,7 @@ export default function UserDataPage() {
                     filteredRequests.map((req) => (
                       <tr
                         key={req.id}
-                        className="hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-700"
+                        className="hover:bg-gray-50 dark:hover:bg-gray-700 border-t border-gray-200 dark:border-gray-700 transition"
                       >
                         <td className="px-6 py-4">{req["Customer-Name"]}</td>
                         <td className="px-6 py-4">{req["User-Email"]}</td>
@@ -128,7 +126,7 @@ export default function UserDataPage() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={6} className="text-center py-6 text-gray-500 dark:text-gray-400">
+                      <td colSpan={6} className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
                         No orders found for <strong>{selectedCourier}</strong>.
                       </td>
                     </tr>
