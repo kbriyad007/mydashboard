@@ -9,6 +9,7 @@ export default function Home() {
       {/* Sidebar */}
       <Sidebar />
 
+      
       {/* Main Content */}
       <div className="ml-[200px] -mr-2 flex-1 p-6">
         {/* 👆 ml matches sidebar width exactly (200px), mr adds small right margin */}
