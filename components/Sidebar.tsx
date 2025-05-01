@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutDashboard, Users, Database, Grid3X3 } from "lucide-react";
+import { Users, Database, Grid } from "lucide-react"; // ✅ Replace Grid3X3 with Grid
 
 const Sidebar = () => {
   return (
@@ -39,7 +39,7 @@ const Sidebar = () => {
               href="/other-section"
               className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-indigo-50 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
             >
-              <Grid3X3 className="w-4 h-4" />
+              <Grid className="w-4 h-4" />
               <span>Other Section</span>
             </Link>
           </li>
@@ -50,3 +50,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
