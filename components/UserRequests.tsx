@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Button } from "@/components/ui/button"; // Import ShadCN button component
-import { Input } from "@/components/ui/input"; // Import ShadCN input component
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
 import { generateInvoice } from "../utils/generateInvoice";
 import { sendWhatsApp } from "../utils/sendWhatsApp";
+import { FaFileInvoice, FaWhatsapp, FaMoon, FaSun } from "react-icons/fa"; // React Icons
 
 type RequestData = {
   id: string;
@@ -78,7 +79,7 @@ const UserRequests = () => {
             className="text-white text-sm px-3 py-2 hover:bg-gray-600 dark:hover:bg-gray-800 transition"
             title="Toggle Theme"
           >
-            {darkMode ? "Light ☀️" : "Dark 🌙"}
+            {darkMode ? <FaSun className="text-yellow-300" /> : <FaMoon />}
           </Button>
         </div>
 
@@ -135,7 +136,7 @@ const UserRequests = () => {
                         className="text-indigo-600 hover:text-indigo-800"
                         title="Generate Invoice"
                       >
-                        📄
+                        <FaFileInvoice className="w-4 h-4" />
                       </Button>
                     </td>
                     <td className="px-3 py-2">
@@ -147,7 +148,7 @@ const UserRequests = () => {
                           className="text-green-500 hover:text-green-700"
                           title="Send WhatsApp"
                         >
-                          🟢
+                          <FaWhatsapp className="w-4 h-4" />
                         </Button>
                       ) : (
                         "N/A"
