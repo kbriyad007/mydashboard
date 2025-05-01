@@ -13,7 +13,7 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="ml-[200px] -mr-2 flex-1 p-6">
-        <Button size="lg" className="mb-4">Log Out</Button>
+        <Button size="lg" className="mb-4" disabled>Log Out</Button>
         {false && (<UserRequests />)}
         
       </div>
