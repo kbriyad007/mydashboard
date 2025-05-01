@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import { db } from "@/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Sidebar from "@/components/Sidebar";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
 
 type RequestData = {
   id: string;
@@ -73,31 +79,28 @@ export default function UserDataPage() {
         {loading ? (
           <div className="flex justify-center items-center py-32">
             <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {predefinedCouriers.map((courier) => (
-              <div
-                key={courier}
-                onClick={() => setSelectedCourier(courier)}
-                className="relative p-6 rounded-xl bg-white/30 dark:bg-gray-800/30 border dark:border-gray-700 border-gray-200 shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 cursor-pointer overflow-hidden"
-              >
-                {/* Blurred Background Logo */}
-                <img
-                  src={`/logo.png`}
-                  alt={`${courier} logo`}
-                  className="absolute inset-0 w-full h-full object-contain opacity-10 blur-lg pointer-events-none"
-                />
+          <Card
+  key={courier}
+  onClick={() => setSelectedCourier(courier)}
+  className="cursor-pointer transition-all hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
+>
+  <img
+    src={`/logo.png`}
+    alt={`${courier} logo`}
+    className="absolute inset-0 w-full h-full object-contain opacity-10 blur-md pointer-events-none"
+  />
 
-                {/* Foreground content */}
-                <div className="relative z-10">
-                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white capitalize tracking-wide">
-                    {courier}
-                  </h2>
-                  <p className="text-4xl font-bold text-indigo-700 dark:text-teal-300 mt-2">
-                    {courierCounts[courier]}
-                  </p>
-                </div>
+  <CardHeader className="relative z-10">
+    <CardTitle className="text-xl capitalize">{courier}</CardTitle>
+  </CardHeader>
+
+  <CardContent className="relative z-10">
+    <p className="text-4xl font-bold text-indigo-700 dark:text-teal-300">
+      {courierCounts[courier]}
+    </p>
+  </CardContent>
+</Card>
+
               </div>
             ))}
           </section>
