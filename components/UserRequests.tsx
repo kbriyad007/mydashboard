@@ -8,13 +8,8 @@ import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
 import { generateInvoice } from "../utils/generateInvoice";
 import { sendWhatsApp } from "../utils/sendWhatsApp";
-import {
-  FaFileInvoice,
-  FaWhatsapp,
-  FaMoon,
-  FaSun,
-  FaPhone,
-} from "react-icons/fa";
+
+import { FaPhone, FaFileInvoice, FaWhatsapp } from "react-icons/fa";
 
 type RequestData = {
   id: string;
@@ -33,7 +28,6 @@ const UserRequests = () => {
   const [requests, setRequests] = useState<RequestData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -56,8 +50,6 @@ const UserRequests = () => {
     fetchData();
   }, []);
 
-  const toggleTheme = () => setDarkMode((prev) => !prev);
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
@@ -74,46 +66,28 @@ const UserRequests = () => {
   });
 
   return (
-    <div className={darkMode ? "dark" : ""}>
-      <div className="max-w-[1100px] mx-auto mt-8 rounded-xl bg-white dark:bg-gray-900 shadow-md overflow-hidden">
-        {/* Header */}
-        <div className="flex justify-between items-center px-5 py-4 bg-gradient-to-r from-teal-500 to-indigo-600 dark:from-indigo-700 dark:to-purple-700">
-          <h2 className="text-lg md:text-xl font-semibold text-white">
-            User Requests
-          </h2>
-          <Button
-            onClick={toggleTheme}
-            variant="outline"
-            className="text-white text-sm px-3 py-2 hover:bg-gray-600 dark:hover:bg-gray-800 transition"
-            title="Toggle Theme"
-          >
-            {darkMode ? (
-              <div className="flex items-center gap-1">
-                <FaSun /> Light
-              </div>
-            ) : (
-              <div className="flex items-center gap-1">
-                <FaMoon /> Dark
-              </div>
-            )}
-          </Button>
+    <div>
+      <div className="max-w-[1100px] mx-auto mt-8 rounded-xl bg-white shadow-md overflow-hidden">
+        {/* Header Section */}
+        <div className="flex justify-between items-center px-5 py-4 bg-gradient-to-r from-teal-500 to-indigo-600">
+          <h2 className="text-lg md:text-xl font-semibold text-white">User Requests</h2>
         </div>
 
-        {/* Search */}
+        {/* Search Section */}
         <div className="px-5 py-4">
           <Input
             type="text"
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder="Search name, email, phone..."
-            className="w-full px-3 py-2 text-sm rounded-md bg-gray-100 dark:bg-gray-800 dark:text-white border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            className="w-full px-3 py-2 text-sm rounded-md bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
         </div>
 
-        {/* Table */}
+        {/* Table Section */}
         <div className="overflow-x-auto px-5 pb-5">
-          <table className="min-w-full text-sm text-left text-gray-800 dark:text-gray-200">
-            <thead className="uppercase bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+          <table className="min-w-full text-sm text-left text-gray-800">
+            <thead className="uppercase bg-gray-100 text-gray-600">
               <tr>
                 <th className="px-3 py-3">Customer</th>
                 <th className="px-3 py-3">Email</th>
@@ -133,34 +107,26 @@ const UserRequests = () => {
                 </tr>
               ) : error ? (
                 <tr>
-                  <td colSpan={7} className="text-red-600 text-center py-4">
-                    {error}
-                  </td>
+                  <td colSpan={7} className="text-red-600 text-center py-4">{error}</td>
                 </tr>
               ) : filteredRequests.length > 0 ? (
                 filteredRequests.map((req) => (
                   <tr
                     key={req.id}
-                    className="border-t border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                    className="border-t border-gray-100 hover:bg-gray-50 transition"
                   >
                     <td className="px-3 py-2">{req["Customer-Name"]}</td>
                     <td className="px-3 py-2">{req["User-Email"]}</td>
-                    <td className="px-3 py-2">
-                      {req["Phone-Number"] ? (
-                        <div className="flex items-center gap-1">
-                          <FaPhone className="text-gray-500 dark:text-gray-300 w-4 h-4" />
-                          {req["Phone-Number"]}
-                        </div>
-                      ) : (
-                        "N/A"
-                      )}
+                    <td className="px-3 py-2 flex items-center gap-2">
+                      <FaPhone className="text-gray-500" />
+                      {req["Phone-Number"] || "N/A"}
                     </td>
                     <td className="px-3 py-2">{req.Courier || "N/A"}</td>
                     <td className="px-3 py-2">{req.Quantity}</td>
                     <td className="px-3 py-2">
                       <Button
                         onClick={() => generateInvoice(req)}
-                        className="text-indigo-600 hover:text-indigo-800"
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1"
                         title="Generate Invoice"
                       >
                         <FaFileInvoice />
@@ -170,12 +136,9 @@ const UserRequests = () => {
                       {req["Phone-Number"] ? (
                         <Button
                           onClick={() =>
-                            sendWhatsApp(
-                              req["Phone-Number"]!,
-                              req["Customer-Name"]
-                            )
+                            sendWhatsApp(req["Phone-Number"]!, req["Customer-Name"])
                           }
-                          className="text-green-500 hover:text-green-700"
+                          className="bg-green-500 hover:bg-green-600 text-white px-2 py-1"
                           title="Send WhatsApp"
                         >
                           <FaWhatsapp />
