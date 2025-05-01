@@ -30,9 +30,9 @@ const Navbar = () => (
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>My Account</DropdownMenuItem>
-        <DropdownMenuItem>Order</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
-        <DropdownMenuItem>More</DropdownMenuItem>
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>Logout</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </header>
