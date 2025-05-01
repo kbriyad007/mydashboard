@@ -86,8 +86,9 @@ export default function UserDataPage() {
               <Card
                 key={courier}
                 onClick={() => setSelectedCourier(courier)}
-                className="cursor-pointer transition-all hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
+                className="cursor-pointer transition-all hover:scale-105 transform bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 rounded-2xl shadow-lg hover:shadow-2xl relative overflow-hidden"
               >
+                {/* Blurred Background Logo */}
                 <img
                   src={`/logo.png`}
                   alt={`${courier} logo`}
@@ -95,11 +96,13 @@ export default function UserDataPage() {
                 />
 
                 <CardHeader className="relative z-10">
-                  <CardTitle className="text-xl capitalize">{courier}</CardTitle>
+                  <CardTitle className="text-xl text-white font-semibold capitalize">
+                    {courier}
+                  </CardTitle>
                 </CardHeader>
 
                 <CardContent className="relative z-10">
-                  <p className="text-4xl font-bold text-indigo-700 dark:text-teal-300">
+                  <p className="text-4xl font-bold text-white">
                     {courierCounts[courier]}
                   </p>
                 </CardContent>
