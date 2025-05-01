@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Button } from "@/components/ui/button"; // Import ShadCN button component
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // Import ShadCN card components
+import { card, cardHeader, cardTitle, cardContent } from "@/components/ui/card"; // Import ShadCN card components
 import { Input } from "@/components/ui/input"; // Import ShadCN input component
 import LoadingSpinner from "./LoadingSpinner";
 import { generateInvoice } from "../utils/generateInvoice";
