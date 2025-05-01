@@ -11,8 +11,7 @@ export default function Home() {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="ml-[200px] -mr-2 flex-1 p-6">
-        <Button className="mb-4">Log Out</Button>
+      <Button size="lg" className="mb-4">Log Out</Button> // Large
         <UserRequests />
       </div>
     </div>
