@@ -1,53 +1,40 @@
+// components/ui/sidebar.tsx
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Home, User, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
-import { Users, Database, Grid } from "lucide-react"; // ✅ Replace Grid3X3 with Grid
 
 const Sidebar = () => {
   return (
-    <div className="fixed top-0 left-0 h-full w-48 bg-white border-r shadow-sm p-5 flex flex-col">
-      {/* Sidebar Header */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold tracking-wide text-center text-indigo-600">Dashboard</h2>
-      </div>
-
-      {/* Sidebar Navigation */}
-      <nav className="flex-1 space-y-2">
-        <ul className="space-y-1">
-          <li>
-            <Link
-              href="https://mydashboard-crqj.vercel.app/"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-indigo-50 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
-            >
-              <Users className="w-4 h-4" />
-              <span>User Requests</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              href="/user-data"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-indigo-50 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
-            >
-              <Database className="w-4 h-4" />
-              <span>User Data</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              href="/other-section"
-              className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-indigo-50 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
-            >
-              <Grid className="w-4 h-4" />
-              <span>Other Section</span>
-            </Link>
-          </li>
-        </ul>
+    <aside className="fixed top-0 left-0 h-full w-64 bg-white border-r shadow p-6 space-y-6">
+      <h2 className="text-xl font-bold">Dashboard</h2>
+      <nav className="space-y-4">
+        <Link href="/">
+          <Button variant="ghost" className="w-full justify-start">
+            <Home className="w-4 h-4 mr-2" />
+            Home
+          </Button>
+        </Link>
+        <Link href="/account">
+          <Button variant="ghost" className="w-full justify-start">
+            <User className="w-4 h-4 mr-2" />
+            My Account
+          </Button>
+        </Link>
+        <Link href="/settings">
+          <Button variant="ghost" className="w-full justify-start">
+            <Settings className="w-4 h-4 mr-2" />
+            Settings
+          </Button>
+        </Link>
+        <Button variant="ghost" className="w-full justify-start">
+          <LogOut className="w-4 h-4 mr-2" />
+          Logout
+        </Button>
       </nav>
-    </div>
+    </aside>
   );
 };
 
 export default Sidebar;
-
