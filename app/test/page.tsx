@@ -4,7 +4,7 @@
 
 import { Button } from "@/components/ui/button";
 
-export default function TestPage() {
+export default function page() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Button>Click me</Button>
