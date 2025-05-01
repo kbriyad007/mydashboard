@@ -8,8 +8,7 @@ import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
 import { generateInvoice } from "../utils/generateInvoice";
 import { sendWhatsApp } from "../utils/sendWhatsApp";
-
-import { FaPhone, FaFileInvoice, FaWhatsapp } from "react-icons/fa";
+import { FileText, MessageCircle, Phone } from "lucide-react"; // modern icons
 
 type RequestData = {
   id: string;
@@ -68,12 +67,12 @@ const UserRequests = () => {
   return (
     <div>
       <div className="max-w-[1100px] mx-auto mt-8 rounded-xl bg-white shadow-md overflow-hidden">
-        {/* Header Section */}
+        {/* Header */}
         <div className="flex justify-between items-center px-5 py-4 bg-gradient-to-r from-teal-500 to-indigo-600">
           <h2 className="text-lg md:text-xl font-semibold text-white">User Requests</h2>
         </div>
 
-        {/* Search Section */}
+        {/* Search */}
         <div className="px-5 py-4">
           <Input
             type="text"
@@ -84,7 +83,7 @@ const UserRequests = () => {
           />
         </div>
 
-        {/* Table Section */}
+        {/* Table */}
         <div className="overflow-x-auto px-5 pb-5">
           <table className="min-w-full text-sm text-left text-gray-800">
             <thead className="uppercase bg-gray-100 text-gray-600">
@@ -117,8 +116,8 @@ const UserRequests = () => {
                   >
                     <td className="px-3 py-2">{req["Customer-Name"]}</td>
                     <td className="px-3 py-2">{req["User-Email"]}</td>
-                    <td className="px-3 py-2 flex items-center gap-2">
-                      <FaPhone className="text-gray-500" />
+                    <td className="px-3 py-2 flex items-center gap-1">
+                      <Phone className="text-gray-500 w-4 h-4" />
                       {req["Phone-Number"] || "N/A"}
                     </td>
                     <td className="px-3 py-2">{req.Courier || "N/A"}</td>
@@ -129,7 +128,7 @@ const UserRequests = () => {
                         className="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1"
                         title="Generate Invoice"
                       >
-                        <FaFileInvoice />
+                        <FileText className="h-4 w-4" />
                       </Button>
                     </td>
                     <td className="px-3 py-2">
@@ -141,7 +140,7 @@ const UserRequests = () => {
                           className="bg-green-500 hover:bg-green-600 text-white px-2 py-1"
                           title="Send WhatsApp"
                         >
-                          <FaWhatsapp />
+                          <MessageCircle className="h-4 w-4" />
                         </Button>
                       ) : (
                         "N/A"
