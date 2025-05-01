@@ -10,6 +10,7 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card";
+import { PackageSearch, User2Icon, MailIcon, PhoneIcon, MapPin, ClipboardList } from "lucide-react";
 
 type RequestData = {
   id: string;
@@ -69,40 +70,32 @@ export default function UserDataPage() {
     : [];
 
   return (
-    <div className="flex bg-gradient-to-br from-[#f5f7fa] to-[#c3cfe2] dark:from-gray-900 dark:to-gray-800 min-h-screen">
+    <div className="flex bg-[#f9fafb] min-h-screen">
       <Sidebar />
-      <main className="ml-48 p-10 w-full">
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-10">
-          🚚 Courier Dashboard
+      <main className="ml-48 p-8 w-full">
+        <h1 className="text-4xl font-bold text-gray-800 mb-10 flex items-center gap-2">
+          <PackageSearch className="text-indigo-600" /> Courier Dashboard
         </h1>
 
         {loading ? (
           <div className="flex justify-center items-center py-32">
-            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {predefinedCouriers.map((courier) => (
               <Card
                 key={courier}
                 onClick={() => setSelectedCourier(courier)}
-                className="cursor-pointer transition-all hover:scale-105 transform bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 rounded-2xl shadow-lg hover:shadow-2xl relative overflow-hidden"
+                className="cursor-pointer transition-transform hover:scale-105 bg-white rounded-xl shadow-md hover:shadow-xl border border-gray-200"
               >
-                {/* Blurred Background Logo */}
-                <img
-                  src={`/logo.png`}
-                  alt={`${courier} logo`}
-                  className="absolute inset-0 w-full h-full object-contain opacity-10 blur-md pointer-events-none"
-                />
-
-                <CardHeader className="relative z-10">
-                  <CardTitle className="text-xl text-white font-semibold capitalize">
+                <CardHeader>
+                  <CardTitle className="text-lg font-semibold text-gray-700 capitalize">
                     {courier}
                   </CardTitle>
                 </CardHeader>
-
-                <CardContent className="relative z-10">
-                  <p className="text-4xl font-bold text-white">
+                <CardContent>
+                  <p className="text-3xl font-bold text-indigo-600">
                     {courierCounts[courier]}
                   </p>
                 </CardContent>
@@ -112,21 +105,21 @@ export default function UserDataPage() {
         )}
 
         {selectedCourier && (
-          <section className="mt-16">
-            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6 capitalize">
+          <section className="mt-12">
+            <h2 className="text-2xl font-semibold text-gray-800 capitalize mb-6">
               {selectedCourier} Orders
             </h2>
 
-            <div className="overflow-x-auto rounded-xl shadow-2xl backdrop-blur-md bg-white/60 dark:bg-gray-800/50">
-              <table className="min-w-full text-sm text-gray-800 dark:text-gray-100">
-                <thead className="bg-gray-100 dark:bg-gray-700 text-left uppercase tracking-wider text-gray-600 dark:text-gray-300 text-xs">
+            <div className="overflow-x-auto rounded-lg border bg-white shadow">
+              <table className="min-w-full text-sm text-gray-700">
+                <thead className="bg-gray-100 text-xs uppercase text-gray-600">
                   <tr>
-                    <th className="px-6 py-4">Customer</th>
-                    <th className="px-6 py-4">Email</th>
-                    <th className="px-6 py-4">Phone</th>
-                    <th className="px-6 py-4">Address</th>
-                    <th className="px-6 py-4">Qty</th>
-                    <th className="px-6 py-4">Description</th>
+                    <th className="px-6 py-3 text-left"><User2Icon className="inline w-4 h-4 mr-1" /> Customer</th>
+                    <th className="px-6 py-3 text-left"><MailIcon className="inline w-4 h-4 mr-1" /> Email</th>
+                    <th className="px-6 py-3 text-left"><PhoneIcon className="inline w-4 h-4 mr-1" /> Phone</th>
+                    <th className="px-6 py-3 text-left"><MapPin className="inline w-4 h-4 mr-1" /> Address</th>
+                    <th className="px-6 py-3 text-left"><ClipboardList className="inline w-4 h-4 mr-1" /> Qty</th>
+                    <th className="px-6 py-3 text-left">Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -134,7 +127,7 @@ export default function UserDataPage() {
                     filteredRequests.map((req) => (
                       <tr
                         key={req.id}
-                        className="hover:bg-gray-50 dark:hover:bg-gray-700 border-t border-gray-200 dark:border-gray-700 transition"
+                        className="border-t hover:bg-gray-50 transition"
                       >
                         <td className="px-6 py-4">{req["Customer-Name"]}</td>
                         <td className="px-6 py-4">{req["User-Email"]}</td>
@@ -146,7 +139,7 @@ export default function UserDataPage() {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={6} className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
+                      <td colSpan={6} className="px-6 py-6 text-center text-gray-500">
                         No orders found for <strong>{selectedCourier}</strong>.
                       </td>
                     </tr>
