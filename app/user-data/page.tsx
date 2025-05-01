@@ -79,29 +79,31 @@ export default function UserDataPage() {
         {loading ? (
           <div className="flex justify-center items-center py-32">
             <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          <Card
-  key={courier}
-  onClick={() => setSelectedCourier(courier)}
-  className="cursor-pointer transition-all hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
->
-  <img
-    src={`/logo.png`}
-    alt={`${courier} logo`}
-    className="absolute inset-0 w-full h-full object-contain opacity-10 blur-md pointer-events-none"
-  />
+          </div>
+        ) : (
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {predefinedCouriers.map((courier) => (
+              <Card
+                key={courier}
+                onClick={() => setSelectedCourier(courier)}
+                className="cursor-pointer transition-all hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
+              >
+                <img
+                  src={`/logo.png`}
+                  alt={`${courier} logo`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-10 blur-md pointer-events-none"
+                />
 
-  <CardHeader className="relative z-10">
-    <CardTitle className="text-xl capitalize">{courier}</CardTitle>
-  </CardHeader>
+                <CardHeader className="relative z-10">
+                  <CardTitle className="text-xl capitalize">{courier}</CardTitle>
+                </CardHeader>
 
-  <CardContent className="relative z-10">
-    <p className="text-4xl font-bold text-indigo-700 dark:text-teal-300">
-      {courierCounts[courier]}
-    </p>
-  </CardContent>
-</Card>
-
-              </div>
+                <CardContent className="relative z-10">
+                  <p className="text-4xl font-bold text-indigo-700 dark:text-teal-300">
+                    {courierCounts[courier]}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
           </section>
         )}
