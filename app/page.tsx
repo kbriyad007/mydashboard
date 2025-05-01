@@ -1,7 +1,7 @@
 "use client";
 
 import Sidebar from "@/components/Sidebar"; // ✅ This will be used
-import UserRequests from "@components/UserRequests";
+import UserRequests from "../components/UserRequests";
 
 import { Button } from "@/components/ui/button";
 import {
