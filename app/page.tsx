@@ -14,6 +14,7 @@ export default function Home() {
       <div className="ml-[200px] -mr-2 flex-1 p-6">
         <Button size="lg" className="mb-4">Log Out</Button>
         {false && (<UserRequests />)}
+        {false && (<Sidebar />)}
 
       </div>
     </div>
