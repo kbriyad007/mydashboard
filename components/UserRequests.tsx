@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SearchIcon, FileTextIcon, MessageCircleIcon, PhoneIcon } from "lucide-react";
 import LoadingSpinner from "./LoadingSpinner";
 import { generateInvoice } from "../utils/generateInvoice";
 import { sendWhatsApp } from "../utils/sendWhatsApp";
-import { FileText, MessageCircle, Phone } from "lucide-react"; // modern icons
 
 type RequestData = {
   id: string;
@@ -21,6 +22,20 @@ type RequestData = {
   Quantity: number;
   Time?: { seconds: number; nanoseconds: number };
   "Product-Links"?: string[];
+};
+
+const highlightMatch = (text: string, query: string) => {
+  if (!query) return text;
+  const parts = text.split(new RegExp(`(${query})`, "gi"));
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase() ? (
+      <mark key={i} className="bg-yellow-200 dark:bg-yellow-500 rounded px-1">
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  );
 };
 
 const UserRequests = () => {
@@ -65,100 +80,98 @@ const UserRequests = () => {
   });
 
   return (
-    <div>
-      <div className="max-w-[1100px] mx-auto mt-8 rounded-xl bg-white shadow-md overflow-hidden">
-        {/* Header */}
-        <div className="flex justify-between items-center px-5 py-4 bg-gradient-to-r from-teal-500 to-indigo-600">
-          <h2 className="text-lg md:text-xl font-semibold text-white">User Requests</h2>
-        </div>
+    <div className="max-w-6xl mx-auto mt-8">
+      <Card>
+        <CardHeader className="flex items-center justify-between border-b">
+          <CardTitle className="text-xl font-semibold">User Requests</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-2">
+            <SearchIcon className="text-gray-500" size={18} />
+            <Input
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search name, email, phone..."
+              className="w-full max-w-md"
+            />
+          </div>
 
-        {/* Search */}
-        <div className="px-5 py-4">
-          <Input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder="Search name, email, phone..."
-            className="w-full px-3 py-2 text-sm rounded-md bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          />
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto px-5 pb-5">
-          <table className="min-w-full text-sm text-left text-gray-800">
-            <thead className="uppercase bg-gray-100 text-gray-600">
-              <tr>
-                <th className="px-3 py-3">Customer</th>
-                <th className="px-3 py-3">Email</th>
-                <th className="px-3 py-3">Phone</th>
-                <th className="px-3 py-3">Courier</th>
-                <th className="px-3 py-3">Qty</th>
-                <th className="px-3 py-3">Invoice</th>
-                <th className="px-3 py-3">WhatsApp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
+          <div className="overflow-x-auto rounded-md border">
+            <table className="w-full text-sm text-left">
+              <thead className="bg-gray-100 text-gray-600">
                 <tr>
-                  <td colSpan={7} className="py-6 text-center">
-                    <LoadingSpinner />
-                  </td>
+                  <th className="px-4 py-2">Customer</th>
+                  <th className="px-4 py-2">Email</th>
+                  <th className="px-4 py-2">Phone</th>
+                  <th className="px-4 py-2">Courier</th>
+                  <th className="px-4 py-2">Qty</th>
+                  <th className="px-4 py-2">Invoice</th>
+                  <th className="px-4 py-2">WhatsApp</th>
                 </tr>
-              ) : error ? (
-                <tr>
-                  <td colSpan={7} className="text-red-600 text-center py-4">{error}</td>
-                </tr>
-              ) : filteredRequests.length > 0 ? (
-                filteredRequests.map((req) => (
-                  <tr
-                    key={req.id}
-                    className="border-t border-gray-100 hover:bg-gray-50 transition"
-                  >
-                    <td className="px-3 py-2">{req["Customer-Name"]}</td>
-                    <td className="px-3 py-2">{req["User-Email"]}</td>
-                    <td className="px-3 py-2 flex items-center gap-1">
-                      <Phone className="text-gray-500 w-4 h-4" />
-                      {req["Phone-Number"] || "N/A"}
-                    </td>
-                    <td className="px-3 py-2">{req.Courier || "N/A"}</td>
-                    <td className="px-3 py-2">{req.Quantity}</td>
-                    <td className="px-3 py-2">
-                      <Button
-                        onClick={() => generateInvoice(req)}
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1"
-                        title="Generate Invoice"
-                      >
-                        <FileText className="h-4 w-4" />
-                      </Button>
-                    </td>
-                    <td className="px-3 py-2">
-                      {req["Phone-Number"] ? (
-                        <Button
-                          onClick={() =>
-                            sendWhatsApp(req["Phone-Number"]!, req["Customer-Name"])
-                          }
-                          className="bg-green-500 hover:bg-green-600 text-white px-2 py-1"
-                          title="Send WhatsApp"
-                        >
-                          <MessageCircle className="h-4 w-4" />
-                        </Button>
-                      ) : (
-                        "N/A"
-                      )}
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={7} className="py-6 text-center">
+                      <LoadingSpinner />
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={7} className="text-center text-gray-500 py-5">
-                    No requests found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                ) : error ? (
+                  <tr>
+                    <td colSpan={7} className="text-red-600 text-center py-4">{error}</td>
+                  </tr>
+                ) : filteredRequests.length > 0 ? (
+                  filteredRequests.map((req) => {
+                    const query = searchQuery.trim();
+                    return (
+                      <tr key={req.id} className="border-t hover:bg-gray-50">
+                        <td className="px-4 py-2">{highlightMatch(req["Customer-Name"], query)}</td>
+                        <td className="px-4 py-2">{highlightMatch(req["User-Email"], query)}</td>
+                        <td className="px-4 py-2 flex items-center gap-1">
+                          <PhoneIcon className="w-4 h-4 text-gray-500" />
+                          {highlightMatch(req["Phone-Number"] || "N/A", query)}
+                        </td>
+                        <td className="px-4 py-2">{highlightMatch(req.Courier || "N/A", query)}</td>
+                        <td className="px-4 py-2">{req.Quantity}</td>
+                        <td className="px-4 py-2">
+                          <Button
+                            onClick={() => generateInvoice(req)}
+                            variant="ghost"
+                            className="text-blue-600 hover:text-blue-800"
+                          >
+                            <FileTextIcon className="w-5 h-5" />
+                          </Button>
+                        </td>
+                        <td className="px-4 py-2">
+                          {req["Phone-Number"] ? (
+                            <Button
+                              onClick={() =>
+                                sendWhatsApp(req["Phone-Number"]!, req["Customer-Name"])
+                              }
+                              variant="ghost"
+                              className="text-green-600 hover:text-green-800"
+                            >
+                              <MessageCircleIcon className="w-5 h-5" />
+                            </Button>
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={7} className="text-center text-gray-500 py-5">
+                      No requests found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
