@@ -1,6 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 const Sidebar = () => (
   <aside className="fixed top-0 left-0 h-full w-60 bg-white border-r p-4 shadow">
@@ -12,8 +20,21 @@ const Sidebar = () => (
 const Navbar = () => (
   <header className="w-full h-16 bg-white shadow flex items-center justify-between px-6 border-b">
     <h1 className="text-lg font-medium">Navbar</h1>
-    {/* Add buttons, profile icon, etc. here */}
-    <Button variant="outline">Profile</Button>
+    
+    {/* Dropdown Menu */}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Menu</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>My Account</DropdownMenuItem>
+        <DropdownMenuItem>Order</DropdownMenuItem>
+        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <DropdownMenuItem>More</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   </header>
 );
 
