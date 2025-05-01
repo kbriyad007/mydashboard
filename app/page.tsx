@@ -1,17 +1,8 @@
-"use client";
+'use client';
 
 import UserRequests from "../components/UserRequests";
 import Sidebar from "../components/Sidebar";
-import { Button } from "@/components/ui/button"
-
-export default function Home() {
-  return (
-    <div>
-      <Button>Click me</Button>
-    </div>
-  )
-}
-
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
@@ -19,10 +10,9 @@ export default function Home() {
       {/* Sidebar */}
       <Sidebar />
 
-      
       {/* Main Content */}
       <div className="ml-[200px] -mr-2 flex-1 p-6">
-        {/* 👆 ml matches sidebar width exactly (200px), mr adds small right margin */}
+        <Button className="mb-4">Click me</Button>
         <UserRequests />
       </div>
     </div>
