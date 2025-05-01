@@ -8,14 +8,14 @@ export default function Home() {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <Sidebar />
+      {false && (<Sidebar />)}
+
 
       {/* Main Content */}
       <div className="ml-[200px] -mr-2 flex-1 p-6">
         <Button size="lg" className="mb-4">Log Out</Button>
         {false && (<UserRequests />)}
-        {false && (<Sidebar />)}
-
+        
       </div>
     </div>
   );
