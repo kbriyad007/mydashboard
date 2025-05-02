@@ -45,7 +45,7 @@ const OrderTable = () => {
                 <FaPhoneAlt className="mr-2 text-blue-500 inline-block" /> {order.phone}
               </td>
               <td className="py-2 px-4 border-b">
-                <FaDollarSign className="mr-2 text-green-500 inline-block" /> ${order.price}
+                <FaDollarSign className="mr-2 text-green-500 inline-block" /> ৳{order.price}
               </td>
               <td className="py-2 px-4 border-b">{order.quantity}</td>
               <td className="py-2 px-4 border-b">
