@@ -1,7 +1,7 @@
 // components/OrderTable.tsx
 
 import React from "react";
-import { FaPhoneAlt, FaCalendarAlt, FaDollarSign } from "react-icons/fa"; // Import necessary icons
+import { FaPhoneAlt, FaCalendarAlt} from "react-icons/fa"; // Import necessary icons
 
 // Sample order data with more product names
 const orders = [
