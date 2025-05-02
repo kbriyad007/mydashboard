@@ -3,7 +3,7 @@
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import AppBarChart from "@/components/AppBarChart";
-import Card from "@/components/Card"; // Import the Card component
+import Card from "@/components/CardList"; // Import the Card component
 
 export default function Home() {
   return (
