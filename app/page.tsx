@@ -26,7 +26,7 @@ export default function Home() {
               <Card />
             </div>
             <div className="bg-white p-4 rounded shadow">
-              <Card />
+              <OrderTable/>
             </div>
             <div className="bg-white p-4 rounded shadow">Box 4</div>
             <div className="bg-white p-4 rounded shadow">Box 5</div>
