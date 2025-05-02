@@ -1,7 +1,7 @@
 "use client";
 
 import Sidebar from "@/components/Sidebar"; // ✅ This will be used
-import UserRequests from "../components/UserRequests";
+
 
 import { Button } from "@/components/ui/button";
 import {
@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
-      <UserRequests />
+  
 
       <div className="ml-60 flex-1 flex flex-col">
         <Navbar />
