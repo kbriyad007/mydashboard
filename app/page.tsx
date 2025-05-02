@@ -2,6 +2,8 @@
 
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import AppBarChart from "@/components/AppBarChart";
+
 
 export default function Home() {
   return (
