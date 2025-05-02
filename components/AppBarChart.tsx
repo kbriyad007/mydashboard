@@ -1,6 +1,17 @@
 "use client";
 import { type ChartConfig } from "@/components/ui/chart"
 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -20,6 +31,7 @@ const chartData = [
   { month: "May", desktop: 209, mobile: 130 },
   { month: "June", desktop: 214, mobile: 140 },
 ];
+
 
 
 const AppBarChart = () => {
