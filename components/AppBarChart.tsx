@@ -1,6 +1,6 @@
 "use client";
 import { type ChartConfig } from "@/components/ui/chart"
-import ChartContainer from "@/components/ui/chart-container";
+
 
 import {
   BarChart,
