@@ -34,15 +34,15 @@ const OrderTable = () => {
           {orders.map((order, index) => (
             <tr key={index} className="hover:bg-gray-50">
               <td className="py-2 px-4 border-b">{order.name}</td>
-              <td className="py-2 px-4 border-b flex items-center">
-                <FaPhoneAlt className="mr-2 text-blue-500" /> {order.phone}
+              <td className="py-2 px-4 border-b">
+                <FaPhoneAlt className="mr-2 text-blue-500 inline-block" /> {order.phone}
               </td>
-              <td className="py-2 px-4 border-b flex items-center">
-                <FaDollarSign className="mr-2 text-green-500" /> ${order.price}
+              <td className="py-2 px-4 border-b">
+                <FaDollarSign className="mr-2 text-green-500 inline-block" /> ${order.price}
               </td>
               <td className="py-2 px-4 border-b">{order.quantity}</td>
-              <td className="py-2 px-4 border-b flex items-center">
-                <FaCalendarAlt className="mr-2 text-yellow-500" /> {order.date}
+              <td className="py-2 px-4 border-b">
+                <FaCalendarAlt className="mr-2 text-yellow-500 inline-block" /> {order.date}
               </td>
             </tr>
           ))}
