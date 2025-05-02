@@ -1,6 +1,4 @@
 "use client";
-import { type ChartConfig } from "@/components/ui/chart"
-
 
 import {
   BarChart,
@@ -12,18 +10,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "#2563eb",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#60a5fa",
-  },
-} satisfies ChartConfig
-
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -33,19 +19,21 @@ const chartData = [
   { month: "June", desktop: 214, mobile: 140 },
 ];
 
-
-
 const AppBarChart = () => {
   return (
-    <div className=''>
-      <h1>Total Revinue</h1>
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-      <BarChart accessibilityLayer data={chartData}>
-        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-        <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-      </BarChart>
-    </ChartContainer>
-      </div>
+    <div className="w-full h-[300px] bg-white p-4 rounded shadow">
+      <h2 className="text-lg font-semibold mb-4">Total Revenue</h2>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="desktop" fill="#2563eb" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="mobile" fill="#60a5fa" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
