@@ -23,11 +23,11 @@ const OrderTable = () => {
       <table className="min-w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-100">
-            <th className="py-2 px-4 border-b">Name</th>
-            <th className="py-2 px-4 border-b">Phone</th>
-            <th className="py-2 px-4 border-b">Price</th>
-            <th className="py-2 px-4 border-b">Quantity</th>
-            <th className="py-2 px-4 border-b">Date</th>
+            <th className="py-2 px-4 border-b text-left">Name</th>
+            <th className="py-2 px-4 border-b text-left">Phone</th>
+            <th className="py-2 px-4 border-b text-left">Price</th>
+            <th className="py-2 px-4 border-b text-left">Quantity</th>
+            <th className="py-2 px-4 border-b text-left">Date</th>
           </tr>
         </thead>
         <tbody>
