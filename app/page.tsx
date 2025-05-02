@@ -4,6 +4,8 @@ import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList"; // Import the Card component
+import OrderTable from "@/components/OrderTable"; // Ensure correct import path
+
 
 export default function Home() {
   return (
