@@ -32,7 +32,7 @@ const AppBarChart = () => {
         <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
       </BarChart>
     </ChartContainer>
-      </div>;
+      </div>
   );
 };
 
