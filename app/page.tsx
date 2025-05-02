@@ -25,7 +25,7 @@ export default function Home() {
               {/* Add the Card component inside Box 2 */}
               <Card />
             </div>
-            <div className="bg-white p-4 rounded shadow">
+            <div className="bg-white p-4 rounded shadow col-span-3">
               <OrderTable/>
             </div>
             <div className="bg-white p-4 rounded shadow">Box 4</div>
