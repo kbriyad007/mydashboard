@@ -14,9 +14,12 @@ export default function Home() {
         <main className="p-6">
           <h2 className="text-2xl font-semibold mb-4">Dashboard Content</h2>
           <div className="grid grid-cols-3 gap-4">
-    <div className="bg-white p-4 rounded shadow">Box 1</div>
-    <div className="bg-white p-4 rounded shadow">Box 2</div>
-    <div className="bg-white p-4 rounded shadow">Box 3</div>
+             <div className="bg-white p-4 rounded shadow">Box 1</div>
+             <div className="bg-white p-4 rounded shadow">Box 2</div>
+             <div className="bg-white p-4 rounded shadow">Box 3</div>
+             <div className="bg-white p-4 rounded shadow">Box 1</div>
+             <div className="bg-white p-4 rounded shadow">Box 2</div>
+             <div className="bg-white p-4 rounded shadow">Box 3</div>
   </div>
         </main>
       </div>
