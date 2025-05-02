@@ -1,8 +1,6 @@
 "use client";
 
 import Sidebar from "@/components/Sidebar"; // ✅ This will be used
-
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
