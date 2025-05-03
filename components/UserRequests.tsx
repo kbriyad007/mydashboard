@@ -1,4 +1,3 @@
-// components/OrderTable.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -107,7 +106,7 @@ const OrderTable = () => {
               </td>
             </tr>
           ) : filteredOrders.length > 0 ? (
-            filteredOrders.map((order, index) => (
+            filteredOrders.map((order) => (
               <tr key={order.id} className="hover:bg-gray-50 border-t">
                 <td className="py-2 px-4 border-b">
                   {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
