@@ -160,3 +160,4 @@ export const generateInvoice = (request: any) => {
 
   invoiceWindow.document.close();
 };
+
