@@ -1,7 +1,6 @@
 "use client";
 
 import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList"; // Import the Card component
 import UserRequests from "@/components/UserRequests"; // Ensure correct import path
@@ -13,7 +12,7 @@ export default function Home() {
       <Sidebar />
 
       <div className="ml-60 flex-1 flex flex-col">
-        <Navbar />
+   
 
         <main className="p-6">
           <div className="grid grid-cols-3 gap-4">
