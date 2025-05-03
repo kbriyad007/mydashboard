@@ -8,7 +8,6 @@ export const generateInvoice = (request: any) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Invoice</title>
-        <link href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css" rel="stylesheet">
         <style>
           * {
             margin: 0;
@@ -98,8 +97,10 @@ export const generateInvoice = (request: any) => {
             background-color: #6366f1;
             transform: scale(1.05);
           }
-          .btn-print i {
-            font-size: 20px;
+          .btn-print svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
           }
           @media print {
             .btn-print {
@@ -135,13 +136,16 @@ export const generateInvoice = (request: any) => {
             </div>
           </div>
           <div class="invoice-summary">
-            <p><strong>Description:</strong> ${request.Description}</p>
+            <p><strong>Description:</strong> ${request.Description || "N/A"}</p>
             <p><strong>Invoice Date:</strong> ${new Date().toLocaleDateString()}</p>
           </div>
           <div class="footer">
             <p>Thank you for your business!</p>
             <a class="btn-print" href="javascript:window.print()">
-              <i class="lucide lucide-printer"></i> Print Invoice
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-2 0H8v4h8v-4z" />
+              </svg>
+              Print Invoice
             </a>
           </div>
         </div>
