@@ -4,7 +4,7 @@ import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList"; // Import the Card component
-import OrderTable from "@/components/OrderTable"; // Ensure correct import path
+import UserRequests from "@/components/UserRequests"; // Ensure correct import path
 
 
 export default function Home() {
@@ -25,7 +25,7 @@ export default function Home() {
               <Card />
             </div>
             <div className="bg-white p-4 rounded shadow col-span-3">
-              <OrderTable/>
+              <UserRequests/>
             </div>
             <div className="bg-white p-4 rounded shadow">Box 4</div>
             <div className="bg-white p-4 rounded shadow">Box 5</div>
