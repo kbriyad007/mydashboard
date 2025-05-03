@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { FaPhoneAlt, FaCalendarAlt } from "react-icons/fa";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, FileTextIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
+import { generateInvoice } from "../utils/generateInvoice";
 
 type OrderData = {
   id: string;
@@ -96,12 +97,13 @@ const OrderTable = () => {
             <th className="py-2 px-4 border-b text-left">Email</th>
             <th className="py-2 px-4 border-b text-left">Qty</th>
             <th className="py-2 px-4 border-b text-left">Date</th>
+            <th className="py-2 px-4 border-b text-left">Invoice</th>
           </tr>
         </thead>
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan={6} className="py-6 text-center">
+              <td colSpan={7} className="py-6 text-center">
                 <LoadingSpinner />
               </td>
             </tr>
@@ -126,11 +128,20 @@ const OrderTable = () => {
                   <FaCalendarAlt className="mr-2 text-yellow-500 inline-block" />
                   {formatDate(order.Time)}
                 </td>
+                <td className="py-2 px-4 border-b">
+                  <button
+                    onClick={() => generateInvoice(order)}
+                    className="text-blue-600 hover:text-blue-800 transition"
+                    title="Generate Invoice"
+                  >
+                    <FileTextIcon className="w-5 h-5" />
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={6} className="text-center text-gray-500 py-5">
+              <td colSpan={7} className="text-center text-gray-500 py-5">
                 No orders found.
               </td>
             </tr>
@@ -142,3 +153,4 @@ const OrderTable = () => {
 };
 
 export default OrderTable;
+
