@@ -8,6 +8,8 @@ export const generateInvoice = (request: any) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Invoice</title>
+        <link href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
         <style>
           * {
             margin: 0;
@@ -15,28 +17,30 @@ export const generateInvoice = (request: any) => {
             box-sizing: border-box;
           }
           body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+            color: #4a5568;
+            line-height: 1.6;
           }
           .container {
-            width: 70%;
+            width: 80%;
+            max-width: 1200px;
             margin: 40px auto;
             background-color: #ffffff;
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+            border-radius: 16px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
           }
           h1 {
-            font-size: 40px;
-            color: #1e293b;
+            font-size: 36px;
+            color: #1a202c;
             text-align: center;
             font-weight: 700;
             margin-bottom: 20px;
           }
           h2 {
             font-size: 24px;
-            color: #334155;
+            color: #2d3748;
             text-align: center;
             margin-bottom: 20px;
             font-weight: 500;
@@ -49,14 +53,13 @@ export const generateInvoice = (request: any) => {
           }
           .invoice-details div {
             padding: 20px;
-            background-color: #f1f5f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            background-color: #edf2f7;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
           }
           .invoice-details p {
             font-size: 16px;
-            line-height: 1.5;
-            color: #475569;
+            color: #2d3748;
             margin-bottom: 10px;
           }
           .invoice-summary {
@@ -66,14 +69,13 @@ export const generateInvoice = (request: any) => {
           }
           .invoice-summary p {
             font-size: 18px;
-            line-height: 1.6;
-            color: #475569;
+            color: #2d3748;
             margin-bottom: 12px;
           }
           .footer {
             margin-top: 40px;
             text-align: center;
-            color: #94a3b8;
+            color: #718096;
             font-size: 14px;
           }
           .btn-print {
@@ -81,20 +83,20 @@ export const generateInvoice = (request: any) => {
             align-items: center;
             justify-content: center;
             margin: 30px auto;
-            padding: 12px 25px;
-            background-color: #4f46e5;
+            padding: 12px 28px;
+            background-color: #5a67d8;
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             border-radius: 8px;
             text-align: center;
             text-decoration: none;
-            gap: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            gap: 10px;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
           }
           .btn-print:hover {
-            background-color: #6366f1;
+            background-color: #434190;
             transform: scale(1.05);
           }
           .btn-print svg {
@@ -160,4 +162,5 @@ export const generateInvoice = (request: any) => {
 
   invoiceWindow.document.close();
 };
+
 
