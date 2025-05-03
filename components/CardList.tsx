@@ -1,20 +1,44 @@
 // components/Card.tsx
+"use client";
 
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { db } from "../firebase";
 
-// Sample customer data
-const customerData = [
-  { name: "John Doe", email: "johndoe@example.com", phone: "123-456-7890" },
-  { name: "Jane Smith", email: "janesmith@example.com", phone: "234-567-8901" },
-  { name: "Alice Johnson", email: "alicej@example.com", phone: "345-678-9012" },
-  { name: "Bob Brown", email: "bobbrown@example.com", phone: "456-789-0123" },
-  { name: "Charlie Lee", email: "charliel@example.com", phone: "567-890-1234" },
-];
+type Customer = {
+  name: string;
+  email: string;
+  phone: string;
+};
 
-// Card component that displays the latest 8 customer names
 const Card = () => {
-  // Take the first 8 customers from the list
-  const latestCustomers = customerData.slice(0, 8);
+  const [latestCustomers, setLatestCustomers] = useState<Customer[]>([]);
+
+  useEffect(() => {
+    const fetchLatestCustomers = async () => {
+      try {
+        const q = query(
+          collection(db, "user_request"),
+          orderBy("Time", "desc"),
+          limit(5)
+        );
+        const snapshot = await getDocs(q);
+        const customers: Customer[] = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            name: data["Customer-Name"] || "Unknown",
+            email: data["User-Email"] || "N/A",
+            phone: data["Phone-Number"] || "N/A",
+          };
+        });
+        setLatestCustomers(customers);
+      } catch (error) {
+        console.error("Failed to fetch latest customers:", error);
+      }
+    };
+
+    fetchLatestCustomers();
+  }, []);
 
   return (
     <div className="w-full p-4 bg-white rounded shadow-md">
