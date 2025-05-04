@@ -7,6 +7,7 @@ import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
 import { Eye, EyeOff } from "lucide-react";
+import ReactTooltip from "react-tooltip"; // Import react-tooltip
 
 export default function Home() {
   const [showChart, setShowChart] = useState(true);
@@ -30,14 +31,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    title="Hide chart"
+                    data-tip="Hide chart" // Added tooltip
                     onClick={() => setShowChart(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    title="Show chart"
+                    data-tip="Show chart" // Added tooltip
                     onClick={() => setShowChart(true)}
                   />
                 )}
@@ -52,14 +53,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    title="Hide card"
+                    data-tip="Hide card" // Added tooltip
                     onClick={() => setShowCard(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    title="Show card"
+                    data-tip="Show card" // Added tooltip
                     onClick={() => setShowCard(true)}
                   />
                 )}
@@ -74,14 +75,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    title="Hide requests"
+                    data-tip="Hide requests" // Added tooltip
                     onClick={() => setShowRequests(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    title="Show requests"
+                    data-tip="Show requests" // Added tooltip
                     onClick={() => setShowRequests(true)}
                   />
                 )}
@@ -96,14 +97,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    title="Hide top products"
+                    data-tip="Hide top products" // Added tooltip
                     onClick={() => setShowTopProducts(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    title="Show top products"
+                    data-tip="Show top products" // Added tooltip
                     onClick={() => setShowTopProducts(true)}
                   />
                 )}
@@ -114,7 +115,11 @@ export default function Home() {
             {/* Box 5 */}
             <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
-                <Eye size={16} className={iconStyle} title="Box 5" />
+                <Eye
+                  size={16}
+                  className={iconStyle}
+                  data-tip="Box 5" // Added tooltip
+                />
               </div>
               Box 5
             </div>
@@ -122,13 +127,19 @@ export default function Home() {
             {/* Box 6 */}
             <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
-                <Eye size={16} className={iconStyle} title="Box 6" />
+                <Eye
+                  size={16}
+                  className={iconStyle}
+                  data-tip="Box 6" // Added tooltip
+                />
               </div>
               Box 6
             </div>
           </div>
         </main>
       </div>
+
+      <ReactTooltip /> {/* Tooltip container */}
     </div>
   );
 }
