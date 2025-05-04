@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 
 type Customer = {
@@ -12,16 +12,13 @@ type Customer = {
 };
 
 const Card = () => {
-  const [latestCustomers, setLatestCustomers] = useState<Customer[]>([]);
+  const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
+  const [visibleCount, setVisibleCount] = useState(5);
 
   useEffect(() => {
-    const fetchLatestCustomers = async () => {
+    const fetchCustomers = async () => {
       try {
-        const q = query(
-          collection(db, "user_request"),
-          orderBy("Time", "desc"),
-          limit(10) // Increased limit from 5 to 10
-        );
+        const q = query(collection(db, "user_request"), orderBy("Time", "desc"));
         const snapshot = await getDocs(q);
         const customers: Customer[] = snapshot.docs.map((doc) => {
           const data = doc.data();
@@ -31,26 +28,41 @@ const Card = () => {
             phone: data["Phone-Number"] || "N/A",
           };
         });
-        setLatestCustomers(customers);
+        setAllCustomers(customers);
       } catch (error) {
-        console.error("Failed to fetch latest customers:", error);
+        console.error("Failed to fetch customers:", error);
       }
     };
 
-    fetchLatestCustomers();
+    fetchCustomers();
   }, []);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 5);
+  };
+
+  const visibleCustomers = allCustomers.slice(0, visibleCount);
 
   return (
     <div className="w-full p-4 bg-white rounded-xl shadow-sm">
       <h2 className="text-lg font-semibold mb-3 text-gray-800">Latest Customers</h2>
       <div className="space-y-2">
-        {latestCustomers.map((customer, index) => (
+        {visibleCustomers.map((customer, index) => (
           <div key={index} className="p-2 border-b last:border-none">
             <p className="text-sm font-medium text-gray-900">{customer.name}</p>
             <p className="text-xs text-gray-600">{customer.email}</p>
           </div>
         ))}
       </div>
+
+      {visibleCount < allCustomers.length && (
+        <button
+          onClick={handleLoadMore}
+          className="mt-4 text-sm text-blue-600 hover:underline focus:outline-none"
+        >
+          Load More
+        </button>
+      )}
     </div>
   );
 };
