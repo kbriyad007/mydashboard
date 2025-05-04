@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { FaCalendarAlt } from "react-icons/fa";
 import { SearchIcon, FileTextIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
-import { FaCalendarAlt } from "react-icons/fa";
 import { generateInvoice } from "../utils/generateInvoice";
 
 type OrderData = {
@@ -94,6 +94,8 @@ const OrderTable = () => {
           <tr className="bg-gray-100">
             <th className="py-2 px-4 border-b text-left">Product</th>
             <th className="py-2 px-4 border-b text-left">Name</th>
+            <th className="py-2 px-4 border-b text-left">Phone</th>
+            <th className="py-2 px-4 border-b text-left">Email</th>
             <th className="py-2 px-4 border-b text-left">Qty</th>
             <th className="py-2 px-4 border-b text-left">Date</th>
             <th className="py-2 px-4 border-b text-left">Invoice</th>
@@ -102,7 +104,7 @@ const OrderTable = () => {
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan={5} className="py-6 text-center">
+              <td colSpan={7} className="py-6 text-center">
                 <LoadingSpinner />
               </td>
             </tr>
@@ -115,10 +117,19 @@ const OrderTable = () => {
                 <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => setSelectedOrder(order)}
-                    className="text-gray-800 hover:text-primary transition-colors duration-200 font-medium underline-offset-2 hover:underline"
+                    className="text-blue-600 font-extrabold text-xl shadow-lg hover:scale-105 transform transition-all"
+                    style={{
+                      textShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
+                    }}
                   >
                     {highlightMatch(order["Customer-Name"], searchQuery)}
                   </button>
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {highlightMatch(order["User-Email"], searchQuery)}
                 </td>
                 <td className="py-2 px-4 border-b">{order.Quantity}</td>
                 <td className="py-2 px-4 border-b">
@@ -138,7 +149,7 @@ const OrderTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="text-center text-gray-500 py-5">
+              <td colSpan={7} className="text-center text-gray-500 py-5">
                 No orders found.
               </td>
             </tr>
@@ -158,22 +169,28 @@ const OrderTable = () => {
             </button>
             <h3 className="text-lg font-semibold mb-4">Customer Info</h3>
             <p className="mb-2">
-              <strong>Name:</strong> {selectedOrder["Customer-Name"]}
+              <strong>Name:</strong> 
+              <a 
+                href={`mailto:${selectedOrder["User-Email"]}`}
+                className="text-blue-600 hover:text-blue-800"
+              >
+                {selectedOrder["Customer-Name"]}
+              </a>
             </p>
             <p className="mb-2">
-              <strong>Email:</strong>{" "}
-              <a
+              <strong>Email:</strong> 
+              <a 
                 href={`mailto:${selectedOrder["User-Email"]}`}
-                className="text-blue-600 hover:underline"
+                className="text-blue-600 hover:text-blue-800"
               >
                 {selectedOrder["User-Email"]}
               </a>
             </p>
             <p className="mb-2">
-              <strong>Phone:</strong>{" "}
-              <a
+              <strong>Phone:</strong> 
+              <a 
                 href={`tel:${selectedOrder["Phone-Number"]}`}
-                className="text-blue-600 hover:underline"
+                className="text-blue-600 hover:text-blue-800"
               >
                 {selectedOrder["Phone-Number"] || "N/A"}
               </a>
