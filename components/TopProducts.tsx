@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { HiOutlineShoppingCart } from "react-icons/hi"; // Shopping cart icon
 
 type Request = {
   name: string;
@@ -15,8 +16,8 @@ export default function TopProducts() {
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const snapshot = await getDocs(collection(db, "user_request")); // ✅ Correct collection name here
-      
+      const snapshot = await getDocs(collection(db, "user_request"));
+
       const data: Request[] = snapshot.docs.map((doc) => {
         const raw = doc.data();
         return {
@@ -26,7 +27,6 @@ export default function TopProducts() {
         };
       });
 
-      // Aggregate quantities per name+product combo
       const map = new Map<string, Request>();
 
       for (const item of data) {
@@ -44,7 +44,7 @@ export default function TopProducts() {
 
       const sorted = Array.from(map.values())
         .sort((a, b) => b.quantity - a.quantity)
-        .slice(0, 5); // Top 5
+        .slice(0, 5);
 
       setTopProducts(sorted);
     };
@@ -53,17 +53,24 @@ export default function TopProducts() {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-lg font-semibold mb-2">Top 5 Products by Quantity</h2>
+    <div className="p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Top 5 Products by Quantity</h2>
+
       {topProducts.length > 0 ? (
-        <ul className="text-sm text-gray-700 space-y-1">
+        <div className="space-y-4">
           {topProducts.map((item, idx) => (
-            <li key={idx} className="flex justify-between">
-              <span>{item.name} - {item.product}</span>
-              <span className="font-medium">{item.quantity}</span>
-            </li>
+            <div
+              key={idx}
+              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-md hover:bg-gray-100 transition-all"
+            >
+              <div className="flex items-center space-x-4">
+                <HiOutlineShoppingCart className="text-xl text-blue-500" />
+                <div className="text-lg font-semibold text-gray-700">{item.product}</div>
+              </div>
+              <div className="font-medium text-gray-900">{item.quantity}</div>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p className="text-sm text-gray-500">No data available.</p>
       )}
