@@ -15,14 +15,14 @@ export default function TopProducts() {
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const snapshot = await getDocs(collection(db, "userRequests"));
+      const snapshot = await getDocs(collection(db, "user_request")); // ✅ Correct collection name here
       
       const data: Request[] = snapshot.docs.map((doc) => {
         const raw = doc.data();
         return {
-          name: raw["Customer-Name"],     // ✅ Match exact field name
-          product: raw["Product-Name"],   // ✅ Match exact field name
-          quantity: Number(raw["Quantity"]) // ✅ Convert to number
+          name: raw["Customer-Name"],
+          product: raw["Product-Name"],
+          quantity: Number(raw["Quantity"]),
         };
       });
 
@@ -44,7 +44,7 @@ export default function TopProducts() {
 
       const sorted = Array.from(map.values())
         .sort((a, b) => b.quantity - a.quantity)
-        .slice(0, 5);
+        .slice(0, 5); // Top 5
 
       setTopProducts(sorted);
     };
