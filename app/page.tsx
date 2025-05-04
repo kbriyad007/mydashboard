@@ -7,7 +7,8 @@ import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
 import { Eye, EyeOff } from "lucide-react";
-import { ReactTooltip } from "react-tooltip";
+import ReactTooltip from "react-tooltip";
+
 
 export default function Home() {
   const [showChart, setShowChart] = useState(true);
