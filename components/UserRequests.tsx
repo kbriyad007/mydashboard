@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { FaPhoneAlt, FaCalendarAlt } from "react-icons/fa";
 import { SearchIcon, FileTextIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
