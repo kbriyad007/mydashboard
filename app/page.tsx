@@ -4,6 +4,8 @@ import Sidebar from "@/components/Sidebar";
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList"; // Import the Card component
 import UserRequests from "@/components/UserRequests"; // Ensure correct import path
+import TopProducts from "@/components/TopProducts";
+
 
 
 export default function Home() {
@@ -26,7 +28,10 @@ export default function Home() {
             <div className="bg-white p-4 rounded shadow col-span-3">
               <UserRequests/>
             </div>
-            <div className="bg-white p-4 rounded shadow">Box 4</div>
+            <div className="bg-white p-4 rounded shadow">
+  <TopProducts />
+</div>
+
             <div className="bg-white p-4 rounded shadow">Box 5</div>
             <div className="bg-white p-4 rounded shadow">Box 6</div>
           </div>
