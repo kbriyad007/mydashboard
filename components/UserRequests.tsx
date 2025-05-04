@@ -6,6 +6,7 @@ import { db } from "../firebase";
 import { SearchIcon, FileTextIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
+import { FaCalendarAlt } from "react-icons/fa";
 import { generateInvoice } from "../utils/generateInvoice";
 
 type OrderData = {
