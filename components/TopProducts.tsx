@@ -114,12 +114,36 @@ export default function TopProducts() {
             <h3 className="text-xl font-semibold mb-4 text-gray-800">
               Customers for {selectedProduct.product}
             </h3>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+            <div className="space-y-3 max-h-64 overflow-y-auto">
               {selectedProduct.customers.map((customer, index) => (
-                <div key={index} className="p-3 border rounded bg-gray-50">
+                <div
+                  key={index}
+                  className="p-3 border rounded bg-gray-50 space-y-1"
+                >
                   <p className="font-medium text-gray-800">{customer.name}</p>
                   <p className="text-sm text-gray-600">📧 {customer.email}</p>
                   <p className="text-sm text-gray-600">📞 {customer.phone}</p>
+
+                  <div className="flex gap-4 mt-1">
+                    <a
+                      href={`https://wa.me/${customer.phone}?text=Hi%20${encodeURIComponent(
+                        customer.name
+                      )},%20thanks%20for%20your%20order!`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-green-600 hover:text-green-800"
+                    >
+                      WhatsApp
+                    </a>
+                    <a
+                      href={`mailto:${customer.email}?subject=Order Update&body=Hi ${encodeURIComponent(
+                        customer.name
+                      )},%0A%0AThanks for your order.`}
+                      className="text-sm text-blue-600 hover:text-blue-800"
+                    >
+                      Email
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
