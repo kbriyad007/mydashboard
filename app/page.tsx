@@ -7,8 +7,6 @@ import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
 import { Eye, EyeOff } from "lucide-react";
-import ReactTooltip from "react-tooltip";
-
 
 export default function Home() {
   const [showChart, setShowChart] = useState(true);
@@ -32,14 +30,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    data-tip="Hide chart" // Added tooltip
+                    title="Hide chart" // Tooltip as title
                     onClick={() => setShowChart(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    data-tip="Show chart" // Added tooltip
+                    title="Show chart" // Tooltip as title
                     onClick={() => setShowChart(true)}
                   />
                 )}
@@ -54,14 +52,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    data-tip="Hide card" // Added tooltip
+                    title="Hide card" // Tooltip as title
                     onClick={() => setShowCard(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    data-tip="Show card" // Added tooltip
+                    title="Show card" // Tooltip as title
                     onClick={() => setShowCard(true)}
                   />
                 )}
@@ -76,14 +74,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    data-tip="Hide requests" // Added tooltip
+                    title="Hide requests" // Tooltip as title
                     onClick={() => setShowRequests(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    data-tip="Show requests" // Added tooltip
+                    title="Show requests" // Tooltip as title
                     onClick={() => setShowRequests(true)}
                   />
                 )}
@@ -98,14 +96,14 @@ export default function Home() {
                   <EyeOff
                     size={16}
                     className={iconStyle}
-                    data-tip="Hide top products" // Added tooltip
+                    title="Hide top products" // Tooltip as title
                     onClick={() => setShowTopProducts(false)}
                   />
                 ) : (
                   <Eye
                     size={16}
                     className={iconStyle}
-                    data-tip="Show top products" // Added tooltip
+                    title="Show top products" // Tooltip as title
                     onClick={() => setShowTopProducts(true)}
                   />
                 )}
@@ -119,7 +117,7 @@ export default function Home() {
                 <Eye
                   size={16}
                   className={iconStyle}
-                  data-tip="Box 5" // Added tooltip
+                  title="Box 5" // Tooltip as title
                 />
               </div>
               Box 5
@@ -131,7 +129,7 @@ export default function Home() {
                 <Eye
                   size={16}
                   className={iconStyle}
-                  data-tip="Box 6" // Added tooltip
+                  title="Box 6" // Tooltip as title
                 />
               </div>
               Box 6
@@ -139,8 +137,6 @@ export default function Home() {
           </div>
         </main>
       </div>
-
-      <ReactTooltip /> {/* Tooltip container */}
     </div>
   );
 }
