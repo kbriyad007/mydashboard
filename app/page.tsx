@@ -14,17 +14,17 @@ export default function Home() {
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
 
-  const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
+  const iconStyle = "text-gray-600 hover:text-gray-900 cursor-pointer transition";
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100">
       <Sidebar />
 
       <div className="ml-60 flex-1 flex flex-col">
         <main className="p-6">
           <div className="grid grid-cols-3 gap-4">
             {/* Box 1 - Chart */}
-            <div className="bg-white p-4 rounded shadow col-span-2 relative">
+            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200">
               <div className="absolute top-2 right-2">
                 {showChart ? (
                   <EyeOff
@@ -44,7 +44,7 @@ export default function Home() {
             </div>
 
             {/* Box 2 - Card */}
-            <div className="bg-white p-4 rounded shadow relative">
+            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200">
               <div className="absolute top-2 right-2">
                 {showCard ? (
                   <EyeOff
@@ -64,7 +64,7 @@ export default function Home() {
             </div>
 
             {/* Box 3 - User Requests */}
-            <div className="bg-white p-4 rounded shadow col-span-3 relative">
+            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl col-span-3 relative border border-gray-200">
               <div className="absolute top-2 right-2">
                 {showRequests ? (
                   <EyeOff
@@ -84,7 +84,7 @@ export default function Home() {
             </div>
 
             {/* Box 4 - Top Products */}
-            <div className="bg-white p-4 rounded shadow col-span-2 relative">
+            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl col-span-2 relative border border-gray-200">
               <div className="absolute top-2 right-2">
                 {showTopProducts ? (
                   <EyeOff
@@ -104,7 +104,7 @@ export default function Home() {
             </div>
 
             {/* Box 5 */}
-            <div className="bg-white p-4 rounded shadow relative">
+            <div className="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200">
               <div className="absolute top-2 right-2">
                 <Eye size={16} className={iconStyle} />
               </div>
@@ -112,7 +112,7 @@ export default function Home() {
             </div>
 
             {/* Box 6 */}
-            <div className="bg-white p-4 rounded shadow relative">
+            <div className="bg-gradient-to-r from-yellow-200 via-red-200 to-pink-200 p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200">
               <div className="absolute top-2 right-2">
                 <Eye size={16} className={iconStyle} />
               </div>
