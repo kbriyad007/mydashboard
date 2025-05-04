@@ -22,9 +22,9 @@ export default function Home() {
 
       <div className="ml-60 flex-1 flex flex-col">
         <main className="p-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Box 1 - Chart */}
-            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200 max-w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Box 1 - Chart (Make it a bit wider) */}
+            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200 max-w-full lg:col-span-2">
               <div className="absolute top-2 right-2">
                 {showChart ? (
                   <EyeOff
@@ -43,8 +43,8 @@ export default function Home() {
               {showChart && <AppBarChart />}
             </div>
 
-            {/* Box 2 - Card */}
-            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200 max-w-full">
+            {/* Box 2 - Card (Make it a bit wider) */}
+            <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:shadow-xl relative border border-gray-200 max-w-full lg:col-span-2">
               <div className="absolute top-2 right-2">
                 {showCard ? (
                   <EyeOff
