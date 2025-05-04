@@ -28,7 +28,7 @@ export default function Home() {
             <div className="bg-white p-4 rounded shadow col-span-3">
               <UserRequests/>
             </div>
-            <div className="bg-white p-4 rounded shadow">
+            <div className="bg-white p-4 rounded shadow col-span-2">
   <TopProducts />
 </div>
 
