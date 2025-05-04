@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaPhoneAlt, FaCalendarAlt } from "react-icons/fa";
 import { SearchIcon, FileTextIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
@@ -115,7 +115,7 @@ const OrderTable = () => {
                 <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => setSelectedOrder(order)}
-                    className="text-blue-600 hover:underline"
+                    className="text-gray-800 hover:text-primary transition-colors duration-200 font-medium underline-offset-2 hover:underline"
                   >
                     {highlightMatch(order["Customer-Name"], searchQuery)}
                   </button>
@@ -164,7 +164,7 @@ const OrderTable = () => {
               <strong>Email:</strong>{" "}
               <a
                 href={`mailto:${selectedOrder["User-Email"]}`}
-                className="text-gray-700 hover:underline"
+                className="text-blue-600 hover:underline"
               >
                 {selectedOrder["User-Email"]}
               </a>
@@ -173,7 +173,7 @@ const OrderTable = () => {
               <strong>Phone:</strong>{" "}
               <a
                 href={`tel:${selectedOrder["Phone-Number"]}`}
-                className="text-gray-700 hover:underline"
+                className="text-blue-600 hover:underline"
               >
                 {selectedOrder["Phone-Number"] || "N/A"}
               </a>
