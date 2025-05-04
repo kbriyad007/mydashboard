@@ -14,28 +14,27 @@ export default function Home() {
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
 
-  const iconStyle =
-    "text-gray-500 hover:text-gray-800 cursor-pointer transition-all duration-200";
+  const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-r from-blue-100 via-teal-100 to-green-100">
+    <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
 
       <div className="ml-60 flex-1 flex flex-col">
         <main className="p-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-3 gap-4">
             {/* Box 1 - Chart */}
-            <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 relative">
+            <div className="bg-white p-4 rounded shadow col-span-2 relative">
               <div className="absolute top-2 right-2">
                 {showChart ? (
                   <EyeOff
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowChart(false)}
                   />
                 ) : (
                   <Eye
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowChart(true)}
                   />
@@ -45,17 +44,17 @@ export default function Home() {
             </div>
 
             {/* Box 2 - Card */}
-            <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 relative">
+            <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
                 {showCard ? (
                   <EyeOff
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowCard(false)}
                   />
                 ) : (
                   <Eye
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowCard(true)}
                   />
@@ -65,17 +64,17 @@ export default function Home() {
             </div>
 
             {/* Box 3 - User Requests */}
-            <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 relative col-span-1 sm:col-span-2 lg:col-span-3">
+            <div className="bg-white p-4 rounded shadow col-span-3 relative">
               <div className="absolute top-2 right-2">
                 {showRequests ? (
                   <EyeOff
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowRequests(false)}
                   />
                 ) : (
                   <Eye
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowRequests(true)}
                   />
@@ -85,17 +84,17 @@ export default function Home() {
             </div>
 
             {/* Box 4 - Top Products */}
-            <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 relative col-span-1 sm:col-span-2 lg:col-span-3">
+            <div className="bg-white p-4 rounded shadow col-span-2 relative">
               <div className="absolute top-2 right-2">
                 {showTopProducts ? (
                   <EyeOff
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowTopProducts(false)}
                   />
                 ) : (
                   <Eye
-                    size={18}
+                    size={16}
                     className={iconStyle}
                     onClick={() => setShowTopProducts(true)}
                   />
@@ -105,17 +104,17 @@ export default function Home() {
             </div>
 
             {/* Box 5 */}
-            <div className="bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 relative">
+            <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
-                <Eye size={18} className={iconStyle} />
+                <Eye size={16} className={iconStyle} />
               </div>
               Box 5
             </div>
 
             {/* Box 6 */}
-            <div className="bg-gradient-to-r from-yellow-200 via-orange-200 to-red-200 p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 relative">
+            <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
-                <Eye size={18} className={iconStyle} />
+                <Eye size={16} className={iconStyle} />
               </div>
               Box 6
             </div>
@@ -124,4 +123,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+} 
