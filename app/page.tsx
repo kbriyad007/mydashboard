@@ -27,9 +27,19 @@ export default function Home() {
             <div className="bg-white p-4 rounded shadow col-span-2 relative">
               <div className="absolute top-2 right-2">
                 {showChart ? (
-                  <EyeOff className={iconStyle} onClick={() => setShowChart(false)} />
+                  <EyeOff
+                    size={16}
+                    className={iconStyle}
+                    title="Hide chart"
+                    onClick={() => setShowChart(false)}
+                  />
                 ) : (
-                  <Eye className={iconStyle} onClick={() => setShowChart(true)} />
+                  <Eye
+                    size={16}
+                    className={iconStyle}
+                    title="Show chart"
+                    onClick={() => setShowChart(true)}
+                  />
                 )}
               </div>
               {showChart && <AppBarChart />}
@@ -39,9 +49,19 @@ export default function Home() {
             <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
                 {showCard ? (
-                  <EyeOff className={iconStyle} onClick={() => setShowCard(false)} />
+                  <EyeOff
+                    size={16}
+                    className={iconStyle}
+                    title="Hide card"
+                    onClick={() => setShowCard(false)}
+                  />
                 ) : (
-                  <Eye className={iconStyle} onClick={() => setShowCard(true)} />
+                  <Eye
+                    size={16}
+                    className={iconStyle}
+                    title="Show card"
+                    onClick={() => setShowCard(true)}
+                  />
                 )}
               </div>
               {showCard && <Card />}
@@ -51,9 +71,19 @@ export default function Home() {
             <div className="bg-white p-4 rounded shadow col-span-3 relative">
               <div className="absolute top-2 right-2">
                 {showRequests ? (
-                  <EyeOff className={iconStyle} onClick={() => setShowRequests(false)} />
+                  <EyeOff
+                    size={16}
+                    className={iconStyle}
+                    title="Hide requests"
+                    onClick={() => setShowRequests(false)}
+                  />
                 ) : (
-                  <Eye className={iconStyle} onClick={() => setShowRequests(true)} />
+                  <Eye
+                    size={16}
+                    className={iconStyle}
+                    title="Show requests"
+                    onClick={() => setShowRequests(true)}
+                  />
                 )}
               </div>
               {showRequests && <UserRequests />}
@@ -63,9 +93,19 @@ export default function Home() {
             <div className="bg-white p-4 rounded shadow col-span-2 relative">
               <div className="absolute top-2 right-2">
                 {showTopProducts ? (
-                  <EyeOff className={iconStyle} onClick={() => setShowTopProducts(false)} />
+                  <EyeOff
+                    size={16}
+                    className={iconStyle}
+                    title="Hide top products"
+                    onClick={() => setShowTopProducts(false)}
+                  />
                 ) : (
-                  <Eye className={iconStyle} onClick={() => setShowTopProducts(true)} />
+                  <Eye
+                    size={16}
+                    className={iconStyle}
+                    title="Show top products"
+                    onClick={() => setShowTopProducts(true)}
+                  />
                 )}
               </div>
               {showTopProducts && <TopProducts />}
@@ -74,8 +114,7 @@ export default function Home() {
             {/* Box 5 */}
             <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
-                {/* Static icon for now — customize if needed */}
-                <Eye className={iconStyle} />
+                <Eye size={16} className={iconStyle} title="Box 5" />
               </div>
               Box 5
             </div>
@@ -83,7 +122,7 @@ export default function Home() {
             {/* Box 6 */}
             <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
-                <Eye className={iconStyle} />
+                <Eye size={16} className={iconStyle} title="Box 6" />
               </div>
               Box 6
             </div>
