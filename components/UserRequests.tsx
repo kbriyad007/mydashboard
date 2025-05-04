@@ -45,6 +45,7 @@ const OrderTable = () => {
   const [orders, setOrders] = useState<OrderData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -114,7 +115,12 @@ const OrderTable = () => {
                   {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
                 </td>
                 <td className="py-2 px-4 border-b">
-                  {highlightMatch(order["Customer-Name"], searchQuery)}
+                  <button
+                    onClick={() => setSelectedOrder(order)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {highlightMatch(order["Customer-Name"], searchQuery)}
+                  </button>
                 </td>
                 <td className="py-2 px-4 border-b">
                   <FaPhoneAlt className="mr-2 text-blue-500 inline-block" />
@@ -148,9 +154,32 @@ const OrderTable = () => {
           )}
         </tbody>
       </table>
+
+      {/* Modal */}
+      {selectedOrder && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow max-w-sm w-full relative">
+            <button
+              onClick={() => setSelectedOrder(null)}
+              className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+            >
+              ×
+            </button>
+            <h3 className="text-lg font-semibold mb-4">Customer Info</h3>
+            <p className="mb-2">
+              <strong>Name:</strong> {selectedOrder["Customer-Name"]}
+            </p>
+            <p className="mb-2">
+              <strong>Email:</strong> {selectedOrder["User-Email"]}
+            </p>
+            <p className="mb-2">
+              <strong>Phone:</strong> {selectedOrder["Phone-Number"] || "N/A"}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default OrderTable;
-
