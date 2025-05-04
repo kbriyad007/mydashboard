@@ -6,10 +6,15 @@ import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
-import { Button } from "@/components/ui/button"; // Assuming ShadCN UI is installed
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Home() {
+  const [showChart, setShowChart] = useState(true);
+  const [showCard, setShowCard] = useState(true);
+  const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
+
+  const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -18,38 +23,70 @@ export default function Home() {
       <div className="ml-60 flex-1 flex flex-col">
         <main className="p-6">
           <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white p-4 rounded shadow col-span-2">
-              <AppBarChart />
-            </div>
-
-            <div className="bg-white p-4 rounded shadow">
-              <Card />
-            </div>
-
-            <div className="bg-white p-4 rounded shadow col-span-3">
-              <UserRequests />
-            </div>
-
-            {/* Toggle Button for Top Products */}
-            <div className="col-span-3 flex justify-end">
-              <Button
-                variant="outline"
-                className="mb-2"
-                onClick={() => setShowTopProducts(!showTopProducts)}
-              >
-                {showTopProducts ? "Hide Top Products" : "Show Top Products"}
-              </Button>
-            </div>
-
-            {/* Conditional Top Products Box */}
-            {showTopProducts && (
-              <div className="bg-white p-4 rounded shadow col-span-2">
-                <TopProducts />
+            {/* Box 1 - Chart */}
+            <div className="bg-white p-4 rounded shadow col-span-2 relative">
+              <div className="absolute top-2 right-2">
+                {showChart ? (
+                  <EyeOff className={iconStyle} onClick={() => setShowChart(false)} />
+                ) : (
+                  <Eye className={iconStyle} onClick={() => setShowChart(true)} />
+                )}
               </div>
-            )}
+              {showChart && <AppBarChart />}
+            </div>
 
-            <div className="bg-white p-4 rounded shadow">Box 5</div>
-            <div className="bg-white p-4 rounded shadow">Box 6</div>
+            {/* Box 2 - Card */}
+            <div className="bg-white p-4 rounded shadow relative">
+              <div className="absolute top-2 right-2">
+                {showCard ? (
+                  <EyeOff className={iconStyle} onClick={() => setShowCard(false)} />
+                ) : (
+                  <Eye className={iconStyle} onClick={() => setShowCard(true)} />
+                )}
+              </div>
+              {showCard && <Card />}
+            </div>
+
+            {/* Box 3 - User Requests */}
+            <div className="bg-white p-4 rounded shadow col-span-3 relative">
+              <div className="absolute top-2 right-2">
+                {showRequests ? (
+                  <EyeOff className={iconStyle} onClick={() => setShowRequests(false)} />
+                ) : (
+                  <Eye className={iconStyle} onClick={() => setShowRequests(true)} />
+                )}
+              </div>
+              {showRequests && <UserRequests />}
+            </div>
+
+            {/* Box 4 - Top Products */}
+            <div className="bg-white p-4 rounded shadow col-span-2 relative">
+              <div className="absolute top-2 right-2">
+                {showTopProducts ? (
+                  <EyeOff className={iconStyle} onClick={() => setShowTopProducts(false)} />
+                ) : (
+                  <Eye className={iconStyle} onClick={() => setShowTopProducts(true)} />
+                )}
+              </div>
+              {showTopProducts && <TopProducts />}
+            </div>
+
+            {/* Box 5 */}
+            <div className="bg-white p-4 rounded shadow relative">
+              <div className="absolute top-2 right-2">
+                {/* Static icon for now — customize if needed */}
+                <Eye className={iconStyle} />
+              </div>
+              Box 5
+            </div>
+
+            {/* Box 6 */}
+            <div className="bg-white p-4 rounded shadow relative">
+              <div className="absolute top-2 right-2">
+                <Eye className={iconStyle} />
+              </div>
+              Box 6
+            </div>
           </div>
         </main>
       </div>
