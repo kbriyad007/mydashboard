@@ -47,6 +47,10 @@ const OrderTable = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState<OrderData | null>(null);
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 10;
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -75,6 +79,18 @@ const OrderTable = () => {
       order["Product-Name"]?.toLowerCase().includes(q)
     );
   });
+
+  // Calculate the orders to display based on pagination
+  const indexOfLastOrder = currentPage * rowsPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - rowsPerPage;
+  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil(filteredOrders.length / rowsPerPage);
 
   return (
     <div className="overflow-x-auto bg-white p-4 rounded shadow max-w-6xl mx-auto mt-8">
@@ -108,8 +124,8 @@ const OrderTable = () => {
                 <LoadingSpinner />
               </td>
             </tr>
-          ) : filteredOrders.length > 0 ? (
-            filteredOrders.map((order) => (
+          ) : currentOrders.length > 0 ? (
+            currentOrders.map((order) => (
               <tr key={order.id} className="hover:bg-gray-50 border-t">
                 <td className="py-2 px-4 border-b">
                   {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
@@ -156,6 +172,29 @@ const OrderTable = () => {
           )}
         </tbody>
       </table>
+
+      {/* Pagination Controls */}
+      {filteredOrders.length > rowsPerPage && (
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+          >
+            Previous
+          </button>
+          <div>
+            Page {currentPage} of {totalPages}
+          </div>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* Modal */}
       {selectedOrder && (
