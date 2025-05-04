@@ -117,9 +117,9 @@ const OrderTable = () => {
                 <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => setSelectedOrder(order)}
-                    className="text-blue-600 font-extrabold text-xl shadow-lg hover:scale-105 transform transition-all"
+                    className="text-gray-800 font-semibold hover:text-blue-600 transition"
                     style={{
-                      textShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
+                      textShadow: "0 0 2px rgba(0, 0, 0, 0.1)",
                     }}
                   >
                     {highlightMatch(order["Customer-Name"], searchQuery)}
