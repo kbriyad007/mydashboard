@@ -66,7 +66,9 @@ export default function TopProducts() {
   return (
     <>
       <div className="p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Top 5 Products by Quantity</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          Top 5 Products by Quantity
+        </h2>
 
         {topProducts.length > 0 ? (
           <div className="space-y-4">
@@ -80,7 +82,7 @@ export default function TopProducts() {
                   onClick={() => setSelectedProduct(item)}
                 >
                   <HiOutlineShoppingCart className="text-xl text-blue-500" />
-                  <div className="text-lg font-semibold text-gray-700 underline hover:text-blue-600">
+                  <div className="text-lg font-semibold text-gray-700 hover:text-blue-600">
                     {item.product}
                   </div>
                 </div>
