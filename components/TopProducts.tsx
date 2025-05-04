@@ -1,7 +1,8 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "@/lib/firebase"; // Adjust path as needed
+import { db } from "@/lib/firebase";
 
 type Request = {
   name: string;
@@ -15,7 +16,16 @@ export default function TopProducts() {
   useEffect(() => {
     const fetchRequests = async () => {
       const snapshot = await getDocs(collection(db, "userRequests"));
-      const data = snapshot.docs.map((doc) => doc.data() as Request);
+      
+      // Map capitalized Firestore fields to local fields
+      const data: Request[] = snapshot.docs.map((doc) => {
+        const raw = doc.data();
+        return {
+          name: raw.Name,
+          product: raw.Product,
+          quantity: Number(raw.Qty), // Ensure it's a number
+        };
+      });
 
       // Aggregate quantities per product+name combo
       const map = new Map<string, Request>();
@@ -47,14 +57,18 @@ export default function TopProducts() {
   return (
     <div>
       <h2 className="text-lg font-semibold mb-2">Top 5 Products by Quantity</h2>
-      <ul className="text-sm text-gray-700 space-y-1">
-        {topProducts.map((item, idx) => (
-          <li key={idx} className="flex justify-between">
-            <span>{item.name} - {item.product}</span>
-            <span className="font-medium">{item.quantity}</span>
-          </li>
-        ))}
-      </ul>
+      {topProducts.length > 0 ? (
+        <ul className="text-sm text-gray-700 space-y-1">
+          {topProducts.map((item, idx) => (
+            <li key={idx} className="flex justify-between">
+              <span>{item.name} - {item.product}</span>
+              <span className="font-medium">{item.quantity}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-sm text-gray-500">No data available.</p>
+      )}
     </div>
   );
 }
