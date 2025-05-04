@@ -17,17 +17,16 @@ export default function TopProducts() {
     const fetchRequests = async () => {
       const snapshot = await getDocs(collection(db, "userRequests"));
       
-      // Map capitalized Firestore fields to local fields
       const data: Request[] = snapshot.docs.map((doc) => {
         const raw = doc.data();
         return {
-          name: raw.Name,
-          product: raw.Product,
-          quantity: Number(raw.Qty), // Ensure it's a number
+          name: raw["Customer-Name"],     // ✅ Match exact field name
+          product: raw["Product-Name"],   // ✅ Match exact field name
+          quantity: Number(raw["Quantity"]) // ✅ Convert to number
         };
       });
 
-      // Aggregate quantities per product+name combo
+      // Aggregate quantities per name+product combo
       const map = new Map<string, Request>();
 
       for (const item of data) {
@@ -43,10 +42,9 @@ export default function TopProducts() {
         }
       }
 
-      // Convert to array and sort by quantity
       const sorted = Array.from(map.values())
         .sort((a, b) => b.quantity - a.quantity)
-        .slice(0, 5); // Top 5
+        .slice(0, 5);
 
       setTopProducts(sorted);
     };
