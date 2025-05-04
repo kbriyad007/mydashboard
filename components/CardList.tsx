@@ -20,7 +20,7 @@ const Card = () => {
         const q = query(
           collection(db, "user_request"),
           orderBy("Time", "desc"),
-          limit(5)
+          limit(10) // Increased limit from 5 to 10
         );
         const snapshot = await getDocs(q);
         const customers: Customer[] = snapshot.docs.map((doc) => {
@@ -41,13 +41,13 @@ const Card = () => {
   }, []);
 
   return (
-    <div className="w-full p-4 bg-white rounded shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Latest Customers</h2>
+    <div className="w-full p-4 bg-white rounded-xl shadow-sm">
+      <h2 className="text-lg font-semibold mb-3 text-gray-800">Latest Customers</h2>
       <div className="space-y-2">
         {latestCustomers.map((customer, index) => (
-          <div key={index} className="p-3 border-b">
-            <p className="font-medium">{customer.name}</p>
-            <p className="text-sm text-gray-600">{customer.email}</p>
+          <div key={index} className="p-2 border-b last:border-none">
+            <p className="text-sm font-medium text-gray-900">{customer.name}</p>
+            <p className="text-xs text-gray-600">{customer.email}</p>
           </div>
         ))}
       </div>
