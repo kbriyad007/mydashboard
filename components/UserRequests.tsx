@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { FaPhoneAlt, FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt } from "react-icons/fa";
 import { SearchIcon, FileTextIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
@@ -94,8 +94,6 @@ const OrderTable = () => {
           <tr className="bg-gray-100">
             <th className="py-2 px-4 border-b text-left">Product</th>
             <th className="py-2 px-4 border-b text-left">Name</th>
-            <th className="py-2 px-4 border-b text-left">Phone</th>
-            <th className="py-2 px-4 border-b text-left">Email</th>
             <th className="py-2 px-4 border-b text-left">Qty</th>
             <th className="py-2 px-4 border-b text-left">Date</th>
             <th className="py-2 px-4 border-b text-left">Invoice</th>
@@ -104,7 +102,7 @@ const OrderTable = () => {
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan={7} className="py-6 text-center">
+              <td colSpan={5} className="py-6 text-center">
                 <LoadingSpinner />
               </td>
             </tr>
@@ -121,13 +119,6 @@ const OrderTable = () => {
                   >
                     {highlightMatch(order["Customer-Name"], searchQuery)}
                   </button>
-                </td>
-                <td className="py-2 px-4 border-b">
-                  <FaPhoneAlt className="mr-2 text-blue-500 inline-block" />
-                  {highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  {highlightMatch(order["User-Email"], searchQuery)}
                 </td>
                 <td className="py-2 px-4 border-b">{order.Quantity}</td>
                 <td className="py-2 px-4 border-b">
@@ -147,7 +138,7 @@ const OrderTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={7} className="text-center text-gray-500 py-5">
+              <td colSpan={5} className="text-center text-gray-500 py-5">
                 No orders found.
               </td>
             </tr>
@@ -170,10 +161,22 @@ const OrderTable = () => {
               <strong>Name:</strong> {selectedOrder["Customer-Name"]}
             </p>
             <p className="mb-2">
-              <strong>Email:</strong> {selectedOrder["User-Email"]}
+              <strong>Email:</strong>{" "}
+              <a
+                href={`mailto:${selectedOrder["User-Email"]}`}
+                className="text-gray-700 hover:underline"
+              >
+                {selectedOrder["User-Email"]}
+              </a>
             </p>
             <p className="mb-2">
-              <strong>Phone:</strong> {selectedOrder["Phone-Number"] || "N/A"}
+              <strong>Phone:</strong>{" "}
+              <a
+                href={`tel:${selectedOrder["Phone-Number"]}`}
+                className="text-gray-700 hover:underline"
+              >
+                {selectedOrder["Phone-Number"] || "N/A"}
+              </a>
             </p>
           </div>
         </div>
