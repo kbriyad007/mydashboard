@@ -10,30 +10,26 @@ import WeeklyTotal from "@/components/WeeklyTotal";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function Home() {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showChart, setShowChart] = useState(true);
   const [showCard, setShowCard] = useState(true);
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [showWeeklyTotal, setShowWeeklyTotal] = useState(true);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // State for sidebar collapse
 
   const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
-  const handleSidebarToggle = () => {
+  // Toggle sidebar state
+  const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
   };
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <Sidebar isCollapsed={isSidebarCollapsed} onToggle={handleSidebarToggle} />
+      {/* Pass the collapsed state and toggle function as props to Sidebar */}
+      <Sidebar isCollapsed={isSidebarCollapsed} onToggle={toggleSidebar} />
 
-      {/* Main content */}
-      <div
-        className={`flex-1 flex flex-col transition-all duration-300 ${
-          isSidebarCollapsed ? "ml-20" : "ml-64"
-        }`} // Adjusting margin based on sidebar collapse
-      >
+      <div className="ml-60 flex-1 flex flex-col">
         <main className="p-6">
           <div className="grid grid-cols-3 gap-4">
             {/* Box 1 - Chart */}
