@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar"; // Import Sidebar component
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
@@ -26,8 +26,8 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Pass the collapsed state and toggle function as props to Sidebar */}
-      <Sidebar isCollapsed={isSidebarCollapsed} onToggle={toggleSidebar} />
+      {/* Pass the collapsed state and toggle function to Sidebar */}
+      <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
 
       <div className="ml-60 flex-1 flex flex-col">
         <main className="p-6">
