@@ -15,6 +15,7 @@ type OrderData = {
   "User-Email": string;
   "Phone-Number"?: string;
   "Product-Name"?: string;
+  "Product-Price"?: string | number;
   Quantity: number | string;
   Time?: { seconds: number; nanoseconds: number };
   Courier?: string;
@@ -85,8 +86,7 @@ const OrderTable = () => {
   );
 
   useEffect(() => {
-    // Reset to first page on search
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to first page on search
   }, [searchQuery]);
 
   return (
@@ -106,6 +106,7 @@ const OrderTable = () => {
         <thead>
           <tr className="bg-gray-100">
             <th className="py-2 px-4 border-b text-left">Product</th>
+            <th className="py-2 px-4 border-b text-left">Price</th>
             <th className="py-2 px-4 border-b text-left">Name</th>
             <th className="py-2 px-4 border-b text-left">Phone</th>
             <th className="py-2 px-4 border-b text-left">Email</th>
@@ -117,7 +118,7 @@ const OrderTable = () => {
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan={7} className="py-6 text-center">
+              <td colSpan={8} className="py-6 text-center">
                 <LoadingSpinner />
               </td>
             </tr>
@@ -128,12 +129,13 @@ const OrderTable = () => {
                   {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
                 </td>
                 <td className="py-2 px-4 border-b">
+                  {order["Product-Price"] ? `৳${order["Product-Price"]}` : "N/A"}
+                </td>
+                <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => setSelectedOrder(order)}
                     className="text-gray-800 font-semibold hover:text-blue-600 transition"
-                    style={{
-                      textShadow: "0 0 2px rgba(0, 0, 0, 0.1)",
-                    }}
+                    style={{ textShadow: "0 0 2px rgba(0, 0, 0, 0.1)" }}
                   >
                     {highlightMatch(order["Customer-Name"], searchQuery)}
                   </button>
@@ -162,7 +164,7 @@ const OrderTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={7} className="text-center text-gray-500 py-5">
+              <td colSpan={8} className="text-center text-gray-500 py-5">
                 No orders found.
               </td>
             </tr>
@@ -251,3 +253,5 @@ const OrderTable = () => {
 };
 
 export default OrderTable;
+
+
