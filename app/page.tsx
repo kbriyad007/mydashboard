@@ -7,7 +7,7 @@ import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
 import WeeklyTotal from "@/components/WeeklyTotal";
-import { Eye, EyeOff } from "lucide-react";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md"; // Modern icons
 
 export default function HomePage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -40,9 +40,17 @@ export default function HomePage() {
             <div className={`${boxStyle} col-span-1 md:col-span-2`}>
               <div className="absolute top-3 right-3">
                 {showChart ? (
-                  <EyeOff size={18} className={iconStyle} onClick={() => setShowChart(false)} />
+                  <MdVisibilityOff
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowChart(false)}
+                  />
                 ) : (
-                  <Eye size={18} className={iconStyle} onClick={() => setShowChart(true)} />
+                  <MdVisibility
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowChart(true)}
+                  />
                 )}
               </div>
               {showChart && <AppBarChart />}
@@ -52,9 +60,17 @@ export default function HomePage() {
             <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 {showCard ? (
-                  <EyeOff size={18} className={iconStyle} onClick={() => setShowCard(false)} />
+                  <MdVisibilityOff
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowCard(false)}
+                  />
                 ) : (
-                  <Eye size={18} className={iconStyle} onClick={() => setShowCard(true)} />
+                  <MdVisibility
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowCard(true)}
+                  />
                 )}
               </div>
               {showCard && <Card />}
@@ -64,9 +80,17 @@ export default function HomePage() {
             <div className={`${boxStyle} col-span-1 md:col-span-3`}>
               <div className="absolute top-3 right-3">
                 {showRequests ? (
-                  <EyeOff size={18} className={iconStyle} onClick={() => setShowRequests(false)} />
+                  <MdVisibilityOff
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowRequests(false)}
+                  />
                 ) : (
-                  <Eye size={18} className={iconStyle} onClick={() => setShowRequests(true)} />
+                  <MdVisibility
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowRequests(true)}
+                  />
                 )}
               </div>
               {showRequests && <UserRequests />}
@@ -76,9 +100,17 @@ export default function HomePage() {
             <div className={`${boxStyle} col-span-1 md:col-span-2`}>
               <div className="absolute top-3 right-3">
                 {showTopProducts ? (
-                  <EyeOff size={18} className={iconStyle} onClick={() => setShowTopProducts(false)} />
+                  <MdVisibilityOff
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowTopProducts(false)}
+                  />
                 ) : (
-                  <Eye size={18} className={iconStyle} onClick={() => setShowTopProducts(true)} />
+                  <MdVisibility
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowTopProducts(true)}
+                  />
                 )}
               </div>
               {showTopProducts && <TopProducts />}
@@ -88,9 +120,17 @@ export default function HomePage() {
             <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 {showWeeklyTotal ? (
-                  <EyeOff size={18} className={iconStyle} onClick={() => setShowWeeklyTotal(false)} />
+                  <MdVisibilityOff
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowWeeklyTotal(false)}
+                  />
                 ) : (
-                  <Eye size={18} className={iconStyle} onClick={() => setShowWeeklyTotal(true)} />
+                  <MdVisibility
+                    size={22}
+                    className={iconStyle}
+                    onClick={() => setShowWeeklyTotal(true)}
+                  />
                 )}
               </div>
               {showWeeklyTotal && <WeeklyTotal />}
@@ -99,7 +139,7 @@ export default function HomePage() {
             {/* Extra Box */}
             <div className={boxStyle}>
               <div className="absolute top-3 right-3">
-                <Eye size={18} className={iconStyle} />
+                <MdVisibility size={22} className={iconStyle} />
               </div>
               <p className="text-muted-foreground text-sm">Box 6</p>
             </div>
