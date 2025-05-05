@@ -1,3 +1,4 @@
+{showChart && <AppBarChart weeklyTotals={weeklyTotals} />}
 "use client";
 
 import React, { useEffect, useState } from "react";
