@@ -9,7 +9,7 @@ import TopProducts from "@/components/TopProducts";
 import WeeklyTotal from "@/components/WeeklyTotal";
 import { Eye, EyeOff } from "lucide-react";
 
-export default function Home() {
+export default function HomePage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showChart, setShowChart] = useState(true);
   const [showCard, setShowCard] = useState(true);
@@ -17,18 +17,18 @@ export default function Home() {
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [showWeeklyTotal, setShowWeeklyTotal] = useState(true);
 
-  const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
-
   const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
+    setIsSidebarCollapsed((prev) => !prev);
   };
+
+  const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
+      {/* ✅ Pass required props to Sidebar */}
       <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
 
-      {/* Main Content */}
+      {/* Main Content with dynamic margin */}
       <div
         className={`transition-all duration-300 ${
           isSidebarCollapsed ? "ml-20" : "ml-64"
