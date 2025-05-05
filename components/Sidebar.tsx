@@ -1,3 +1,4 @@
+// components/Sidebar.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -9,62 +10,76 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-import { Home, User, Settings, LogOut, ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
+import {
+  Home,
+  User,
+  Settings,
+  LogOut,
+  ChevronDown,
+  ChevronRight,
+  ChevronLeft,
+} from "lucide-react";
 import Link from "next/link";
 
-// Define the props for Sidebar
-interface SidebarProps {
+type SidebarProps = {
   isCollapsed: boolean;
   toggleSidebar: () => void;
-}
+};
 
 const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
   return (
     <aside
-      className={`fixed top-0 left-0 h-full ${isCollapsed ? "w-20" : "w-64"} bg-white border-r shadow p-6 flex flex-col justify-between transition-all duration-300`}
+      className={`fixed top-0 left-0 h-full ${
+        isCollapsed ? "w-20" : "w-64"
+      } bg-white border-r shadow p-6 flex flex-col justify-between transition-all duration-300`}
     >
-      {/* Minimize Button placed at the top-right edge */}
+      {/* Minimize Button */}
       <Button
         variant="ghost"
         className="absolute top-4 right-4"
         onClick={toggleSidebar}
       >
-        {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+        {isCollapsed ? (
+          <ChevronRight className="w-4 h-4" />
+        ) : (
+          <ChevronLeft className="w-4 h-4" />
+        )}
       </Button>
 
       <div>
-        {/* Dashboard Title, hidden when collapsed */}
-        <h2 className={`text-xl font-bold mb-6 ${isCollapsed ? "hidden" : ""}`}>Dashboard</h2>
+        <h2 className={`text-xl font-bold mb-6 ${isCollapsed ? "hidden" : ""}`}>
+          Dashboard
+        </h2>
         <nav className="space-y-4">
           <Link href="/">
             <Button variant="ghost" className="w-full justify-start">
               <Home className="w-4 h-4 mr-2" />
-              {!isCollapsed && "Home"} {/* Only show text when expanded */}
+              {!isCollapsed && "Home"}
             </Button>
           </Link>
           <Link href="/account">
             <Button variant="ghost" className="w-full justify-start">
               <User className="w-4 h-4 mr-2" />
-              {!isCollapsed && "My Account"} {/* Only show text when expanded */}
+              {!isCollapsed && "My Account"}
             </Button>
           </Link>
           <Link href="/settings">
             <Button variant="ghost" className="w-full justify-start">
               <Settings className="w-4 h-4 mr-2" />
-              {!isCollapsed && "Settings"} {/* Only show text when expanded */}
+              {!isCollapsed && "Settings"}
             </Button>
           </Link>
         </nav>
       </div>
 
-      {/* Dropdown at the bottom */}
+      {/* Dropdown at bottom */}
       <div className="mt-auto">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="w-full justify-between">
               <span className="flex items-center">
                 <LogOut className="w-4 h-4 mr-2" />
-                {!isCollapsed && "Sign Out"} {/* Only show text when expanded */}
+                {!isCollapsed && "Sign Out"}
               </span>
               <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
