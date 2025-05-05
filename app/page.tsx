@@ -6,6 +6,7 @@ import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
+import WeeklyTotal from "@/components/WeeklyTotal";
 import { Eye, EyeOff } from "lucide-react";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
   const [showCard, setShowCard] = useState(true);
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
+  const [showWeeklyTotal, setShowWeeklyTotal] = useState(true);
 
   const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
@@ -103,15 +105,27 @@ export default function Home() {
               {showTopProducts && <TopProducts />}
             </div>
 
-            {/* Box 5 */}
+            {/* Box 5 - Weekly Total */}
             <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
-                <Eye size={16} className={iconStyle} />
+                {showWeeklyTotal ? (
+                  <EyeOff
+                    size={16}
+                    className={iconStyle}
+                    onClick={() => setShowWeeklyTotal(false)}
+                  />
+                ) : (
+                  <Eye
+                    size={16}
+                    className={iconStyle}
+                    onClick={() => setShowWeeklyTotal(true)}
+                  />
+                )}
               </div>
-              Box 5
+              {showWeeklyTotal && <WeeklyTotal />}
             </div>
 
-            {/* Box 6 */}
+            {/* Box 6 - Placeholder */}
             <div className="bg-white p-4 rounded shadow relative">
               <div className="absolute top-2 right-2">
                 <Eye size={16} className={iconStyle} />
@@ -123,4 +137,4 @@ export default function Home() {
       </div>
     </div>
   );
-} 
+}
