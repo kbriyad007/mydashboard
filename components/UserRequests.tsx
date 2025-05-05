@@ -90,32 +90,34 @@ const OrderTable = () => {
   }, [searchQuery]);
 
   return (
-    <div className="overflow-x-auto bg-white p-4 rounded shadow max-w-6xl mx-auto mt-8">
-      <div className="flex items-center gap-2 mb-4">
-        <SearchIcon className="text-gray-500" size={18} />
+    <div className="overflow-x-auto bg-white dark:bg-gray-800 p-5 rounded-xl shadow-lg max-w-7xl mx-auto mt-8 font-sans">
+      <div className="flex items-center gap-2 mb-6">
+        <SearchIcon className="text-gray-500 dark:text-gray-300" size={18} />
         <Input
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search name, email, phone..."
-          className="w-full max-w-md"
+          className="w-full max-w-md border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 transition"
         />
       </div>
 
-      <h2 className="text-xl font-semibold mb-4">Order Details</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6">
+        Order Details
+      </h2>
       <table className="min-w-full table-auto border-collapse text-sm">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="py-2 px-4 border-b text-left">Product</th>
-            <th className="py-2 px-4 border-b text-left">Price</th>
-            <th className="py-2 px-4 border-b text-left">Name</th>
-            <th className="py-2 px-4 border-b text-left">Phone</th>
-            <th className="py-2 px-4 border-b text-left">Email</th>
-            <th className="py-2 px-4 border-b text-left">Qty</th>
-            <th className="py-2 px-4 border-b text-left">Date</th>
-            <th className="py-2 px-4 border-b text-left">Invoice</th>
+        <thead className="text-xs text-gray-600 bg-gray-100 dark:bg-gray-700">
+          <tr>
+            <th className="py-3 px-4 text-left">Product</th>
+            <th className="py-3 px-4 text-left">Price</th>
+            <th className="py-3 px-4 text-left">Name</th>
+            <th className="py-3 px-4 text-left">Phone</th>
+            <th className="py-3 px-4 text-left">Email</th>
+            <th className="py-3 px-4 text-left">Qty</th>
+            <th className="py-3 px-4 text-left">Date</th>
+            <th className="py-3 px-4 text-left">Invoice</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-sm text-gray-700 dark:text-gray-300">
           {loading ? (
             <tr>
               <td colSpan={8} className="py-6 text-center">
@@ -124,34 +126,30 @@ const OrderTable = () => {
             </tr>
           ) : paginatedOrders.length > 0 ? (
             paginatedOrders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50 border-t">
-                <td className="py-2 px-4 border-b">
-                  {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
-                </td>
-                <td className="py-2 px-4 border-b">
+              <tr
+                key={order.id}
+                className="hover:bg-gray-50 dark:hover:bg-gray-600 transition"
+              >
+                <td className="py-3 px-4">{highlightMatch(order["Product-Name"] || "N/A", searchQuery)}</td>
+                <td className="py-3 px-4">
                   {order["Product-Price"] ? `৳${order["Product-Price"]}` : "N/A"}
                 </td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-3 px-4">
                   <button
                     onClick={() => setSelectedOrder(order)}
-                    className="text-gray-800 font-semibold hover:text-blue-600 transition"
-                    style={{ textShadow: "0 0 2px rgba(0, 0, 0, 0.1)" }}
+                    className="text-gray-900 dark:text-gray-100 hover:text-blue-600 transition"
                   >
                     {highlightMatch(order["Customer-Name"], searchQuery)}
                   </button>
                 </td>
-                <td className="py-2 px-4 border-b">
-                  {highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  {highlightMatch(order["User-Email"], searchQuery)}
-                </td>
-                <td className="py-2 px-4 border-b">{order.Quantity}</td>
-                <td className="py-2 px-4 border-b">
-                  <FaCalendarAlt className="mr-2 text-yellow-500 inline-block" />
+                <td className="py-3 px-4">{highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}</td>
+                <td className="py-3 px-4">{highlightMatch(order["User-Email"], searchQuery)}</td>
+                <td className="py-3 px-4">{order.Quantity}</td>
+                <td className="py-3 px-4">
+                  <FaCalendarAlt className="text-yellow-500 inline-block mr-2" />
                   {formatDate(order.Time)}
                 </td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-3 px-4">
                   <button
                     onClick={() => generateInvoice(order)}
                     className="text-blue-600 hover:text-blue-800 transition"
@@ -164,7 +162,7 @@ const OrderTable = () => {
             ))
           ) : (
             <tr>
-              <td colSpan={8} className="text-center text-gray-500 py-5">
+              <td colSpan={8} className="text-center py-5 text-gray-500">
                 No orders found.
               </td>
             </tr>
@@ -178,7 +176,7 @@ const OrderTable = () => {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50"
           >
             Previous
           </button>
@@ -187,11 +185,7 @@ const OrderTable = () => {
             <button
               key={pageNum}
               onClick={() => setCurrentPage(pageNum)}
-              className={`px-3 py-1 border rounded ${
-                pageNum === currentPage
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "hover:bg-gray-100"
-              }`}
+              className={`px-4 py-2 border rounded ${pageNum === currentPage ? "bg-blue-600 text-white" : "hover:bg-gray-200 dark:hover:bg-gray-700"}`}
             >
               {pageNum}
             </button>
@@ -200,7 +194,7 @@ const OrderTable = () => {
           <button
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="px-4 py-2 border rounded bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50"
           >
             Next
           </button>
@@ -210,14 +204,14 @@ const OrderTable = () => {
       {/* Modal */}
       {selectedOrder && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow max-w-sm w-full relative">
+          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm w-full relative">
             <button
               onClick={() => setSelectedOrder(null)}
               className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
             >
               ×
             </button>
-            <h3 className="text-lg font-semibold mb-4">Customer Info</h3>
+            <h3 className="text-xl font-semibold mb-4">Customer Info</h3>
             <p className="mb-2">
               <strong>Name:</strong>{" "}
               <a
@@ -253,5 +247,3 @@ const OrderTable = () => {
 };
 
 export default OrderTable;
-
-
