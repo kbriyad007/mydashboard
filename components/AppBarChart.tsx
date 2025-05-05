@@ -10,20 +10,23 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-  { month: "July", desktop: 314, mobile: 240 },
-  { month: "August", desktop: 500, mobile: 340 },
-  { month: "September", desktop: 314, mobile: 240 },
-  { month: "October", desktop: 414, mobile: 240 },
-];
+// Update AppBarChart to receive weeklyTotals data
+type WeeklyTotal = {
+  weekStart: string;
+  total: number;
+};
 
-const AppBarChart = () => {
+interface AppBarChartProps {
+  weeklyTotals: WeeklyTotal[]; // Add prop for weeklyTotals
+}
+
+const AppBarChart = ({ weeklyTotals }: AppBarChartProps) => {
+  // Map weeklyTotals to the data format used by the chart
+  const chartData = weeklyTotals.map(({ weekStart, total }) => ({
+    month: weekStart,
+    totalRevenue: total,
+  }));
+
   return (
     <div className="w-full h-[300px] bg-background dark:bg-zinc-900 border border-muted rounded-2xl shadow-sm p-4">
       <h2 className="text-base md:text-lg font-semibold text-foreground mb-4">
@@ -53,16 +56,11 @@ const AppBarChart = () => {
               fontSize: "14px",
             }}
           />
-          <Bar dataKey="desktop" fill="url(#colorDesktop)" radius={[6, 6, 0, 0]} />
-          <Bar dataKey="mobile" fill="url(#colorMobile)" radius={[6, 6, 0, 0]} />
+          <Bar dataKey="totalRevenue" fill="url(#colorRevenue)" radius={[6, 6, 0, 0]} />
           <defs>
-            <linearGradient id="colorDesktop" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.9} />
               <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.4} />
-            </linearGradient>
-            <linearGradient id="colorMobile" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#38bdf8" stopOpacity={0.9} />
-              <stop offset="100%" stopColor="#38bdf8" stopOpacity={0.4} />
             </linearGradient>
           </defs>
         </BarChart>
