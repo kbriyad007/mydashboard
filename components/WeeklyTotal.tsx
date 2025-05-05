@@ -66,25 +66,25 @@ const WeeklyTotal = () => {
 
   if (loading) {
     return (
-      <div className="p-4 text-gray-600 text-sm">
+      <div className="p-4 text-gray-600 text-sm font-medium">
         Loading weekly totals...
       </div>
     );
   }
 
   return (
-    <div className="bg-white p-4 rounded shadow w-full max-w-3xl mx-auto mt-6">
-      <h2 className="text-xl font-semibold mb-4 text-blue-700">Weekly Ordered Total</h2>
-      <ul className="text-sm text-gray-800 space-y-2">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto mt-6 border border-gray-100">
+      <h2 className="text-2xl font-semibold text-blue-900 mb-6">Weekly Ordered Total</h2>
+      <ul className="text-sm text-gray-700 space-y-3">
         {weeklyTotals.length > 0 ? (
           weeklyTotals.map(({ weekStart, total }) => (
-            <li key={weekStart} className="flex justify-between">
-              <span>{weekStart}</span>
-              <span className="font-medium text-blue-600">৳{total.toLocaleString()}</span>
+            <li key={weekStart} className="flex justify-between items-center py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200 ease-in-out">
+              <span className="font-medium">{weekStart}</span>
+              <span className="font-semibold text-blue-600">৳{total.toLocaleString()}</span>
             </li>
           ))
         ) : (
-          <li>No data available.</li>
+          <li className="text-center text-gray-500">No data available.</li>
         )}
       </ul>
     </div>
