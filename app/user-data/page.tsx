@@ -71,7 +71,8 @@ export default function UserDataPage() {
 
   return (
     <div className="flex bg-[#f9fafb] min-h-screen">
-      <Sidebar />
+   <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
+
       <main className="ml-48 p-8 w-full">
         <h1 className="text-4xl font-bold text-gray-800 mb-10 flex items-center gap-2">
           <PackageSearch className="text-indigo-600" /> Courier Dashboard
