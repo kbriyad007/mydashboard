@@ -22,21 +22,22 @@ export default function HomePage() {
   const iconStyle =
     "text-muted-foreground hover:text-primary transition duration-200 cursor-pointer";
 
+  const boxStyle =
+    "bg-background dark:bg-zinc-900 p-5 md:p-6 rounded-2xl shadow-md border border-muted relative";
+
   return (
-    <div className="flex min-h-screen bg-muted/40">
-      <Sidebar
-        isCollapsed={isSidebarCollapsed}
-        toggleSidebar={toggleSidebar}
-      />
+    <div className="flex min-h-screen bg-gradient-to-br from-muted/30 via-background to-muted/50">
+      <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
 
       <div
         className={`transition-all duration-300 ${
           isSidebarCollapsed ? "ml-20" : "ml-64"
         } flex-1 flex flex-col`}
       >
-        <main className="p-6 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border col-span-1 md:col-span-2 relative">
+        <main className="p-4 md:p-6 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {/* Chart */}
+            <div className={`${boxStyle} col-span-1 md:col-span-2`}>
               <div className="absolute top-3 right-3">
                 {showChart ? (
                   <EyeOff size={18} className={iconStyle} onClick={() => setShowChart(false)} />
@@ -47,7 +48,8 @@ export default function HomePage() {
               {showChart && <AppBarChart />}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border relative">
+            {/* Card */}
+            <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 {showCard ? (
                   <EyeOff size={18} className={iconStyle} onClick={() => setShowCard(false)} />
@@ -58,7 +60,8 @@ export default function HomePage() {
               {showCard && <Card />}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border col-span-1 md:col-span-3 relative">
+            {/* User Requests */}
+            <div className={`${boxStyle} col-span-1 md:col-span-3`}>
               <div className="absolute top-3 right-3">
                 {showRequests ? (
                   <EyeOff size={18} className={iconStyle} onClick={() => setShowRequests(false)} />
@@ -69,7 +72,8 @@ export default function HomePage() {
               {showRequests && <UserRequests />}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border col-span-1 md:col-span-2 relative">
+            {/* Top Products */}
+            <div className={`${boxStyle} col-span-1 md:col-span-2`}>
               <div className="absolute top-3 right-3">
                 {showTopProducts ? (
                   <EyeOff size={18} className={iconStyle} onClick={() => setShowTopProducts(false)} />
@@ -80,7 +84,8 @@ export default function HomePage() {
               {showTopProducts && <TopProducts />}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border relative">
+            {/* Weekly Total */}
+            <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 {showWeeklyTotal ? (
                   <EyeOff size={18} className={iconStyle} onClick={() => setShowWeeklyTotal(false)} />
@@ -91,7 +96,8 @@ export default function HomePage() {
               {showWeeklyTotal && <WeeklyTotal />}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border relative">
+            {/* Extra Box */}
+            <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 <Eye size={18} className={iconStyle} />
               </div>
