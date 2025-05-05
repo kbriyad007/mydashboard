@@ -25,16 +25,46 @@ const chartData = [
 
 const AppBarChart = () => {
   return (
-    <div className="w-full h-[300px] bg-white p-4 rounded shadow">
-      <h2 className="text-lg font-semibold mb-4">Total Revenue</h2>
+    <div className="w-full h-[300px] bg-background dark:bg-zinc-900 border border-muted rounded-2xl shadow-sm p-4">
+      <h2 className="text-base md:text-lg font-semibold text-foreground mb-4">
+        Total Revenue
+      </h2>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="desktop" fill="#2563eb" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="mobile" fill="#60a5fa" radius={[4, 4, 0, 0]} />
+        <BarChart data={chartData} barSize={22}>
+          <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
+          <XAxis
+            dataKey="month"
+            tick={{ fontSize: 12 }}
+            stroke="#94a3b8"
+            axisLine={false}
+            tickLine={false}
+          />
+          <YAxis
+            stroke="#94a3b8"
+            tick={{ fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "rgba(255,255,255,0.9)",
+              borderRadius: "8px",
+              border: "1px solid #e2e8f0",
+              fontSize: "14px",
+            }}
+          />
+          <Bar dataKey="desktop" fill="url(#colorDesktop)" radius={[6, 6, 0, 0]} />
+          <Bar dataKey="mobile" fill="url(#colorMobile)" radius={[6, 6, 0, 0]} />
+          <defs>
+            <linearGradient id="colorDesktop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.9} />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.4} />
+            </linearGradient>
+            <linearGradient id="colorMobile" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#38bdf8" stopOpacity={0.9} />
+              <stop offset="100%" stopColor="#38bdf8" stopOpacity={0.4} />
+            </linearGradient>
+          </defs>
         </BarChart>
       </ResponsiveContainer>
     </div>
