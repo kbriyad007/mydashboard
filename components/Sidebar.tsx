@@ -1,6 +1,6 @@
-
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,31 +10,40 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-import { Home, User, Settings, LogOut, ChevronDown } from "lucide-react";
+import { Home, User, Settings, LogOut, ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 const Sidebar = () => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Toggle sidebar state
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
-    <aside className="fixed top-0 left-0 h-full w-64 bg-white border-r shadow p-6 flex flex-col justify-between">
+    <aside
+      className={`fixed top-0 left-0 h-full ${isCollapsed ? "w-20" : "w-64"} bg-white border-r shadow p-6 flex flex-col justify-between transition-all duration-300`}
+    >
       <div>
-        <h2 className="text-xl font-bold mb-6">Dashboard</h2>
+        <h2 className={`text-xl font-bold mb-6 ${isCollapsed ? "hidden" : ""}`}>Dashboard</h2>
         <nav className="space-y-4">
           <Link href="/">
             <Button variant="ghost" className="w-full justify-start">
               <Home className="w-4 h-4 mr-2" />
-              Home
+              {!isCollapsed && "Home"}
             </Button>
           </Link>
           <Link href="/account">
             <Button variant="ghost" className="w-full justify-start">
               <User className="w-4 h-4 mr-2" />
-              My Account
+              {!isCollapsed && "My Account"}
             </Button>
           </Link>
           <Link href="/settings">
             <Button variant="ghost" className="w-full justify-start">
               <Settings className="w-4 h-4 mr-2" />
-              Settings
+              {!isCollapsed && "Settings"}
             </Button>
           </Link>
         </nav>
@@ -47,7 +56,7 @@ const Sidebar = () => {
             <Button variant="ghost" className="w-full justify-between">
               <span className="flex items-center">
                 <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
+                {!isCollapsed && "Sign Out"}
               </span>
               <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
@@ -65,6 +74,15 @@ const Sidebar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+      {/* Sidebar toggle button */}
+      <Button
+        variant="ghost"
+        className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+        onClick={toggleSidebar}
+      >
+        {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+      </Button>
     </aside>
   );
 };
