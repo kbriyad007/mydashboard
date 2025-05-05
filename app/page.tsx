@@ -15,14 +15,25 @@ export default function Home() {
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [showWeeklyTotal, setShowWeeklyTotal] = useState(true);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // State for sidebar collapse
 
   const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
+  const handleSidebarToggle = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
+      {/* Sidebar */}
+      <Sidebar isCollapsed={isSidebarCollapsed} onToggle={handleSidebarToggle} />
 
-      <div className="ml-60 flex-1 flex flex-col">
+      {/* Main content */}
+      <div
+        className={`flex-1 flex flex-col transition-all duration-300 ${
+          isSidebarCollapsed ? "ml-20" : "ml-64"
+        }`} // Adjusting margin based on sidebar collapse
+      >
         <main className="p-6">
           <div className="grid grid-cols-3 gap-4">
             {/* Box 1 - Chart */}
@@ -138,4 +149,3 @@ export default function Home() {
     </div>
   );
 }
-
