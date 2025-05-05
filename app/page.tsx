@@ -18,15 +18,6 @@ export default function Home() {
 
   const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
-  // Mock request data (replace with actual data)
-  const requests = [
-    { date: "2025-05-01T00:00:00Z", amount: 120 },
-    { date: "2025-05-02T00:00:00Z", amount: 150 },
-    { date: "2025-05-03T00:00:00Z", amount: 80 },
-    { date: "2025-05-04T00:00:00Z", amount: 200 },
-    { date: "2025-05-05T00:00:00Z", amount: 95 },
-  ];
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
@@ -131,7 +122,7 @@ export default function Home() {
                   />
                 )}
               </div>
-              {showWeeklyTotal && <WeeklyTotal requests={requests} />}
+              {showWeeklyTotal && <WeeklyTotal />}
             </div>
 
             {/* Box 6 - Placeholder */}
@@ -147,3 +138,4 @@ export default function Home() {
     </div>
   );
 }
+
