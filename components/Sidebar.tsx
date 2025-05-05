@@ -35,24 +35,25 @@ const Sidebar = () => {
       </Button>
 
       <div>
+        {/* Dashboard Title, hidden when collapsed */}
         <h2 className={`text-xl font-bold mb-6 ${isCollapsed ? "hidden" : ""}`}>Dashboard</h2>
         <nav className="space-y-4">
           <Link href="/">
             <Button variant="ghost" className="w-full justify-start">
               <Home className="w-4 h-4 mr-2" />
-              {!isCollapsed && "Home"}
+              {!isCollapsed && "Home"} {/* Only show text when expanded */}
             </Button>
           </Link>
           <Link href="/account">
             <Button variant="ghost" className="w-full justify-start">
               <User className="w-4 h-4 mr-2" />
-              {!isCollapsed && "My Account"}
+              {!isCollapsed && "My Account"} {/* Only show text when expanded */}
             </Button>
           </Link>
           <Link href="/settings">
             <Button variant="ghost" className="w-full justify-start">
               <Settings className="w-4 h-4 mr-2" />
-              {!isCollapsed && "Settings"}
+              {!isCollapsed && "Settings"} {/* Only show text when expanded */}
             </Button>
           </Link>
         </nav>
@@ -65,7 +66,7 @@ const Sidebar = () => {
             <Button variant="ghost" className="w-full justify-between">
               <span className="flex items-center">
                 <LogOut className="w-4 h-4 mr-2" />
-                {!isCollapsed && "Sign Out"}
+                {!isCollapsed && "Sign Out"} {/* Only show text when expanded */}
               </span>
               <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
