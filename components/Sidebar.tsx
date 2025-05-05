@@ -25,10 +25,10 @@ const Sidebar = () => {
     <aside
       className={`fixed top-0 left-0 h-full ${isCollapsed ? "w-20" : "w-64"} bg-white border-r shadow p-6 flex flex-col justify-between transition-all duration-300`}
     >
-      {/* Minimize Button placed at the top */}
+      {/* Minimize Button placed at the top-right edge */}
       <Button
         variant="ghost"
-        className="absolute top-4 left-1/2 transform -translate-x-1/2"
+        className="absolute top-4 right-4"
         onClick={toggleSidebar}
       >
         {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
