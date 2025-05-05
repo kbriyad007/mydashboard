@@ -1,4 +1,3 @@
-// components/Card.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -44,13 +43,21 @@ const Card = () => {
   const visibleCustomers = allCustomers.slice(0, visibleCount);
 
   return (
-    <div className="w-full p-4 bg-white rounded-xl shadow-sm">
-      <h2 className="text-lg font-semibold mb-3 text-gray-800">Latest Customers</h2>
-      <div className="space-y-2">
+    <div className="w-full p-5 bg-white dark:bg-zinc-900 rounded-2xl shadow-md border border-muted transition-colors">
+      <h2 className="text-base md:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+        Latest Customers
+      </h2>
+
+      <div className="space-y-3">
         {visibleCustomers.map((customer, index) => (
-          <div key={index} className="p-2 border-b last:border-none">
-            <p className="text-sm font-medium text-gray-900">{customer.name}</p>
-            <p className="text-xs text-gray-600">{customer.email}</p>
+          <div
+            key={index}
+            className="p-3 bg-muted/20 dark:bg-muted/10 rounded-lg transition hover:bg-muted/30 dark:hover:bg-muted/20"
+          >
+            <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              {customer.name}
+            </p>
+            <p className="text-xs text-muted-foreground">{customer.email}</p>
           </div>
         ))}
       </div>
@@ -58,7 +65,7 @@ const Card = () => {
       {visibleCount < allCustomers.length && (
         <button
           onClick={handleLoadMore}
-          className="mt-4 text-sm text-blue-600 hover:underline focus:outline-none"
+          className="mt-5 text-sm font-medium text-primary hover:underline focus:outline-none transition"
         >
           Load More
         </button>
