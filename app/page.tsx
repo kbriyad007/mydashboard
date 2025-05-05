@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Sidebar from "@/components/Sidebar"; // Import Sidebar component
+import Sidebar from "@/components/Sidebar";
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
@@ -19,17 +19,21 @@ export default function Home() {
 
   const iconStyle = "text-gray-400 hover:text-gray-700 cursor-pointer";
 
-  // Toggle sidebar state
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
   };
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Pass the collapsed state and toggle function to Sidebar */}
+      {/* Sidebar */}
       <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
 
-      <div className="ml-60 flex-1 flex flex-col">
+      {/* Main Content */}
+      <div
+        className={`transition-all duration-300 ${
+          isSidebarCollapsed ? "ml-20" : "ml-64"
+        } flex-1 flex flex-col`}
+      >
         <main className="p-6">
           <div className="grid grid-cols-3 gap-4">
             {/* Box 1 - Chart */}
