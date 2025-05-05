@@ -25,7 +25,7 @@ const chartData = [
 
 const AppBarChart = () => {
   return (
-    <div className="w-full h-[300px] bg-background dark:bg-zinc-900 border border-muted rounded-2xl shadow-sm p-4">
+    <div className="w-full h-[300px] bg-zinc-50 dark:bg-zinc-900 border border-muted rounded-2xl shadow-md p-4">
       <h2 className="text-base md:text-lg font-semibold text-foreground mb-4">
         Total Revenue
       </h2>
@@ -47,7 +47,7 @@ const AppBarChart = () => {
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "rgba(255,255,255,0.9)",
+              backgroundColor: "#ffffff",
               borderRadius: "8px",
               border: "1px solid #e2e8f0",
               fontSize: "14px",
@@ -72,3 +72,4 @@ const AppBarChart = () => {
 };
 
 export default AppBarChart;
+
