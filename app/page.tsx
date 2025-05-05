@@ -53,7 +53,7 @@ export default function HomePage() {
                   />
                 )}
               </div>
-              {showChart && <AppBarChart />}
+              {showChart && <AppBarChart weeklyTotals={weeklyTotals} />}
             </div>
 
             {/* Card */}
