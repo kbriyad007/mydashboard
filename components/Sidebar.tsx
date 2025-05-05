@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,14 +12,13 @@ import {
 import { Home, User, Settings, LogOut, ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
-const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+// Define the props for Sidebar
+interface SidebarProps {
+  isCollapsed: boolean;
+  toggleSidebar: () => void;
+}
 
-  // Toggle sidebar state
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
+const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
   return (
     <aside
       className={`fixed top-0 left-0 h-full ${isCollapsed ? "w-20" : "w-64"} bg-white border-r shadow p-6 flex flex-col justify-between transition-all duration-300`}
