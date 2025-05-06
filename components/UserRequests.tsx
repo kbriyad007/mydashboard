@@ -13,7 +13,7 @@ import {
   XCircle,
   ShoppingCart,
   Package,
-  Hash,
+
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
