@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  AreaChart,
-  Area,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -34,7 +34,7 @@ const generateAllDates = (startDate: string, endDate: string) => {
 };
 
 const formatDateWithOrdinal = (dateString: string) => {
-  if (dateString.startsWith("W")) return dateString; // For Weekly like "W1"
+  if (dateString.startsWith("W")) return dateString;
 
   const date = new Date(dateString);
   const day = date.getDate();
@@ -83,13 +83,7 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
         Total Revenue ({isWeekly ? "Weekly" : "Daily"})
       </h2>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={completeData}>
-          <defs>
-            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.8} />
-              <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.2} />
-            </linearGradient>
-          </defs>
+        <BarChart data={completeData}>
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.08} />
           <XAxis
             dataKey="day"
@@ -117,16 +111,13 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
               isWeekly ? `Week: ${label}` : `Date: ${formatDateWithOrdinal(label)}`
             }
           />
-          <Area
-            type="monotone"
+          <Bar
             dataKey="total"
-            stroke="#3b82f6"
-            fill="url(#colorRevenue)"
-            strokeWidth={3}
-            dot={false}
-            activeDot={false}
+            fill="#3b82f6"
+            radius={[4, 4, 0, 0]}
+            barSize={30}
           />
-        </AreaChart>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
