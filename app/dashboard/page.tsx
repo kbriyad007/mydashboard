@@ -6,7 +6,7 @@ import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { MdVisibility, MdVisibilityOff, MdExitToApp } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -107,6 +107,11 @@ const Dashboard = () => {
 
   const toggleSidebar = () => setIsSidebarCollapsed((prev) => !prev);
 
+  const handleLogout = () => {
+    localStorage.removeItem("isAdmin");
+    router.push("/login");
+  };
+
   const iconStyle =
     "text-muted-foreground hover:text-primary transition duration-200 cursor-pointer";
 
@@ -123,6 +128,17 @@ const Dashboard = () => {
         } flex-1 flex flex-col`}
       >
         <main className="p-4 md:p-6 space-y-6">
+          {/* Logout Button */}
+          <div className="absolute top-4 right-4">
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition"
+            >
+              <MdExitToApp size={20} className="mr-2 inline" />
+              Logout
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Chart */}
             <div className={`${boxStyle} col-span-1 md:col-span-2`}>
