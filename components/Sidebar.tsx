@@ -44,9 +44,9 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Collapse Button */}
+      {/* Collapse Button - positioned outside edge */}
       <button
-        className="absolute top-4 right-4 p-1 text-white hover:text-gray-200"
+        className="absolute top-4 -right-3 z-10 bg-indigo-700 rounded-full p-1 text-white hover:bg-indigo-800 shadow"
         onClick={toggleSidebar}
       >
         {isCollapsed ? (
