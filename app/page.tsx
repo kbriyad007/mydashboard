@@ -9,6 +9,7 @@ import TopProducts from "@/components/TopProducts";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { Button } from "@/components/ui/button";
 
 type OrderData = {
   "Product-Price"?: string | number;
@@ -17,29 +18,23 @@ type OrderData = {
 };
 
 type TotalType = {
-  day: string;
+  day: string; // day for daily, W1/W2/W3 for weekly
   total: number;
 };
 
 const getDayStartDate = (date: Date) => {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return d.toISOString().split("T")[0]; // YYYY-MM-DD
 };
 
 const getWeekStartDate = (date: Date) => {
   const d = new Date(date);
   const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Start on Monday
-  const weekStart = new Date(d.setDate(diff));
-  weekStart.setHours(0, 0, 0, 0);
-  const year = weekStart.getFullYear();
-  const month = String(weekStart.getMonth() + 1).padStart(2, "0");
-  const dayNum = String(weekStart.getDate()).padStart(2, "0");
-  return `${year}-${month}-${dayNum}`;
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
+  d.setDate(diff);
+  d.setHours(0, 0, 0, 0);
+  return d.toISOString().split("T")[0]; // YYYY-MM-DD
 };
 
 export default function HomePage() {
@@ -50,7 +45,7 @@ export default function HomePage() {
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [dailyTotals, setDailyTotals] = useState<TotalType[]>([]);
   const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
-  const [showWeekly, setShowWeekly] = useState(false);
+  const [viewMode, setViewMode] = useState<"daily" | "weekly">("daily");
 
   useEffect(() => {
     const fetchTotals = async () => {
@@ -80,8 +75,12 @@ export default function HomePage() {
           .sort((a, b) => (a.day < b.day ? -1 : 1));
 
         const weeklyArray: TotalType[] = Object.entries(weeklyMap)
-          .map(([day, total]) => ({ day, total }))
-          .sort((a, b) => (a.day < b.day ? -1 : 1));
+          .map(([date, total]) => ({ date, total }))
+          .sort((a, b) => (a.date < b.date ? -1 : 1))
+          .map((entry, index) => ({
+            day: `W${index + 1}`,
+            total: entry.total,
+          }));
 
         setDailyTotals(dailyArray);
         setWeeklyTotals(weeklyArray);
@@ -114,13 +113,21 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Chart */}
             <div className={`${boxStyle} col-span-1 md:col-span-2`}>
-              <div className="absolute top-3 right-3 flex gap-2">
-                <button
-                  onClick={() => setShowWeekly((prev) => !prev)}
-                  className="text-sm bg-primary text-white px-3 py-1 rounded-lg shadow hover:bg-primary/90 transition"
+              <div className="absolute top-3 right-3 flex gap-2 items-center">
+                <Button
+                  variant={viewMode === "daily" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setViewMode("daily")}
                 >
-                  {showWeekly ? "Show Daily" : "Show Weekly"}
-                </button>
+                  Daily
+                </Button>
+                <Button
+                  variant={viewMode === "weekly" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setViewMode("weekly")}
+                >
+                  Weekly
+                </Button>
                 {showChart ? (
                   <MdVisibilityOff
                     size={22}
@@ -136,7 +143,9 @@ export default function HomePage() {
                 )}
               </div>
               {showChart && (
-                <AppBarChart dailyTotals={showWeekly ? weeklyTotals : dailyTotals} />
+                <AppBarChart
+                  dailyTotals={viewMode === "daily" ? dailyTotals : weeklyTotals}
+                />
               )}
             </div>
 
