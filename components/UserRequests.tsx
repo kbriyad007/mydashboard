@@ -142,7 +142,12 @@ const OrderTable = () => {
                   {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
                 </td>
                 <td className="py-3 px-4">
-                  {order["Product-Price"] ? `৳${order["Product-Price"]}` : "N/A"}
+                  <span className="inline-flex items-center gap-1">
+                    <FileText className="text-green-600" size={14} />
+                    {order["Product-Price"]
+                      ? `৳${order["Product-Price"]}`
+                      : "N/A"}
+                  </span>
                 </td>
                 <td className="py-3 px-4">
                   <button
@@ -153,14 +158,23 @@ const OrderTable = () => {
                   </button>
                 </td>
                 <td className="py-3 px-4">
-                  {highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}
+                  <span className="inline-flex items-center gap-1">
+                    <Phone className="text-blue-500" size={14} />
+                    {highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}
+                  </span>
                 </td>
                 <td className="py-3 px-4">
-                  {highlightMatch(order["User-Email"], searchQuery)}
+                  <span className="inline-flex items-center gap-1">
+                    <Mail className="text-purple-600" size={14} />
+                    {highlightMatch(order["User-Email"], searchQuery)}
+                  </span>
                 </td>
                 <td className="py-3 px-4">{order.Quantity}</td>
                 <td className="py-3 px-4">
-                  <CalendarDays className="text-yellow-500 inline-block mr-1" size={16} />
+                  <CalendarDays
+                    className="text-yellow-500 inline-block mr-1"
+                    size={16}
+                  />
                   {formatDate(order.Time)}
                 </td>
                 <td className="py-3 px-4">
@@ -275,4 +289,3 @@ const OrderTable = () => {
 };
 
 export default OrderTable;
-
