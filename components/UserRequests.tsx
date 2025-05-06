@@ -142,13 +142,8 @@ const OrderTable = () => {
                   {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
                 </td>
                 <td className="py-3 px-4">
-                  <span className="inline-flex items-center gap-1">
-                    <FileText className="text-green-600" size={14} />
-                    {order["Product-Price"]
-                      ? `৳${order["Product-Price"]}`
-                      : "N/A"}
-                  </span>
-                </td>
+  {order["Product-Price"] ? `৳${order["Product-Price"]}` : "N/A"}
+</td>
                 <td className="py-3 px-4">
                   <button
                     onClick={() => setSelectedOrder(order)}
