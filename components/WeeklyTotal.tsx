@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 
 type OrderData = {
@@ -32,7 +32,9 @@ const WeeklyTotal = () => {
     const fetchOrders = async () => {
       try {
         const snapshot = await getDocs(collection(db, "user_request"));
-        const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
+        const data: OrderData[] = snapshot.docs.map(
+          (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as OrderData
+        );
 
         const weeklyMap: { [week: string]: number } = {};
 
@@ -78,7 +80,10 @@ const WeeklyTotal = () => {
       <ul className="text-sm text-gray-700 space-y-3">
         {weeklyTotals.length > 0 ? (
           weeklyTotals.map(({ weekStart, total }) => (
-            <li key={weekStart} className="flex justify-between items-center py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200 ease-in-out">
+            <li
+              key={weekStart}
+              className="flex justify-between items-center py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200 ease-in-out"
+            >
               <span className="font-medium">{weekStart}</span>
               <span className="font-semibold text-blue-600">৳{total.toLocaleString()}</span>
             </li>
