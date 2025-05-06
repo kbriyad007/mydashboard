@@ -16,18 +16,15 @@ type OrderData = {
   Time?: { seconds: number };
 };
 
-type WeeklyTotalType = {
-  weekStart: string;
+type DailyTotalType = {
+  day: string;
   total: number;
 };
 
-const getWeekStartDate = (date: Date) => {
+const getDayStartDate = (date: Date) => {
   const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  d.setDate(diff);
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().split("T")[0];
+  d.setHours(0, 0, 0, 0); // Set to the start of the day
+  return d.toISOString().split("T")[0]; // Format as YYYY-MM-DD
 };
 
 export default function HomePage() {
@@ -36,15 +33,15 @@ export default function HomePage() {
   const [showCard, setShowCard] = useState(true);
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
-  const [weeklyTotals, setWeeklyTotals] = useState<WeeklyTotalType[]>([]);
+  const [dailyTotals, setDailyTotals] = useState<DailyTotalType[]>([]);
 
   useEffect(() => {
-    const fetchWeeklyTotals = async () => {
+    const fetchDailyTotals = async () => {
       try {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
 
-        const weeklyMap: { [week: string]: number } = {};
+        const dailyMap: { [day: string]: number } = {};
 
         data.forEach((order) => {
           const price = parseFloat(order["Product-Price"] as string) || 0;
@@ -52,24 +49,24 @@ export default function HomePage() {
 
           if (order.Time?.seconds) {
             const orderDate = new Date(order.Time.seconds * 1000);
-            const weekStart = getWeekStartDate(orderDate);
+            const dayStart = getDayStartDate(orderDate);
 
-            if (!weeklyMap[weekStart]) weeklyMap[weekStart] = 0;
-            weeklyMap[weekStart] += price * qty;
+            if (!dailyMap[dayStart]) dailyMap[dayStart] = 0;
+            dailyMap[dayStart] += price * qty;
           }
         });
 
-        const weeklyArray: WeeklyTotalType[] = Object.entries(weeklyMap)
-          .map(([weekStart, total]) => ({ weekStart, total }))
-          .sort((a, b) => (a.weekStart < b.weekStart ? -1 : 1));
+        const dailyArray: DailyTotalType[] = Object.entries(dailyMap)
+          .map(([day, total]) => ({ day, total }))
+          .sort((a, b) => (a.day < b.day ? -1 : 1));
 
-        setWeeklyTotals(weeklyArray);
+        setDailyTotals(dailyArray);
       } catch (error) {
-        console.error("Failed to fetch weekly totals:", error);
+        console.error("Failed to fetch daily totals:", error);
       }
     };
 
-    fetchWeeklyTotals();
+    fetchDailyTotals();
   }, []);
 
   const toggleSidebar = () => setIsSidebarCollapsed((prev) => !prev);
@@ -108,7 +105,7 @@ export default function HomePage() {
                   />
                 )}
               </div>
-              {showChart && <AppBarChart weeklyTotals={weeklyTotals} />}
+              {showChart && <AppBarChart dailyTotals={dailyTotals} />}
             </div>
 
             {/* Card */}
