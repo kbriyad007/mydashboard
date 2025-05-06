@@ -30,17 +30,16 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
   return (
     <motion.aside
       className={`fixed top-0 left-0 h-full ${
-        isCollapsed ? "w-20" : "w-64"
-      } bg-gradient-to-r from-blue-500 to-indigo-600 text-white border-r shadow-xl p-6 flex flex-col justify-between transition-all duration-300 ease-in-out rounded-r-xl`}
+        isCollapsed ? "w-16" : "w-56"
+      } bg-gradient-to-r from-blue-500 to-indigo-600 text-white border-r shadow-xl py-4 px-3 flex flex-col justify-between transition-all duration-300 ease-in-out rounded-r-xl`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
       {/* Minimize Button */}
-      <Button
-        variant="ghost"
-        className="absolute top-4 right-4 text-white hover:text-gray-200"
+      <button
+        className="absolute top-3 right-3 p-1 text-white hover:text-gray-200"
         onClick={toggleSidebar}
       >
         {isCollapsed ? (
@@ -48,32 +47,41 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
         ) : (
           <ChevronLeft className="w-4 h-4" />
         )}
-      </Button>
+      </button>
 
       <div>
         <h2
-          className={`text-xl font-semibold mb-6 ${
+          className={`text-lg font-semibold mb-6 ${
             isCollapsed ? "hidden" : ""
           } transition-opacity duration-200`}
         >
           Dashboard
         </h2>
-        <nav className="space-y-4">
+        <nav className="space-y-2">
           <Link href="/">
-            <Button variant="ghost" className="w-full justify-start hover:bg-blue-700 rounded-lg">
-              <Home className="w-5 h-5 mr-2" />
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
+            >
+              <Home className="w-4 h-4 mr-2" />
               {!isCollapsed && "Home"}
             </Button>
           </Link>
           <Link href="/account">
-            <Button variant="ghost" className="w-full justify-start hover:bg-blue-700 rounded-lg">
-              <User className="w-5 h-5 mr-2" />
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
+            >
+              <User className="w-4 h-4 mr-2" />
               {!isCollapsed && "My Account"}
             </Button>
           </Link>
           <Link href="/settings">
-            <Button variant="ghost" className="w-full justify-start hover:bg-blue-700 rounded-lg">
-              <Settings className="w-5 h-5 mr-2" />
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
+            >
+              <Settings className="w-4 h-4 mr-2" />
               {!isCollapsed && "Settings"}
             </Button>
           </Link>
@@ -86,16 +94,19 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="w-full justify-between hover:bg-blue-700 rounded-lg"
+              className="w-full justify-between text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
             >
               <span className="flex items-center">
-                <LogOut className="w-5 h-5 mr-2" />
+                <LogOut className="w-4 h-4 mr-2" />
                 {!isCollapsed && "Sign Out"}
               </span>
               <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="top" className="w-56 bg-white text-gray-800 rounded-lg shadow-lg">
+          <DropdownMenuContent
+            side="top"
+            className="w-48 bg-white text-gray-800 rounded-lg shadow-lg"
+          >
             <DropdownMenuItem>
               <Settings className="w-4 h-4 mr-2" />
               Settings
