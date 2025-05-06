@@ -58,7 +58,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
           Dashboard
         </h2>
         <nav className="space-y-2">
-          <Link href="/">
+          <Link href="https://mydashboard-lac.vercel.app/dashboard">
             <Button
               variant="ghost"
               className="w-full justify-start text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
