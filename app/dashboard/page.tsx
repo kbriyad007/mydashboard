@@ -8,7 +8,7 @@ import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 
 // Other helper functions and types
 
