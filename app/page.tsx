@@ -77,7 +77,7 @@ export default function HomePage() {
         const weeklySorted = Object.entries(weeklyMap)
           .sort((a, b) => (a[0] < b[0] ? -1 : 1));
 
-        const weeklyArray: TotalType[] = weeklySorted.map(([_, total], i) => ({
+        const weeklyArray: TotalType[] = weeklySorted.map(([week, total], i) => ({
           day: `W${i + 1}`,
           total,
         }));
