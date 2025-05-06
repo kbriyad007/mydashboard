@@ -10,7 +10,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// Update AppBarChart to receive dailyTotals data
 type DailyTotal = {
   day: string;
   total: number;
@@ -21,12 +20,12 @@ interface AppBarChartProps {
 }
 
 const generateAllDates = (startDate: string, endDate: string) => {
-  const dates = [];
+  const dates: string[] = [];
   const currentDate = new Date(startDate);
   const end = new Date(endDate);
 
   while (currentDate <= end) {
-    const formattedDate = currentDate.toISOString().split("T")[0];  // "YYYY-MM-DD"
+    const formattedDate = currentDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
     dates.push(formattedDate);
     currentDate.setDate(currentDate.getDate() + 1);
   }
@@ -35,25 +34,24 @@ const generateAllDates = (startDate: string, endDate: string) => {
 };
 
 const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
-  // Find the range of dates (min and max)
+  if (dailyTotals.length === 0) return null;
+
   const allDates = generateAllDates(
     dailyTotals[0]?.day,
     dailyTotals[dailyTotals.length - 1]?.day
   );
 
-  // Explicitly define the map with string keys (dates) and number values (revenue)
   const dailyTotalsMap: { [key: string]: number } = dailyTotals.reduce(
     (acc, { day, total }) => {
       acc[day] = total;
       return acc;
     },
-    {} as { [key: string]: number } // Type assertion
+    {} as { [key: string]: number }
   );
 
-  // Create a complete list of daily totals with zeroes for missing days
   const completeDailyTotals = allDates.map((date) => ({
     day: date,
-    total: dailyTotalsMap[date] || 0,  // Default to 0 if no data exists for the day
+    total: dailyTotalsMap[date] || 0,
   }));
 
   return (
@@ -84,8 +82,10 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
               border: "1px solid #e2e8f0",
               fontSize: "14px",
             }}
+            formatter={(value: number) => [`৳${value.toFixed(2)}`, "Revenue"]}
+            labelFormatter={(label) => `Date: ${label}`}
           />
-          <Bar dataKey="totalRevenue" fill="url(#colorRevenue)" radius={[6, 6, 0, 0]} />
+          <Bar dataKey="total" fill="url(#colorRevenue)" radius={[6, 6, 0, 0]} />
           <defs>
             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.9} />
@@ -99,4 +99,5 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
 };
 
 export default AppBarChart;
+
 
