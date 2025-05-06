@@ -1,7 +1,10 @@
 const LoadingSpinner = () => {
   return (
-    <div className="flex justify-center items-center py-10">
-      <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin" />
+    <div className="flex justify-center items-center py-16">
+      <div className="relative w-12 h-12">
+        <div className="absolute inset-0 rounded-full border-4 border-gray-300"></div>
+        <div className="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin-slow"></div>
+      </div>
     </div>
   );
 };
