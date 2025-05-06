@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -25,7 +25,7 @@ const generateAllDates = (startDate: string, endDate: string) => {
   const end = new Date(endDate);
 
   while (currentDate <= end) {
-    const formattedDate = currentDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
+    const formattedDate = currentDate.toISOString().split("T")[0];
     dates.push(formattedDate);
     currentDate.setDate(currentDate.getDate() + 1);
   }
@@ -60,7 +60,13 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
         Total Revenue (Daily)
       </h2>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={completeDailyTotals}>
+        <AreaChart data={completeDailyTotals}>
+          <defs>
+            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.8} />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.2} />
+            </linearGradient>
+          </defs>
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
           <XAxis
             dataKey="day"
@@ -85,21 +91,19 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
             formatter={(value: number) => [`৳${value.toFixed(2)}`, "Revenue"]}
             labelFormatter={(label) => `Date: ${label}`}
           />
-          <Line
+          <Area
             type="monotone"
             dataKey="total"
             stroke="#3b82f6"
+            fill="url(#colorRevenue)"
             strokeWidth={3}
-            dot={{ r: 4, fill: "#3b82f6" }}
-            activeDot={{ r: 6 }}
+            dot={{ r: 3 }}
+            activeDot={{ r: 5 }}
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
 export default AppBarChart;
-
-
-
