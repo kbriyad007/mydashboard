@@ -10,33 +10,33 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// Update AppBarChart to receive weeklyTotals data
-type WeeklyTotal = {
-  weekStart: string;
+// Update AppBarChart to receive dailyTotals data
+type DailyTotal = {
+  day: string;  // Use 'day' instead of 'weekStart'
   total: number;
 };
 
 interface AppBarChartProps {
-  weeklyTotals: WeeklyTotal[]; // Add prop for weeklyTotals
+  dailyTotals: DailyTotal[];  // Change to 'dailyTotals' prop
 }
 
-const AppBarChart = ({ weeklyTotals }: AppBarChartProps) => {
-  // Map weeklyTotals to the data format used by the chart
-  const chartData = weeklyTotals.map(({ weekStart, total }) => ({
-    month: weekStart,
-    totalRevenue: total,
+const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
+  // Map dailyTotals to the data format used by the chart
+  const chartData = dailyTotals.map(({ day, total }) => ({
+    day,          // Day of the data
+    totalRevenue: total,  // Total revenue for the day
   }));
 
   return (
     <div className="w-full h-[300px] bg-background dark:bg-zinc-900 border border-muted rounded-2xl shadow-sm p-4">
       <h2 className="text-base md:text-lg font-semibold text-foreground mb-4">
-        Total Revenue
+        Total Revenue (Daily)
       </h2>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={chartData} barSize={22}>
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
           <XAxis
-            dataKey="month"
+            dataKey="day"  // Change to 'day' for daily data
             tick={{ fontSize: 12 }}
             stroke="#94a3b8"
             axisLine={false}
