@@ -3,10 +3,13 @@
 import { useEffect, useState } from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { HiOutlineShoppingCart } from "react-icons/hi";
-import { AiOutlineClose } from "react-icons/ai"; // Close icon for the modal
-import { FaWhatsapp } from "react-icons/fa"; // WhatsApp icon
-import { MdEmail } from "react-icons/md"; // Email icon
+import {
+  ShoppingCart,
+  X,
+  PhoneIcon,
+  MailIcon,
+  MessageCircle,
+} from "lucide-react";
 
 type Request = {
   name: string;
@@ -68,8 +71,8 @@ export default function TopProducts() {
 
   return (
     <>
-      <div className="p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+      <div className="p-6 bg-white rounded-2xl shadow-xl border border-gray-100">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
           Top 5 Products by Quantity
         </h2>
 
@@ -78,18 +81,16 @@ export default function TopProducts() {
             {topProducts.map((item, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-md hover:bg-gray-100 transition-all"
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow hover:bg-gray-100 cursor-pointer transition-all"
+                onClick={() => setSelectedProduct(item)}
               >
-                <div
-                  className="flex items-center space-x-4 cursor-pointer"
-                  onClick={() => setSelectedProduct(item)}
-                >
-                  <HiOutlineShoppingCart className="text-xl text-blue-500" />
-                  <div className="text-lg font-semibold text-gray-700 hover:text-blue-600">
+                <div className="flex items-center gap-3">
+                  <ShoppingCart className="w-5 h-5 text-blue-500" />
+                  <div className="text-base font-medium text-gray-700 hover:text-blue-600">
                     {item.product}
                   </div>
                 </div>
-                <div className="font-medium text-gray-900">{item.quantity}</div>
+                <div className="text-sm font-semibold text-gray-900">{item.quantity}</div>
               </div>
             ))}
           </div>
@@ -101,59 +102,73 @@ export default function TopProducts() {
       {/* Modal */}
       {selectedProduct && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
           onClick={() => setSelectedProduct(null)}
         >
           <div
-            className="bg-white rounded-lg p-8 shadow-lg w-full max-w-lg relative"
+            className="bg-white rounded-2xl p-6 shadow-2xl w-full max-w-2xl relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedProduct(null)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
             >
-              <AiOutlineClose />
+              <X className="w-6 h-6" />
             </button>
-            <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
               Customers for {selectedProduct.product}
             </h3>
-            <div className="space-y-3 max-h-64 overflow-y-auto">
+
+            <div className="space-y-4 max-h-72 overflow-y-auto pr-1">
               {selectedProduct.customers.map((customer, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm space-y-2"
+                  className="p-4 bg-gray-50 border border-gray-200 rounded-xl shadow-sm"
                 >
-                  <p className="font-medium text-gray-800">{customer.name}</p>
-                  <p className="text-sm text-gray-600">📧 {customer.email}</p>
-                  <p className="text-sm text-gray-600">📞 {customer.phone}</p>
+                  <p className="text-base font-medium text-gray-900">{customer.name}</p>
 
-                  <div className="flex gap-4 mt-2">
+                  <div className="flex items-center text-sm text-gray-600 mt-1">
+                    <PhoneIcon className="w-4 h-4 mr-2 text-gray-500" />
+                    {customer.phone}
+                  </div>
+
+                  <div className="flex items-center text-sm text-gray-600 mt-1">
+                    <MailIcon className="w-4 h-4 mr-2 text-gray-500" />
+                    {customer.email}
+                  </div>
+
+                  <div className="flex gap-4 mt-3">
                     <a
                       href={`https://wa.me/${customer.phone}?text=Hi%20${encodeURIComponent(
                         customer.name
                       )},%20thanks%20for%20your%20order!`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-sm text-green-600 hover:text-green-800"
+                      className="flex items-center text-sm text-green-600 hover:text-green-700 font-medium"
                     >
-                      <FaWhatsapp className="mr-2" /> WhatsApp
+                      <MessageCircle className="w-4 h-4 mr-1.5" />
+                      WhatsApp
                     </a>
+
                     <a
                       href={`mailto:${customer.email}?subject=Order Update&body=Hi ${encodeURIComponent(
                         customer.name
                       )},%0A%0AThanks for your order.`}
-                      className="flex items-center text-sm text-blue-600 hover:text-blue-800"
+                      className="flex items-center text-sm text-blue-600 hover:text-blue-700 font-medium"
                     >
-                      <MdEmail className="mr-2" /> Email
+                      <MailIcon className="w-4 h-4 mr-1.5" />
+                      Email
                     </a>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-right">
+
+            <div className="mt-5 text-right">
               <button
                 onClick={() => setSelectedProduct(null)}
-                className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
+                className="px-5 py-2 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition"
               >
                 Close
               </button>
