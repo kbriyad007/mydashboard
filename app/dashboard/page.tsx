@@ -10,7 +10,38 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
-// Other helper functions and types
+// Define the TotalType type
+type TotalType = {
+  day: string;
+  total: number;
+};
+
+type OrderData = {
+  "Product-Price"?: string | number;
+  Quantity: number | string;
+  Time?: { seconds: number };
+};
+
+const getDayStartDate = (date: Date) => {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const getWeekStartDate = (date: Date) => {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Start on Monday
+  const weekStart = new Date(d.setDate(diff));
+  weekStart.setHours(0, 0, 0, 0);
+  const year = weekStart.getFullYear();
+  const month = String(weekStart.getMonth() + 1).padStart(2, "0");
+  const dayNum = String(weekStart.getDate()).padStart(2, "0");
+  return `${year}-${month}-${dayNum}`;
+};
 
 const Dashboard = () => {
   const router = useRouter();
@@ -21,7 +52,7 @@ const Dashboard = () => {
     if (isAdmin !== "true") {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showChart, setShowChart] = useState(true);
