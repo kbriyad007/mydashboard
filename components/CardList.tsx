@@ -8,70 +8,57 @@ type Customer = {
   name: string;
   email: string;
   phone: string;
-  item: string;
 };
 
 const Card = () => {
-  const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
-  const [visibleCount, setVisibleCount] = useState(5);
+  const [customers, setCustomers] = useState<Customer[]>([]);
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const q = query(collection(db, "user_request"), orderBy("Time", "desc"));
         const snapshot = await getDocs(q);
-        const customers: Customer[] = snapshot.docs.map((doc) => {
-          const data = doc.data();
+        const data: Customer[] = snapshot.docs.map((doc) => {
+          const d = doc.data();
           return {
-            name: data["Customer-Name"] || "Unknown",
-            email: data["User-Email"] || "N/A",
-            phone: data["Phone-Number"] || "N/A",
-            item: data["Product-Name"] || "N/A",
+            name: d["Customer-Name"] || "Unknown",
+            email: d["User-Email"] || "N/A",
+            phone: d["Phone-Number"] || "N/A",
           };
         });
-        setAllCustomers(customers);
+        setCustomers(data.slice(0, 3)); // Show only latest 3
       } catch (error) {
-        console.error("Failed to fetch customers:", error);
+        console.error("Error fetching customers:", error);
       }
     };
 
     fetchCustomers();
   }, []);
 
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 5);
-  };
-
-  const visibleCustomers = allCustomers.slice(0, visibleCount);
-
   return (
-    <div className="w-full p-4 bg-white dark:bg-zinc-900 rounded-xl shadow border border-muted">
-      <h2 className="text-sm md:text-base font-semibold text-gray-800 dark:text-gray-100 mb-3">
+    <div className="w-full p-4 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
+      <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">
         Latest Customers
       </h2>
 
-      <div className="space-y-2">
-        {visibleCustomers.map((customer, index) => (
+      <div className="space-y-3">
+        {customers.map((customer, index) => (
           <div
             key={index}
-            className="p-3 bg-muted/10 dark:bg-muted/5 rounded-lg flex flex-col gap-1 hover:bg-muted/20 dark:hover:bg-muted/10 transition"
+            className="p-3 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 hover:shadow-sm transition"
           >
-            <p className="text-sm font-medium text-gray-900 dark:text-white">{customer.name}</p>
-            <p className="text-xs text-muted-foreground">{customer.email}</p>
-            <p className="text-xs text-muted-foreground">📦 {customer.item}</p>
-            <p className="text-xs text-muted-foreground">📞 {customer.phone}</p>
+            <p className="text-sm font-medium text-gray-800 dark:text-white">
+              {customer.name}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+              {customer.email}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              {customer.phone}
+            </p>
           </div>
         ))}
       </div>
-
-      {visibleCount < allCustomers.length && (
-        <button
-          onClick={handleLoadMore}
-          className="mt-4 text-xs font-medium text-blue-600 hover:underline dark:text-blue-400 transition"
-        >
-          Load More
-        </button>
-      )}
     </div>
   );
 };
