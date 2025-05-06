@@ -33,6 +33,25 @@ const generateAllDates = (startDate: string, endDate: string) => {
   return dates;
 };
 
+// Format to "1st May"
+const formatDateWithOrdinal = (dateString: string) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString("default", { month: "short" });
+
+  const getOrdinal = (n: number) => {
+    if (n > 3 && n < 21) return "th";
+    switch (n % 10) {
+      case 1: return "st";
+      case 2: return "nd";
+      case 3: return "rd";
+      default: return "th";
+    }
+  };
+
+  return `${day}${getOrdinal(day)} ${month}`;
+};
+
 const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
   if (dailyTotals.length === 0) return null;
 
@@ -70,6 +89,7 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
           <XAxis
             dataKey="day"
+            tickFormatter={formatDateWithOrdinal}
             tick={{ fontSize: 12 }}
             stroke="#94a3b8"
             axisLine={false}
@@ -89,7 +109,7 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
               fontSize: "14px",
             }}
             formatter={(value: number) => [`৳${value.toFixed(2)}`, "Revenue"]}
-            labelFormatter={(label) => `Date: ${label}`}
+            labelFormatter={(label) => `Date: ${formatDateWithOrdinal(label)}`}
           />
           <Area
             type="monotone"
