@@ -142,8 +142,8 @@ const OrderTable = () => {
                   {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
                 </td>
                 <td className="py-3 px-4">
-  {order["Product-Price"] ? `৳${order["Product-Price"]}` : "N/A"}
-</td>
+                  {order["Product-Price"] ? `৳${order["Product-Price"]}` : "N/A"}
+                </td>
                 <td className="py-3 px-4">
                   <button
                     onClick={() => setSelectedOrder(order)}
@@ -238,7 +238,7 @@ const OrderTable = () => {
               <XCircle size={20} />
             </button>
 
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-3 mb-5">
               <div className="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 p-2 rounded-full">
                 <UserCircle className="w-6 h-6" />
               </div>
@@ -247,33 +247,30 @@ const OrderTable = () => {
               </h3>
             </div>
 
-            <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-              <div className="flex items-center gap-2">
-                <UserCircle size={16} className="text-gray-400" />
-                <span className="font-medium text-gray-500 dark:text-gray-400">Name:</span>
-                <span>{selectedOrder["Customer-Name"]}</span>
+            <div className="space-y-4 text-sm text-gray-700 dark:text-gray-300">
+              <div className="grid grid-cols-3 gap-2 items-center">
+                <UserCircle size={18} className="text-gray-400" />
+                <span className="col-span-2">{selectedOrder["Customer-Name"]}</span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Mail size={16} className="text-gray-400" />
-                <span className="font-medium text-gray-500 dark:text-gray-400">Email:</span>
-                <a
-                  href={`mailto:${selectedOrder["User-Email"]}`}
-                  className="text-blue-600 dark:text-blue-300 hover:underline"
-                >
-                  {selectedOrder["User-Email"]}
-                </a>
+              <div className="grid grid-cols-3 gap-2 items-center">
+                <Mail size={18} className="text-gray-400" />
+                <span className="col-span-2">{selectedOrder["User-Email"]}</span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Phone size={16} className="text-gray-400" />
-                <span className="font-medium text-gray-500 dark:text-gray-400">Phone:</span>
-                <a
-                  href={`tel:${selectedOrder["Phone-Number"]}`}
-                  className="text-blue-600 dark:text-blue-300 hover:underline"
-                >
-                  {selectedOrder["Phone-Number"] || "N/A"}
-                </a>
+              <div className="grid grid-cols-3 gap-2 items-center">
+                <Phone size={18} className="text-gray-400" />
+                <span className="col-span-2">{selectedOrder["Phone-Number"] || "N/A"}</span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 items-center">
+                <FileText size={18} className="text-gray-400" />
+                <span className="col-span-2">{selectedOrder["Product-Name"] || "N/A"}</span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 items-center">
+                <span className="text-lg font-bold text-gray-500 dark:text-gray-400">Qty</span>
+                <span className="col-span-2">{selectedOrder.Quantity}</span>
               </div>
             </div>
           </div>
