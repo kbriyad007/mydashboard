@@ -44,7 +44,6 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Collapse Button - slightly inside the edge */}
       <button
         className="absolute top-4 right-0.5 z-10 text-white hover:text-gray-200"
         onClick={toggleSidebar}
@@ -56,7 +55,6 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
         )}
       </button>
 
-      {/* Top - Navigation */}
       <div>
         <h2
           className={`text-xl font-bold mb-8 tracking-tight ${
@@ -72,7 +70,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
               className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
               <LayoutDashboard className="w-5 h-5 mr-2" />
-              {!isCollapsed && <span className="transition-opacity">Home</span>}
+              {!isCollapsed && <span>Home</span>}
             </Button>
           </Link>
           <Link href="/account">
@@ -81,7 +79,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
               className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
               <User className="w-5 h-5 mr-2" />
-              {!isCollapsed && <span className="transition-opacity">My Account</span>}
+              {!isCollapsed && <span>My Account</span>}
             </Button>
           </Link>
           <Link href="/settings">
@@ -90,13 +88,12 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
               className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
               <Settings2 className="w-5 h-5 mr-2" />
-              {!isCollapsed && <span className="transition-opacity">Settings</span>}
+              {!isCollapsed && <span>Settings</span>}
             </Button>
           </Link>
         </nav>
       </div>
 
-      {/* Bottom - Dropdown */}
       <div className="mt-auto">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
