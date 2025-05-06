@@ -34,9 +34,11 @@ export default function HomePage() {
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [dailyTotals, setDailyTotals] = useState<DailyTotalType[]>([]);
+  const [loading, setLoading] = useState(true); // Loading state for fetching data
 
   useEffect(() => {
     const fetchDailyTotals = async () => {
+      setLoading(true); // Start loading
       try {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
@@ -44,8 +46,8 @@ export default function HomePage() {
         const dailyMap: { [day: string]: number } = {};
 
         data.forEach((order) => {
-          const price = parseFloat(order["Product-Price"] as string) || 0;
-          const qty = parseInt(order.Quantity as string) || 1;
+          const price = parseFloat(order["Product-Price"] as string) || 0; // Handle missing or invalid price
+          const qty = parseInt(order.Quantity as string) || 1; // Handle missing or invalid quantity
 
           if (order.Time?.seconds) {
             const orderDate = new Date(order.Time.seconds * 1000);
@@ -60,9 +62,11 @@ export default function HomePage() {
           .map(([day, total]) => ({ day, total }))
           .sort((a, b) => (a.day < b.day ? -1 : 1));
 
-        setDailyTotals(dailyArray);
+        setDailyTotals(dailyArray); // Set the fetched totals
       } catch (error) {
         console.error("Failed to fetch daily totals:", error);
+      } finally {
+        setLoading(false); // Stop loading
       }
     };
 
@@ -105,7 +109,11 @@ export default function HomePage() {
                   />
                 )}
               </div>
-              {showChart && <AppBarChart dailyTotals={dailyTotals} />}
+              {showChart && !loading ? (
+                <AppBarChart dailyTotals={dailyTotals} />
+              ) : (
+                loading && <p>Loading chart...</p>
+              )}
             </div>
 
             {/* Card */}
