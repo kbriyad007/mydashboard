@@ -1,13 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
 import WeeklyTotal from "@/components/WeeklyTotal";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md"; // Modern icons
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+
+type OrderData = {
+  "Product-Price"?: string | number;
+  Quantity: number | string;
+  Time?: { seconds: number };
+};
+
+type WeeklyTotalType = {
+  weekStart: string;
+  total: number;
+};
+
+const getWeekStartDate = (date: Date) => {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff);
+  d.setHours(0, 0, 0, 0);
+  return d.toISOString().split("T")[0];
+};
 
 export default function HomePage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -16,6 +38,41 @@ export default function HomePage() {
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [showWeeklyTotal, setShowWeeklyTotal] = useState(true);
+  const [weeklyTotals, setWeeklyTotals] = useState<WeeklyTotalType[]>([]);
+
+  useEffect(() => {
+    const fetchWeeklyTotals = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "user_request"));
+        const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
+
+        const weeklyMap: { [week: string]: number } = {};
+
+        data.forEach((order) => {
+          const price = parseFloat(order["Product-Price"] as string) || 0;
+          const qty = parseInt(order.Quantity as string) || 1;
+
+          if (order.Time?.seconds) {
+            const orderDate = new Date(order.Time.seconds * 1000);
+            const weekStart = getWeekStartDate(orderDate);
+
+            if (!weeklyMap[weekStart]) weeklyMap[weekStart] = 0;
+            weeklyMap[weekStart] += price * qty;
+          }
+        });
+
+        const weeklyArray: WeeklyTotalType[] = Object.entries(weeklyMap)
+          .map(([weekStart, total]) => ({ weekStart, total }))
+          .sort((a, b) => (a.weekStart < b.weekStart ? -1 : 1));
+
+        setWeeklyTotals(weeklyArray);
+      } catch (error) {
+        console.error("Failed to fetch weekly totals:", error);
+      }
+    };
+
+    fetchWeeklyTotals();
+  }, []);
 
   const toggleSidebar = () => setIsSidebarCollapsed((prev) => !prev);
 
@@ -133,7 +190,7 @@ export default function HomePage() {
                   />
                 )}
               </div>
-              {showWeeklyTotal && <WeeklyTotal />}
+              {showWeeklyTotal && <WeeklyTotal weeklyTotals={weeklyTotals} />}
             </div>
 
             {/* Extra Box */}
