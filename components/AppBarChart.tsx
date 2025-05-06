@@ -41,13 +41,13 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
     dailyTotals[dailyTotals.length - 1]?.day
   );
 
-  // Ensure each date has a corresponding total, even if it's zero
+  // Explicitly define the map with string keys (dates) and number values (revenue)
   const dailyTotalsMap: { [key: string]: number } = dailyTotals.reduce(
     (acc, { day, total }) => {
       acc[day] = total;
       return acc;
     },
-    {}
+    {} as { [key: string]: number } // Type assertion
   );
 
   // Create a complete list of daily totals with zeroes for missing days
@@ -99,3 +99,4 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
 };
 
 export default AppBarChart;
+
