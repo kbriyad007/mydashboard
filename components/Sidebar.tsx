@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   LayoutDashboard,
-  UserRound,
+  User,
   Settings2,
   LogOut,
   ChevronDown,
@@ -80,7 +80,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
               variant="ghost"
               className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
-              <UserRound className="w-5 h-5 mr-2" />
+              <User className="w-5 h-5 mr-2" />
               {!isCollapsed && <span className="transition-opacity">My Account</span>}
             </Button>
           </Link>
