@@ -228,54 +228,65 @@ const OrderTable = () => {
       )}
 
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="relative bg-white dark:bg-gray-900 p-6 md:p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-200 dark:border-gray-700">
-            <button
-              onClick={() => setSelectedOrder(null)}
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-800 dark:hover:text-white"
-              title="Close"
-            >
-              <XCircle size={20} />
-            </button>
+  <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="relative bg-white dark:bg-gray-900 p-6 md:p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-200 dark:border-gray-700">
+      <button
+        onClick={() => setSelectedOrder(null)}
+        className="absolute top-3 right-3 text-gray-400 hover:text-gray-800 dark:hover:text-white"
+        title="Close"
+      >
+        <XCircle size={20} />
+      </button>
 
-            <div className="flex items-center gap-3 mb-5">
-              <div className="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 p-2 rounded-full">
-                <UserCircle className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                Customer Info
-              </h3>
-            </div>
-
-            <div className="space-y-4 text-sm text-gray-700 dark:text-gray-300">
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <UserCircle size={18} className="text-gray-400" />
-                <span className="col-span-2">{selectedOrder["Customer-Name"]}</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <Mail size={18} className="text-gray-400" />
-                <span className="col-span-2">{selectedOrder["User-Email"]}</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <Phone size={18} className="text-gray-400" />
-                <span className="col-span-2">{selectedOrder["Phone-Number"] || "N/A"}</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <FileText size={18} className="text-gray-400" />
-                <span className="col-span-2">{selectedOrder["Product-Name"] || "N/A"}</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <span className="text-lg font-bold text-gray-500 dark:text-gray-400">Qty</span>
-                <span className="col-span-2">{selectedOrder.Quantity}</span>
-              </div>
-            </div>
-          </div>
+      <div className="flex items-center gap-3 mb-4">
+        <div className="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 p-2 rounded-full">
+          <UserCircle className="w-6 h-6" />
         </div>
-      )}
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+          Customer Info
+        </h3>
+      </div>
+
+      <div className="space-y-4 text-sm text-gray-700 dark:text-gray-300">
+        <div className="grid grid-cols-3 gap-2 items-center">
+          <span className="font-medium text-gray-500 dark:text-gray-400 col-span-1">Name:</span>
+          <span className="col-span-2">{selectedOrder["Customer-Name"]}</span>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 items-center">
+          <span className="font-medium text-gray-500 dark:text-gray-400 col-span-1">Email:</span>
+          <a
+            href={`mailto:${selectedOrder["User-Email"]}`}
+            className="col-span-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 px-2 py-1 rounded transition cursor-pointer"
+          >
+            {selectedOrder["User-Email"]}
+          </a>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 items-center">
+          <span className="font-medium text-gray-500 dark:text-gray-400 col-span-1">Phone:</span>
+          <a
+            href={`tel:${selectedOrder["Phone-Number"]}`}
+            className="col-span-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 px-2 py-1 rounded transition cursor-pointer"
+          >
+            {selectedOrder["Phone-Number"] || "N/A"}
+          </a>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 items-center">
+          <span className="font-medium text-gray-500 dark:text-gray-400 col-span-1">Product:</span>
+          <span className="col-span-2">{selectedOrder["Product-Name"] || "N/A"}</span>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 items-center">
+          <span className="font-medium text-gray-500 dark:text-gray-400 col-span-1">Quantity:</span>
+          <span className="col-span-2">{selectedOrder.Quantity}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
