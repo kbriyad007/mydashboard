@@ -9,11 +9,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-
 import {
-  Home,
-  User,
-  Settings,
+  LayoutDashboard,
+  UserRound,
+  Settings2,
   LogOut,
   ChevronDown,
   ChevronRight,
@@ -31,87 +30,85 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
   const router = useRouter();
 
   const handleSignOut = () => {
-    // Clear the localStorage session data (isAdmin flag)
     localStorage.removeItem("isAdmin");
-
-    // Redirect the user to the login page after signing out
     router.push("/login");
   };
 
   return (
     <motion.aside
       className={`fixed top-0 left-0 h-full ${
-        isCollapsed ? "w-16" : "w-56"
-      } bg-gradient-to-r from-blue-500 to-indigo-600 text-white border-r shadow-xl py-4 px-3 flex flex-col justify-between transition-all duration-300 ease-in-out rounded-r-xl`}
+        isCollapsed ? "w-16" : "w-60"
+      } bg-gradient-to-br from-indigo-600 to-blue-600 text-white border-r shadow-lg py-5 px-4 flex flex-col justify-between transition-all duration-300 ease-in-out rounded-r-xl`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Minimize Button */}
+      {/* Collapse Button */}
       <button
-        className="absolute top-3 right-3 p-1 text-white hover:text-gray-200"
+        className="absolute top-4 right-4 p-1 text-white hover:text-gray-200"
         onClick={toggleSidebar}
       >
         {isCollapsed ? (
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-5 h-5" />
         ) : (
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-5 h-5" />
         )}
       </button>
 
+      {/* Top - Navigation */}
       <div>
         <h2
-          className={`text-lg font-semibold mb-6 ${
-            isCollapsed ? "hidden" : ""
+          className={`text-xl font-bold mb-8 tracking-tight ${
+            isCollapsed ? "hidden" : "block"
           } transition-opacity duration-200`}
         >
           Dashboard
         </h2>
-        <nav className="space-y-2">
+        <nav className="space-y-3">
           <Link href="https://mydashboard-lac.vercel.app/dashboard">
             <Button
               variant="ghost"
-              className="w-full justify-start text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
+              className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
-              <Home className="w-4 h-4 mr-2" />
-              {!isCollapsed && "Home"}
+              <LayoutDashboard className="w-5 h-5 mr-2" />
+              {!isCollapsed && <span className="transition-opacity">Home</span>}
             </Button>
           </Link>
           <Link href="/account">
             <Button
               variant="ghost"
-              className="w-full justify-start text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
+              className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
-              <User className="w-4 h-4 mr-2" />
-              {!isCollapsed && "My Account"}
+              <UserRound className="w-5 h-5 mr-2" />
+              {!isCollapsed && <span className="transition-opacity">My Account</span>}
             </Button>
           </Link>
           <Link href="/settings">
             <Button
               variant="ghost"
-              className="w-full justify-start text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
+              className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
-              <Settings className="w-4 h-4 mr-2" />
-              {!isCollapsed && "Settings"}
+              <Settings2 className="w-5 h-5 mr-2" />
+              {!isCollapsed && <span className="transition-opacity">Settings</span>}
             </Button>
           </Link>
         </nav>
       </div>
 
-      {/* Dropdown at bottom */}
+      {/* Bottom - Dropdown */}
       <div className="mt-auto">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="w-full justify-between text-sm px-2 py-1.5 hover:bg-blue-700 rounded-md"
+              className="w-full justify-between items-center text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
               <span className="flex items-center">
-                <LogOut className="w-4 h-4 mr-2" />
+                <LogOut className="w-5 h-5 mr-2" />
                 {!isCollapsed && "Sign Out"}
               </span>
-              <ChevronDown className="w-4 h-4 ml-2" />
+              {!isCollapsed && <ChevronDown className="w-4 h-4 ml-auto" />}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -119,12 +116,12 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
             className="w-48 bg-white text-gray-800 rounded-lg shadow-lg"
           >
             <DropdownMenuItem>
-              <Settings className="w-4 h-4 mr-2" />
+              <Settings2 className="w-4 h-4 mr-2" />
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>
-              <LogOut className="w-4 h-4 mr-2" />
+              <LogOut className="w-4 h-4 mr-2 text-red-600" />
               Sign Out
             </DropdownMenuItem>
           </DropdownMenuContent>
