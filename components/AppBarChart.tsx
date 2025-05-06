@@ -12,19 +12,48 @@ import {
 
 // Update AppBarChart to receive dailyTotals data
 type DailyTotal = {
-  day: string;  // Use 'day' instead of 'weekStart'
+  day: string;
   total: number;
 };
 
 interface AppBarChartProps {
-  dailyTotals: DailyTotal[];  // Change to 'dailyTotals' prop
+  dailyTotals: DailyTotal[];
 }
 
+const generateAllDates = (startDate: string, endDate: string) => {
+  const dates = [];
+  const currentDate = new Date(startDate);
+  const end = new Date(endDate);
+
+  while (currentDate <= end) {
+    const formattedDate = currentDate.toISOString().split("T")[0];  // "YYYY-MM-DD"
+    dates.push(formattedDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+};
+
 const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
-  // Map dailyTotals to the data format used by the chart
-  const chartData = dailyTotals.map(({ day, total }) => ({
-    day,          // Day of the data
-    totalRevenue: total,  // Total revenue for the day
+  // Find the range of dates (min and max)
+  const allDates = generateAllDates(
+    dailyTotals[0]?.day,
+    dailyTotals[dailyTotals.length - 1]?.day
+  );
+
+  // Ensure each date has a corresponding total, even if it's zero
+  const dailyTotalsMap: { [key: string]: number } = dailyTotals.reduce(
+    (acc, { day, total }) => {
+      acc[day] = total;
+      return acc;
+    },
+    {}
+  );
+
+  // Create a complete list of daily totals with zeroes for missing days
+  const completeDailyTotals = allDates.map((date) => ({
+    day: date,
+    total: dailyTotalsMap[date] || 0,  // Default to 0 if no data exists for the day
   }));
 
   return (
@@ -33,10 +62,10 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
         Total Revenue (Daily)
       </h2>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={chartData} barSize={22}>
+        <BarChart data={completeDailyTotals} barSize={22}>
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
           <XAxis
-            dataKey="day"  // Change to 'day' for daily data
+            dataKey="day"
             tick={{ fontSize: 12 }}
             stroke="#94a3b8"
             axisLine={false}
