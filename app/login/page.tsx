@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const ADMIN_PASSWORD = "your-secure-password"; // Change this to a strong password
+const ADMIN_PASSWORD = "ekia19901990"; // Change this to a strong password
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
