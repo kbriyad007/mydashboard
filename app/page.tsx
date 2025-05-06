@@ -21,10 +21,14 @@ type DailyTotalType = {
   total: number;
 };
 
+// ✅ FIXED: Local date formatting instead of UTC
 const getDayStartDate = (date: Date) => {
   const d = new Date(date);
-  d.setHours(0, 0, 0, 0); // Set to the start of the day
-  return d.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+  d.setHours(0, 0, 0, 0);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 export default function HomePage() {
@@ -34,11 +38,9 @@ export default function HomePage() {
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [dailyTotals, setDailyTotals] = useState<DailyTotalType[]>([]);
-  const [loading, setLoading] = useState(true); // Loading state for fetching data
 
   useEffect(() => {
     const fetchDailyTotals = async () => {
-      setLoading(true); // Start loading
       try {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
@@ -46,8 +48,8 @@ export default function HomePage() {
         const dailyMap: { [day: string]: number } = {};
 
         data.forEach((order) => {
-          const price = parseFloat(order["Product-Price"] as string) || 0; // Handle missing or invalid price
-          const qty = parseInt(order.Quantity as string) || 1; // Handle missing or invalid quantity
+          const price = parseFloat(order["Product-Price"] as string) || 0;
+          const qty = parseInt(order.Quantity as string) || 1;
 
           if (order.Time?.seconds) {
             const orderDate = new Date(order.Time.seconds * 1000);
@@ -62,11 +64,9 @@ export default function HomePage() {
           .map(([day, total]) => ({ day, total }))
           .sort((a, b) => (a.day < b.day ? -1 : 1));
 
-        setDailyTotals(dailyArray); // Set the fetched totals
+        setDailyTotals(dailyArray);
       } catch (error) {
         console.error("Failed to fetch daily totals:", error);
-      } finally {
-        setLoading(false); // Stop loading
       }
     };
 
@@ -109,11 +109,7 @@ export default function HomePage() {
                   />
                 )}
               </div>
-              {showChart && !loading ? (
-                <AppBarChart dailyTotals={dailyTotals} />
-              ) : (
-                loading && <p>Loading chart...</p>
-              )}
+              {showChart && <AppBarChart dailyTotals={dailyTotals} />}
             </div>
 
             {/* Card */}
