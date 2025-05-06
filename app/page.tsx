@@ -9,7 +9,6 @@ import TopProducts from "@/components/TopProducts";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { Button } from "@/components/ui/button";
 
 type OrderData = {
   "Product-Price"?: string | number;
@@ -18,23 +17,29 @@ type OrderData = {
 };
 
 type TotalType = {
-  day: string; // "YYYY-MM-DD" for daily, "W1", "W2" etc. for weekly
+  day: string;
   total: number;
 };
 
-// Use local timezone for day start
 const getDayStartDate = (date: Date) => {
-  const local = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  return local.toLocaleDateString("en-CA"); // YYYY-MM-DD
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
-// Get start of the week (Monday) in local time
 const getWeekStartDate = (date: Date) => {
-  const local = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const day = local.getDay(); // 0 = Sunday
-  const diff = local.getDate() - ((day + 6) % 7); // Monday as start
-  local.setDate(diff);
-  return local.toLocaleDateString("en-CA");
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Start on Monday
+  const weekStart = new Date(d.setDate(diff));
+  weekStart.setHours(0, 0, 0, 0);
+  const year = weekStart.getFullYear();
+  const month = String(weekStart.getMonth() + 1).padStart(2, "0");
+  const dayNum = String(weekStart.getDate()).padStart(2, "0");
+  return `${year}-${month}-${dayNum}`;
 };
 
 export default function HomePage() {
@@ -45,7 +50,7 @@ export default function HomePage() {
   const [showTopProducts, setShowTopProducts] = useState(true);
   const [dailyTotals, setDailyTotals] = useState<TotalType[]>([]);
   const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
-  const [viewMode, setViewMode] = useState<"daily" | "weekly">("daily");
+  const [showWeekly, setShowWeekly] = useState(false);
 
   useEffect(() => {
     const fetchTotals = async () => {
@@ -53,8 +58,8 @@ export default function HomePage() {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
 
-        const dailyMap: Record<string, number> = {};
-        const weeklyMap: Record<string, number> = {};
+        const dailyMap: { [day: string]: number } = {};
+        const weeklyMap: { [week: string]: number } = {};
 
         data.forEach((order) => {
           const price = parseFloat(order["Product-Price"] as string) || 0;
@@ -74,13 +79,9 @@ export default function HomePage() {
           .map(([day, total]) => ({ day, total }))
           .sort((a, b) => (a.day < b.day ? -1 : 1));
 
-        const weeklySorted = Object.entries(weeklyMap)
-          .sort((a, b) => (a[0] < b[0] ? -1 : 1));
-
-        const weeklyArray: TotalType[] = weeklySorted.map(([week, total], i) => ({
-          day: `W${i + 1}`,
-          total,
-        }));
+        const weeklyArray: TotalType[] = Object.entries(weeklyMap)
+          .map(([day, total]) => ({ day, total }))
+          .sort((a, b) => (a.day < b.day ? -1 : 1));
 
         setDailyTotals(dailyArray);
         setWeeklyTotals(weeklyArray);
@@ -113,21 +114,13 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Chart */}
             <div className={`${boxStyle} col-span-1 md:col-span-2`}>
-              <div className="absolute top-3 right-3 flex gap-2 items-center">
-                <Button
-                  variant={viewMode === "daily" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setViewMode("daily")}
+              <div className="absolute top-3 right-3 flex gap-2">
+                <button
+                  onClick={() => setShowWeekly((prev) => !prev)}
+                  className="text-sm bg-primary text-white px-3 py-1 rounded-lg shadow hover:bg-primary/90 transition"
                 >
-                  Daily
-                </Button>
-                <Button
-                  variant={viewMode === "weekly" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setViewMode("weekly")}
-                >
-                  Weekly
-                </Button>
+                  {showWeekly ? "Show Daily" : "Show Weekly"}
+                </button>
                 {showChart ? (
                   <MdVisibilityOff
                     size={22}
@@ -143,9 +136,7 @@ export default function HomePage() {
                 )}
               </div>
               {showChart && (
-                <AppBarChart
-                  dailyTotals={viewMode === "daily" ? dailyTotals : weeklyTotals}
-                />
+                <AppBarChart dailyTotals={showWeekly ? weeklyTotals : dailyTotals} />
               )}
             </div>
 
