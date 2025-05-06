@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -60,7 +60,7 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
         Total Revenue (Daily)
       </h2>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={completeDailyTotals} barSize={22}>
+        <LineChart data={completeDailyTotals}>
           <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.1} />
           <XAxis
             dataKey="day"
@@ -85,19 +85,21 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
             formatter={(value: number) => [`৳${value.toFixed(2)}`, "Revenue"]}
             labelFormatter={(label) => `Date: ${label}`}
           />
-          <Bar dataKey="total" fill="url(#colorRevenue)" radius={[6, 6, 0, 0]} />
-          <defs>
-            <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.9} />
-              <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.4} />
-            </linearGradient>
-          </defs>
-        </BarChart>
+          <Line
+            type="monotone"
+            dataKey="total"
+            stroke="#3b82f6"
+            strokeWidth={3}
+            dot={{ r: 4, fill: "#3b82f6" }}
+            activeDot={{ r: 6 }}
+          />
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
 export default AppBarChart;
+
 
 
