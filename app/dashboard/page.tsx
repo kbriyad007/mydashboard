@@ -1,6 +1,6 @@
 "use client";
-
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
@@ -10,39 +10,19 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
-type OrderData = {
-  "Product-Price"?: string | number;
-  Quantity: number | string;
-  Time?: { seconds: number };
-};
+// Other helper functions and types
 
-type TotalType = {
-  day: string;
-  total: number;
-};
+const Dashboard = () => {
+  const router = useRouter();
 
-const getDayStartDate = (date: Date) => {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
+  // Admin check
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("isAdmin");
+    if (isAdmin !== "true") {
+      router.push("/login");
+    }
+  }, []);
 
-const getWeekStartDate = (date: Date) => {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Start on Monday
-  const weekStart = new Date(d.setDate(diff));
-  weekStart.setHours(0, 0, 0, 0);
-  const year = weekStart.getFullYear();
-  const month = String(weekStart.getMonth() + 1).padStart(2, "0");
-  const dayNum = String(weekStart.getDate()).padStart(2, "0");
-  return `${year}-${month}-${dayNum}`;
-};
-
-export default function HomePage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showChart, setShowChart] = useState(true);
   const [showCard, setShowCard] = useState(true);
@@ -52,6 +32,7 @@ export default function HomePage() {
   const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
   const [showWeekly, setShowWeekly] = useState(false);
 
+  // Fetch data
   useEffect(() => {
     const fetchTotals = async () => {
       try {
@@ -212,4 +193,6 @@ export default function HomePage() {
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;
