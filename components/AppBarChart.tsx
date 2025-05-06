@@ -97,8 +97,8 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
             stroke="#3b82f6"
             fill="url(#colorRevenue)"
             strokeWidth={3}
-            dot={{ r: 3 }}
-            activeDot={{ r: 5 }}
+            dot={false}
+            activeDot={false}
           />
         </AreaChart>
       </ResponsiveContainer>
