@@ -16,12 +16,11 @@ type OrderData = {
   Time?: { seconds: number };
 };
 
-type DailyTotalType = {
+type TotalType = {
   day: string;
   total: number;
 };
 
-// ✅ FIXED: Local date formatting instead of UTC
 const getDayStartDate = (date: Date) => {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
@@ -31,21 +30,36 @@ const getDayStartDate = (date: Date) => {
   return `${year}-${month}-${day}`;
 };
 
+const getWeekStartDate = (date: Date) => {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Start on Monday
+  const weekStart = new Date(d.setDate(diff));
+  weekStart.setHours(0, 0, 0, 0);
+  const year = weekStart.getFullYear();
+  const month = String(weekStart.getMonth() + 1).padStart(2, "0");
+  const dayNum = String(weekStart.getDate()).padStart(2, "0");
+  return `${year}-${month}-${dayNum}`;
+};
+
 export default function HomePage() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showChart, setShowChart] = useState(true);
   const [showCard, setShowCard] = useState(true);
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
-  const [dailyTotals, setDailyTotals] = useState<DailyTotalType[]>([]);
+  const [dailyTotals, setDailyTotals] = useState<TotalType[]>([]);
+  const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
+  const [showWeekly, setShowWeekly] = useState(false);
 
   useEffect(() => {
-    const fetchDailyTotals = async () => {
+    const fetchTotals = async () => {
       try {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
 
         const dailyMap: { [day: string]: number } = {};
+        const weeklyMap: { [week: string]: number } = {};
 
         data.forEach((order) => {
           const price = parseFloat(order["Product-Price"] as string) || 0;
@@ -53,24 +67,30 @@ export default function HomePage() {
 
           if (order.Time?.seconds) {
             const orderDate = new Date(order.Time.seconds * 1000);
-            const dayStart = getDayStartDate(orderDate);
+            const dayKey = getDayStartDate(orderDate);
+            const weekKey = getWeekStartDate(orderDate);
 
-            if (!dailyMap[dayStart]) dailyMap[dayStart] = 0;
-            dailyMap[dayStart] += price * qty;
+            dailyMap[dayKey] = (dailyMap[dayKey] || 0) + price * qty;
+            weeklyMap[weekKey] = (weeklyMap[weekKey] || 0) + price * qty;
           }
         });
 
-        const dailyArray: DailyTotalType[] = Object.entries(dailyMap)
+        const dailyArray: TotalType[] = Object.entries(dailyMap)
+          .map(([day, total]) => ({ day, total }))
+          .sort((a, b) => (a.day < b.day ? -1 : 1));
+
+        const weeklyArray: TotalType[] = Object.entries(weeklyMap)
           .map(([day, total]) => ({ day, total }))
           .sort((a, b) => (a.day < b.day ? -1 : 1));
 
         setDailyTotals(dailyArray);
+        setWeeklyTotals(weeklyArray);
       } catch (error) {
-        console.error("Failed to fetch daily totals:", error);
+        console.error("Failed to fetch totals:", error);
       }
     };
 
-    fetchDailyTotals();
+    fetchTotals();
   }, []);
 
   const toggleSidebar = () => setIsSidebarCollapsed((prev) => !prev);
@@ -94,7 +114,13 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Chart */}
             <div className={`${boxStyle} col-span-1 md:col-span-2`}>
-              <div className="absolute top-3 right-3">
+              <div className="absolute top-3 right-3 flex gap-2">
+                <button
+                  onClick={() => setShowWeekly((prev) => !prev)}
+                  className="text-sm bg-primary text-white px-3 py-1 rounded-lg shadow hover:bg-primary/90 transition"
+                >
+                  {showWeekly ? "Show Daily" : "Show Weekly"}
+                </button>
                 {showChart ? (
                   <MdVisibilityOff
                     size={22}
@@ -109,7 +135,9 @@ export default function HomePage() {
                   />
                 )}
               </div>
-              {showChart && <AppBarChart dailyTotals={dailyTotals} />}
+              {showChart && (
+                <AppBarChart dailyTotals={showWeekly ? weeklyTotals : dailyTotals} />
+              )}
             </div>
 
             {/* Card */}
