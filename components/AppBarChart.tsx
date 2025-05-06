@@ -127,3 +127,4 @@ const AppBarChart = ({ dailyTotals }: AppBarChartProps) => {
 };
 
 export default AppBarChart;
+
