@@ -36,7 +36,6 @@ export default function HomePage() {
   const [showCard, setShowCard] = useState(true);
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
-  const [showWeeklyTotal, setShowWeeklyTotal] = useState(true);
   const [weeklyTotals, setWeeklyTotals] = useState<WeeklyTotalType[]>([]);
 
   useEffect(() => {
@@ -170,26 +169,6 @@ export default function HomePage() {
                 )}
               </div>
               {showTopProducts && <TopProducts />}
-            </div>
-
-            {/* Weekly Total */}
-            <div className={boxStyle}>
-              <div className="absolute top-3 right-3">
-                {showWeeklyTotal ? (
-                  <MdVisibilityOff
-                    size={22}
-                    className={iconStyle}
-                    onClick={() => setShowWeeklyTotal(false)}
-                  />
-                ) : (
-                  <MdVisibility
-                    size={22}
-                    className={iconStyle}
-                    onClick={() => setShowWeeklyTotal(true)}
-                  />
-                )}
-              </div>
-              {showWeeklyTotal && <WeeklyTotal weeklyTotals={weeklyTotals} />}
             </div>
 
             {/* Extra Box */}
