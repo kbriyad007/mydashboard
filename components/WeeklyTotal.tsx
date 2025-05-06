@@ -24,10 +24,20 @@ const getWeekStartDate = (date: Date) => {
   return d.toISOString().split("T")[0]; // "YYYY-MM-DD"
 };
 
-const WeeklyTotal = () => {
-  const [weeklyTotals, setWeeklyTotals] = useState<WeeklyTotal[]>([]);
-  const [loading, setLoading] = useState(true);
-
+const WeeklyTotal = ({
+  weeklyTotals,
+  loading,
+}: {
+  weeklyTotals: WeeklyTotalType[];
+  loading: boolean;
+}) => {
+  if (loading) {
+    return (
+      <div className="p-4 text-gray-600 text-sm font-medium">
+        Loading weekly totals...
+      </div>
+    );
+  }
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -76,7 +86,9 @@ const WeeklyTotal = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto mt-6 border border-gray-100">
-      <h2 className="text-2xl font-semibold text-blue-900 mb-6">Weekly Ordered Total</h2>
+      <h2 className="text-2xl font-semibold text-blue-900 mb-6">
+        Weekly Ordered Total
+      </h2>
       <ul className="text-sm text-gray-700 space-y-3">
         {weeklyTotals.length > 0 ? (
           weeklyTotals.map(({ weekStart, total }) => (
@@ -85,7 +97,9 @@ const WeeklyTotal = () => {
               className="flex justify-between items-center py-3 px-4 rounded-lg hover:bg-gray-50 transition-all duration-200 ease-in-out"
             >
               <span className="font-medium">{weekStart}</span>
-              <span className="font-semibold text-blue-600">৳{total.toLocaleString()}</span>
+              <span className="font-semibold text-blue-600">
+                ৳{total.toLocaleString()}
+              </span>
             </li>
           ))
         ) : (
