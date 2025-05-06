@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { FaCalendarAlt } from "react-icons/fa";
-import { SearchIcon, FileTextIcon } from "lucide-react";
+import { SearchIcon, FileTextIcon, Mail, Phone, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoadingSpinner from "./LoadingSpinner";
 import { generateInvoice } from "../utils/generateInvoice";
@@ -130,20 +130,26 @@ const OrderTable = () => {
                 key={order.id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-600 transition"
               >
-                <td className="py-3 px-4">{highlightMatch(order["Product-Name"] || "N/A", searchQuery)}</td>
+                <td className="py-3 px-4">
+                  {highlightMatch(order["Product-Name"] || "N/A", searchQuery)}
+                </td>
                 <td className="py-3 px-4">
                   {order["Product-Price"] ? `৳${order["Product-Price"]}` : "N/A"}
                 </td>
                 <td className="py-3 px-4">
                   <button
                     onClick={() => setSelectedOrder(order)}
-                    className="text-gray-900 dark:text-gray-100 hover:text-blue-600 transition"
+                    className="text-gray-900 dark:text-gray-100 hover:text-blue-600 transition font-medium"
                   >
                     {highlightMatch(order["Customer-Name"], searchQuery)}
                   </button>
                 </td>
-                <td className="py-3 px-4">{highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}</td>
-                <td className="py-3 px-4">{highlightMatch(order["User-Email"], searchQuery)}</td>
+                <td className="py-3 px-4">
+                  {highlightMatch(order["Phone-Number"] || "N/A", searchQuery)}
+                </td>
+                <td className="py-3 px-4">
+                  {highlightMatch(order["User-Email"], searchQuery)}
+                </td>
                 <td className="py-3 px-4">{order.Quantity}</td>
                 <td className="py-3 px-4">
                   <FaCalendarAlt className="text-yellow-500 inline-block mr-2" />
@@ -185,7 +191,11 @@ const OrderTable = () => {
             <button
               key={pageNum}
               onClick={() => setCurrentPage(pageNum)}
-              className={`px-4 py-2 border rounded ${pageNum === currentPage ? "bg-blue-600 text-white" : "hover:bg-gray-200 dark:hover:bg-gray-700"}`}
+              className={`px-4 py-2 border rounded ${
+                pageNum === currentPage
+                  ? "bg-blue-600 text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
+              }`}
             >
               {pageNum}
             </button>
@@ -201,44 +211,63 @@ const OrderTable = () => {
         </div>
       )}
 
-      {/* Modal */}
+      {/* Modern Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-sm w-full relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300">
+          <div className="relative bg-white dark:bg-gray-900 p-6 md:p-8 rounded-2xl shadow-xl max-w-sm w-full animate-fade-in-up border border-gray-200 dark:border-gray-700">
             <button
               onClick={() => setSelectedOrder(null)}
-              className="absolute top-2 right-3 text-gray-500 hover:text-black text-xl"
+              className="absolute top-3 right-3 text-gray-400 hover:text-gray-800 dark:hover:text-white transition"
+              title="Close"
             >
-              ×
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
-            <h3 className="text-xl font-semibold mb-4">Customer Info</h3>
-            <p className="mb-2">
-              <strong>Name:</strong>{" "}
-              <a
-                href={`mailto:${selectedOrder["User-Email"]}`}
-                className="text-blue-600 hover:text-blue-800"
-              >
-                {selectedOrder["Customer-Name"]}
-              </a>
-            </p>
-            <p className="mb-2">
-              <strong>Email:</strong>{" "}
-              <a
-                href={`mailto:${selectedOrder["User-Email"]}`}
-                className="text-blue-600 hover:text-blue-800"
-              >
-                {selectedOrder["User-Email"]}
-              </a>
-            </p>
-            <p className="mb-2">
-              <strong>Phone:</strong>{" "}
-              <a
-                href={`tel:${selectedOrder["Phone-Number"]}`}
-                className="text-blue-600 hover:text-blue-800"
-              >
-                {selectedOrder["Phone-Number"] || "N/A"}
-              </a>
-            </p>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-blue-100 dark:bg-blue-800 text-blue-600 dark:text-blue-200 p-2 rounded-full">
+                <User className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">Customer Info</h3>
+            </div>
+
+            <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+              <div className="flex items-center gap-2">
+                <User size={16} className="text-gray-400" />
+                <span className="font-medium text-gray-500 dark:text-gray-400">Name:</span>
+                <span>{selectedOrder["Customer-Name"]}</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Mail size={16} className="text-gray-400" />
+                <span className="font-medium text-gray-500 dark:text-gray-400">Email:</span>
+                <a
+                  href={`mailto:${selectedOrder["User-Email"]}`}
+                  className="text-blue-600 dark:text-blue-300 hover:underline"
+                >
+                  {selectedOrder["User-Email"]}
+                </a>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Phone size={16} className="text-gray-400" />
+                <span className="font-medium text-gray-500 dark:text-gray-400">Phone:</span>
+                <a
+                  href={`tel:${selectedOrder["Phone-Number"]}`}
+                  className="text-blue-600 dark:text-blue-300 hover:underline"
+                >
+                  {selectedOrder["Phone-Number"] || "N/A"}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       )}
