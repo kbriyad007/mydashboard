@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -27,6 +28,16 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    // Clear the localStorage session data (isAdmin flag)
+    localStorage.removeItem("isAdmin");
+
+    // Redirect the user to the login page after signing out
+    router.push("/login");
+  };
+
   return (
     <motion.aside
       className={`fixed top-0 left-0 h-full ${
@@ -112,7 +123,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignOut}>
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
             </DropdownMenuItem>
