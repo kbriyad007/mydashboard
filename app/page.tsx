@@ -18,23 +18,23 @@ type OrderData = {
 };
 
 type TotalType = {
-  day: string; // day for daily, W1/W2/W3 for weekly
+  day: string; // "YYYY-MM-DD" for daily, "W1", "W2" etc. for weekly
   total: number;
 };
 
+// Use local timezone for day start
 const getDayStartDate = (date: Date) => {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().split("T")[0]; // YYYY-MM-DD
+  const local = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  return local.toLocaleDateString("en-CA"); // YYYY-MM-DD
 };
 
+// Get start of the week (Monday) in local time
 const getWeekStartDate = (date: Date) => {
-  const d = new Date(date);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
-  d.setDate(diff);
-  d.setHours(0, 0, 0, 0);
-  return d.toISOString().split("T")[0]; // YYYY-MM-DD
+  const local = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const day = local.getDay(); // 0 = Sunday
+  const diff = local.getDate() - ((day + 6) % 7); // Monday as start
+  local.setDate(diff);
+  return local.toLocaleDateString("en-CA");
 };
 
 export default function HomePage() {
@@ -53,8 +53,8 @@ export default function HomePage() {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
 
-        const dailyMap: { [day: string]: number } = {};
-        const weeklyMap: { [week: string]: number } = {};
+        const dailyMap: Record<string, number> = {};
+        const weeklyMap: Record<string, number> = {};
 
         data.forEach((order) => {
           const price = parseFloat(order["Product-Price"] as string) || 0;
@@ -74,13 +74,13 @@ export default function HomePage() {
           .map(([day, total]) => ({ day, total }))
           .sort((a, b) => (a.day < b.day ? -1 : 1));
 
-        const weeklyArray: TotalType[] = Object.entries(weeklyMap)
-          .map(([date, total]) => ({ date, total }))
-          .sort((a, b) => (a.date < b.date ? -1 : 1))
-          .map((entry, index) => ({
-            day: `W${index + 1}`,
-            total: entry.total,
-          }));
+        const weeklySorted = Object.entries(weeklyMap)
+          .sort((a, b) => (a[0] < b[0] ? -1 : 1));
+
+        const weeklyArray: TotalType[] = weeklySorted.map(([_, total], i) => ({
+          day: `W${i + 1}`,
+          total,
+        }));
 
         setDailyTotals(dailyArray);
         setWeeklyTotals(weeklyArray);
