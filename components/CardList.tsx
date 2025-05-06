@@ -13,6 +13,7 @@ type Customer = {
 
 const Card = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -27,7 +28,7 @@ const Card = () => {
             phone: d["Phone-Number"] || "N/A",
           };
         });
-        setCustomers(data.slice(0, 3)); // Show only latest 3
+        setCustomers(data);
       } catch (error) {
         console.error("Error fetching customers:", error);
       }
@@ -36,6 +37,16 @@ const Card = () => {
     fetchCustomers();
   }, []);
 
+  const handleToggle = () => {
+    if (visibleCount < customers.length) {
+      setVisibleCount((prev) => prev + 3);
+    } else {
+      setVisibleCount(3); // Reset to initial count
+    }
+  };
+
+  const isShowLess = visibleCount >= customers.length;
+
   return (
     <div className="w-full p-3 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
       <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
@@ -43,7 +54,7 @@ const Card = () => {
       </h2>
 
       <div className="space-y-2">
-        {customers.map((customer, index) => (
+        {customers.slice(0, visibleCount).map((customer, index) => (
           <div
             key={index}
             className="p-2 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 hover:shadow-sm transition"
@@ -63,6 +74,15 @@ const Card = () => {
           </div>
         ))}
       </div>
+
+      {customers.length > 3 && (
+        <button
+          onClick={handleToggle}
+          className="mt-3 text-sm text-blue-600 hover:underline dark:text-blue-400"
+        >
+          {isShowLess ? "Show Less" : "Load More"}
+        </button>
+      )}
     </div>
   );
 };
