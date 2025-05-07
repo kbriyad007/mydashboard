@@ -14,9 +14,17 @@ const Total = ({ total }: { total?: number }) => {
         const querySnapshot = await getDocs(collection(db, 'user_request'));
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          const price = parseFloat(data.Price);
-          if (!isNaN(price)) {
-            tempTotal += price;
+
+          const rawPrice = data['Product-Price'];
+          const quantity = data['Quantity'];
+
+          // Convert price and quantity to numbers safely
+          const price = typeof rawPrice === 'string' ? parseFloat(rawPrice) : Number(rawPrice);
+          const qty = typeof quantity === 'string' ? parseInt(quantity) : Number(quantity);
+
+          // Only proceed if price and quantity are valid numbers
+          if (!isNaN(price) && !isNaN(qty)) {
+            tempTotal += price * qty; // Multiply price by quantity
           }
         });
         setComputedTotal(tempTotal);
