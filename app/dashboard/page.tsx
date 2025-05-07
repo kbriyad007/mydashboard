@@ -7,7 +7,7 @@ import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
-import total from "@/components/total"; // Import the Total component
+import Total from "@/components/total"; // ✅ Changed to PascalCase
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -55,7 +55,7 @@ const Dashboard = () => {
     if (localStorage.getItem("isAdmin") !== "true") {
       router.push("/login");
     }
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     const fetchTotals = async () => {
@@ -105,11 +105,11 @@ const Dashboard = () => {
           <div className="flex space-x-4 mb-6">
             <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
               <h3 className="text-lg font-semibold">Total Price</h3>
-              <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} /> {/* Pass total data */}
+              <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
             </div>
             <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
               <h3 className="text-lg font-semibold">Recent Price</h3>
-              <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} /> {/* Pass recent data */}
+              <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
             </div>
           </div>
 
