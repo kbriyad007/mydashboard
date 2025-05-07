@@ -12,7 +12,6 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
-// Types
 type TotalType = {
   day: string;
   total: number;
@@ -24,7 +23,6 @@ type OrderData = {
   Time?: { seconds: number };
 };
 
-// Helper functions
 const getDayStartDate = (date: Date) => {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
@@ -98,46 +96,50 @@ const Dashboard = () => {
   const iconStyle =
     "text-muted-foreground hover:text-primary transition duration-200 cursor-pointer";
   const boxStyle =
-    "bg-background dark:bg-zinc-900 p-4 sm:p-5 rounded-xl shadow border border-muted relative";
+    "bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm p-5 rounded-2xl relative";
+
+  const statCardStyle =
+    "p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow bg-white/80 dark:bg-zinc-900/60 backdrop-blur";
 
   return (
-    <div className="flex flex-col sm:flex-row min-h-screen bg-gradient-to-br from-muted/30 via-background to-muted/50">
-      <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)} />
-      <div className={`transition-all duration-300 w-full ${isSidebarCollapsed ? "sm:ml-20" : "sm:ml-64"} flex-1`}>
-        <main className="p-3 sm:p-5 space-y-4 sm:space-y-6">
-          {/* Total Price and Recent Price */}
-          <div className="flex space-x-4 mb-6">
-            {/* Total Price */}
-            <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-6 rounded-2xl shadow-lg w-full">
-              <h3 className="text-xl font-semibold text-white mb-4">Total Price</h3>
-              {/* Add a check for loading data */}
-              {isDataLoading ? (
-                <div className="flex justify-center items-center text-white">
-                  <p>Loading...</p>
-                </div>
-              ) : (
-                <div className="text-4xl font-bold text-white">
-                  <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
-                </div>
-              )}
-            </div>
-
-            {/* Recent Price */}
-            <div className="bg-gradient-to-r from-yellow-400 to-red-500 p-6 rounded-2xl shadow-lg w-full">
-              <h3 className="text-xl font-semibold text-white mb-4">Recent Price</h3>
-              {/* Add a check for loading data */}
-              {isDataLoading ? (
-                <div className="flex justify-center items-center text-white">
-                  <p>Loading...</p>
-                </div>
-              ) : (
-                <div className="text-4xl font-bold text-white">
-                  <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
-                </div>
-              )}
-            </div>
+    <div className="flex flex-col sm:flex-row min-h-screen bg-background">
+      <Sidebar
+        isCollapsed={isSidebarCollapsed}
+        toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+      />
+      <div
+        className={`transition-all duration-300 w-full ${
+          isSidebarCollapsed ? "sm:ml-20" : "sm:ml-64"
+        } flex-1`}
+      >
+        <main className="p-4 sm:p-6 space-y-6">
+          {/* Stat Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {["Total Price", "Recent Price"].map((label, idx) => (
+              <div key={label} className={statCardStyle}>
+                <h3 className="text-lg font-semibold text-zinc-700 dark:text-zinc-200 mb-2">
+                  {label}
+                </h3>
+                {isDataLoading ? (
+                  <p className="text-sm text-zinc-500">Loading...</p>
+                ) : (
+                  <div className="text-3xl font-bold text-zinc-900 dark:text-white">
+                    <Total
+                      total={
+                        idx === 0
+                          ? dailyTotals.reduce((acc, curr) => acc + curr.total, 0)
+                          : dailyTotals.length
+                          ? dailyTotals[dailyTotals.length - 1].total
+                          : 0
+                      }
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
 
+          {/* Chart + Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {/* Chart */}
             <div className={`${boxStyle} xl:col-span-2`}>
@@ -149,13 +151,23 @@ const Dashboard = () => {
                   {showWeekly ? "Show Daily" : "Show Weekly"}
                 </button>
                 {showChart ? (
-                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowChart(false)} />
+                  <MdVisibilityOff
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowChart(false)}
+                  />
                 ) : (
-                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowChart(true)} />
+                  <MdVisibility
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowChart(true)}
+                  />
                 )}
               </div>
               {showChart && (
-                <AppBarChart dailyTotals={showWeekly ? weeklyTotals : dailyTotals} />
+                <AppBarChart
+                  dailyTotals={showWeekly ? weeklyTotals : dailyTotals}
+                />
               )}
             </div>
 
@@ -163,9 +175,17 @@ const Dashboard = () => {
             <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 {showCard ? (
-                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowCard(false)} />
+                  <MdVisibilityOff
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowCard(false)}
+                  />
                 ) : (
-                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowCard(true)} />
+                  <MdVisibility
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowCard(true)}
+                  />
                 )}
               </div>
               {showCard && <Card />}
@@ -175,9 +195,17 @@ const Dashboard = () => {
             <div className={`${boxStyle} md:col-span-2 xl:col-span-3`}>
               <div className="absolute top-3 right-3">
                 {showRequests ? (
-                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowRequests(false)} />
+                  <MdVisibilityOff
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowRequests(false)}
+                  />
                 ) : (
-                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowRequests(true)} />
+                  <MdVisibility
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowRequests(true)}
+                  />
                 )}
               </div>
               {showRequests && <UserRequests />}
@@ -187,9 +215,17 @@ const Dashboard = () => {
             <div className={`${boxStyle} xl:col-span-2`}>
               <div className="absolute top-3 right-3">
                 {showTopProducts ? (
-                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowTopProducts(false)} />
+                  <MdVisibilityOff
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowTopProducts(false)}
+                  />
                 ) : (
-                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowTopProducts(true)} />
+                  <MdVisibility
+                    size={20}
+                    className={iconStyle}
+                    onClick={() => setShowTopProducts(true)}
+                  />
                 )}
               </div>
               {showTopProducts && <TopProducts />}
