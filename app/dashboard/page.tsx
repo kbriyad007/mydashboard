@@ -7,7 +7,6 @@ import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
-import Total from "@/components/total"; // Capitalized import for React component
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -101,18 +100,6 @@ const Dashboard = () => {
       <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)} />
       <div className={`transition-all duration-300 w-full ${isSidebarCollapsed ? "sm:ml-20" : "sm:ml-64"} flex-1`}>
         <main className="p-3 sm:p-5 space-y-4 sm:space-y-6">
-          {/* Total Price and Recent Price */}
-          <div className="flex space-x-4 mb-6">
-            <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
-              <h3 className="text-lg font-semibold">Total Price</h3>
-              <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
-            </div>
-            <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
-              <h3 className="text-lg font-semibold">Recent Price</h3>
-              <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {/* Chart */}
             <div className={`${boxStyle} xl:col-span-2`}>
