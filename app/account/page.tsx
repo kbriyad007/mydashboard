@@ -1,5 +1,3 @@
-// pages/customers.tsx
-
 'use client';
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
@@ -17,7 +15,7 @@ export default function CustomersPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'your-collection-name'));
+      const querySnapshot = await getDocs(collection(db, 'user_request')); // ✅ Fixed here
       const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as Omit<CustomerData, 'id'>),
