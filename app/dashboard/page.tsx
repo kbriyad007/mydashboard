@@ -50,6 +50,7 @@ const Dashboard = () => {
   const [dailyTotals, setDailyTotals] = useState<TotalType[]>([]);
   const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
   const [showWeekly, setShowWeekly] = useState(false);
+  const [isDataLoading, setIsDataLoading] = useState(true);
 
   useEffect(() => {
     if (localStorage.getItem("isAdmin") !== "true") {
@@ -59,6 +60,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchTotals = async () => {
+      setIsDataLoading(true);
       try {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
@@ -85,6 +87,8 @@ const Dashboard = () => {
         setWeeklyTotals(weeklyArray.sort((a, b) => a.day.localeCompare(b.day)));
       } catch (err) {
         console.error("Failed to fetch totals:", err);
+      } finally {
+        setIsDataLoading(false);
       }
     };
 
@@ -105,11 +109,21 @@ const Dashboard = () => {
           <div className="flex space-x-4 mb-6">
             <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
               <h3 className="text-lg font-semibold">Total Price</h3>
-              <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
+              {/* Add a check for loading data */}
+              {isDataLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
+              )}
             </div>
             <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
               <h3 className="text-lg font-semibold">Recent Price</h3>
-              <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
+              {/* Add a check for loading data */}
+              {isDataLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
+              )}
             </div>
           </div>
 
@@ -185,4 +199,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
