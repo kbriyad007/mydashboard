@@ -7,7 +7,7 @@ type CustomerData = {
   id: string;
   'Customer-Name': string;
   'Phone-Number': string;
-  'Product-Link': string | string[];
+  'Product-Links': string[];
 };
 
 export default function CustomersPage() {
@@ -43,28 +43,21 @@ export default function CustomersPage() {
               <tr key={customer.id} className="hover:bg-gray-50 transition">
                 <td className="px-4 py-3 border-b font-medium">{customer['Customer-Name']}</td>
                 <td className="px-4 py-3 border-b">{customer['Phone-Number']}</td>
-                <td className="px-4 py-3 border-b space-y-1">
-                  {Array.isArray(customer['Product-Link']) ? (
-                    customer['Product-Link'].map((link, index) => (
+                <td className="px-4 py-3 border-b space-y-1 max-w-xs">
+                  {customer['Product-Links']?.length > 0 ? (
+                    customer['Product-Links'].map((link, index) => (
                       <a
                         key={index}
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block text-blue-600 hover:underline truncate max-w-xs"
+                        className="block text-blue-600 hover:underline truncate"
                       >
                         {link}
                       </a>
                     ))
                   ) : (
-                    <a
-                      href={customer['Product-Link']}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline truncate max-w-xs block"
-                    >
-                      {customer['Product-Link']}
-                    </a>
+                    <span className="text-gray-400 italic">No links</span>
                   )}
                 </td>
               </tr>
@@ -82,4 +75,5 @@ export default function CustomersPage() {
     </div>
   );
 }
+
 
