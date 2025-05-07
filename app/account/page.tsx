@@ -27,47 +27,54 @@ export default function CustomersPage() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6 text-gray-800">Customer Requests</h1>
-      <div className="overflow-x-auto rounded-lg shadow-lg">
-        <table className="min-w-full bg-white text-sm text-left text-gray-700 border border-gray-200">
-          <thead className="bg-gray-100 text-xs uppercase text-gray-600">
+    <div className="p-8 max-w-6xl mx-auto">
+      <h1 className="text-3xl font-semibold mb-8 text-gray-800">Customer Requests</h1>
+      <div className="overflow-x-auto rounded-xl shadow-lg bg-white border border-gray-200">
+        <table className="min-w-full text-sm text-gray-700">
+          <thead className="bg-gray-50 text-xs uppercase tracking-wider text-gray-600">
             <tr>
-              <th className="px-4 py-3 border-b">Customer Name</th>
-              <th className="px-4 py-3 border-b">Phone Number</th>
-              <th className="px-4 py-3 border-b">Product Link(s)</th>
+              <th className="px-6 py-4 text-left">Customer Name</th>
+              <th className="px-6 py-4 text-left">Phone Number</th>
+              <th className="px-6 py-4 text-left">Product Link(s)</th>
             </tr>
           </thead>
-          <tbody>
-            {customers.map((customer) => (
-              <tr key={customer.id} className="hover:bg-gray-50 transition">
-                <td className="px-4 py-3 border-b font-medium">{customer['Customer-Name']}</td>
-                <td className="px-4 py-3 border-b">{customer['Phone-Number']}</td>
-                <td className="px-4 py-3 border-b space-x-2 space-y-2 max-w-xs flex flex-wrap">
-                  {customer['Product-Links']?.length > 0 ? (
-                    customer['Product-Links'].map((link, index) => (
-                      <a
-                        key={index}
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-full shadow hover:bg-blue-700 transition"
-                      >
-                        Product Link {index + 1}
-                      </a>
-                    ))
-                  ) : (
-                    <span className="text-gray-400 italic">No links</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {customers.length === 0 && (
+          <tbody className="divide-y divide-gray-200">
+            {customers.length === 0 ? (
               <tr>
-                <td colSpan={3} className="text-center py-6 text-gray-500">
+                <td colSpan={3} className="text-center py-8 text-gray-400 italic">
                   No customer data found.
                 </td>
               </tr>
+            ) : (
+              customers.map((customer) => (
+                <tr key={customer.id} className="hover:bg-gray-50 transition">
+                  <td className="px-6 py-5 align-top font-medium text-gray-900 whitespace-nowrap">
+                    {customer['Customer-Name']}
+                  </td>
+                  <td className="px-6 py-5 align-top text-gray-700 whitespace-nowrap">
+                    {customer['Phone-Number']}
+                  </td>
+                  <td className="px-6 py-5 align-top">
+                    <div className="flex flex-col gap-2">
+                      {customer['Product-Links']?.length > 0 ? (
+                        customer['Product-Links'].map((link, index) => (
+                          <a
+                            key={index}
+                            href={link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-xs bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-full shadow transition duration-150 ease-in-out"
+                          >
+                            Product Link {index + 1}
+                          </a>
+                        ))
+                      ) : (
+                        <span className="text-gray-400 italic">No links</span>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))
             )}
           </tbody>
         </table>
