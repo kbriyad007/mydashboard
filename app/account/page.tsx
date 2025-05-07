@@ -43,7 +43,7 @@ export default function CustomersPage() {
               <tr key={customer.id} className="hover:bg-gray-50 transition">
                 <td className="px-4 py-3 border-b font-medium">{customer['Customer-Name']}</td>
                 <td className="px-4 py-3 border-b">{customer['Phone-Number']}</td>
-                <td className="px-4 py-3 border-b space-y-1 max-w-xs">
+                <td className="px-4 py-3 border-b space-x-2 space-y-2 max-w-xs flex flex-wrap">
                   {customer['Product-Links']?.length > 0 ? (
                     customer['Product-Links'].map((link, index) => (
                       <a
@@ -51,9 +51,9 @@ export default function CustomersPage() {
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block text-blue-600 hover:underline truncate"
+                        className="inline-block bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-full shadow hover:bg-blue-700 transition"
                       >
-                        {link}
+                        Product Link {index + 1}
                       </a>
                     ))
                   ) : (
@@ -75,5 +75,3 @@ export default function CustomersPage() {
     </div>
   );
 }
-
-
