@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import Total from './Total'; // adjust path as needed
 
 export default function TotalPage() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -29,9 +30,7 @@ export default function TotalPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">All User Requests</h1>
-      <div className="mb-6 text-lg text-gray-800">
-        ✅ <strong>Total Price of All Orders:</strong> ${totalPrice.toFixed(2)}
-      </div>
+      <Total total={totalPrice} />
     </div>
   );
 }
