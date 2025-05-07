@@ -1,56 +1,85 @@
-// app/account/page.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Sidebar from "@/components/Sidebar";
+import { useState } from "react"; import { Input } from "@/components/ui/input"; import { Button } from "@/components/ui/button"; import { Card, CardContent } from "@/components/ui/card"; import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const AccountPage = () => {
-  const router = useRouter();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+const AccountPage = () => { const [darkMode, setDarkMode] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("isAdmin") !== "true") {
-      router.push("/login");
-    }
+return ( <div className="max-w-4xl mx-auto p-6 space-y-6"> <h1 className="text-2xl font-bold">Account Settings</h1>
 
-    // Example: Replace with your Firebase Auth or actual user data
-    const dummyUser = {
-      name: "Admin User",
-      email: "admin@example.com",
-    };
-    setUser(dummyUser);
-  }, [router]);
+<Tabs defaultValue="profile" className="w-full">
+    <TabsList className="grid w-full grid-cols-4">
+      <TabsTrigger value="profile">Profile</TabsTrigger>
+      <TabsTrigger value="security">Security</TabsTrigger>
+      <TabsTrigger value="preferences">Preferences</TabsTrigger>
+      <TabsTrigger value="billing">Billing</TabsTrigger>
+    </TabsList>
 
-  return (
-    <div className="flex flex-col sm:flex-row min-h-screen bg-muted/10">
-      <Sidebar
-        isCollapsed={isSidebarCollapsed}
-        toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-      />
+    {/* Profile Tab */}
+    <TabsContent value="profile">
+      <Card>
+        <CardContent className="space-y-4 p-6">
+          <Input placeholder="Full Name" />
+          <Input placeholder="Email Address" type="email" />
+          <Input placeholder="Phone Number" type="tel" />
+          <Button>Update Profile</Button>
+        </CardContent>
+      </Card>
+    </TabsContent>
 
-      <main className={`transition-all duration-300 w-full ${isSidebarCollapsed ? "sm:ml-20" : "sm:ml-64"} p-5`}>
-        <div className="bg-background dark:bg-zinc-900 p-6 rounded-xl shadow border border-muted max-w-xl mx-auto">
-          <h1 className="text-2xl font-semibold mb-4">Account Settings</h1>
-          {user ? (
-            <div className="space-y-4">
-              <div>
-                <label className="text-muted-foreground text-sm">Name</label>
-                <p className="text-lg">{user.name}</p>
-              </div>
-              <div>
-                <label className="text-muted-foreground text-sm">Email</label>
-                <p className="text-lg">{user.email}</p>
-              </div>
-            </div>
-          ) : (
-            <p>Loading account info...</p>
-          )}
-        </div>
-      </main>
-    </div>
-  );
-};
+    {/* Security Tab */}
+    <TabsContent value="security">
+      <Card>
+        <CardContent className="space-y-4 p-6">
+          <Input placeholder="Current Password" type="password" />
+          <Input placeholder="New Password" type="password" />
+          <Input placeholder="Confirm New Password" type="password" />
+          <Button>Change Password</Button>
+          <hr />
+          <Button variant="outline">Enable Two-Factor Authentication</Button>
+        </CardContent>
+      </Card>
+    </TabsContent>
+
+    {/* Preferences Tab */}
+    <TabsContent value="preferences">
+      <Card>
+        <CardContent className="space-y-4 p-6">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+            />
+            Enable Dark Mode
+          </label>
+          <select className="border rounded px-2 py-1">
+            <option>English</option>
+            <option>Spanish</option>
+            <option>French</option>
+          </select>
+          <Button>Save Preferences</Button>
+        </CardContent>
+      </Card>
+    </TabsContent>
+
+    {/* Billing Tab */}
+    <TabsContent value="billing">
+      <Card>
+        <CardContent className="space-y-4 p-6">
+          <p className="text-sm">Current Plan: Free</p>
+          <Button>Upgrade Plan</Button>
+          <Button variant="outline">View Invoices</Button>
+        </CardContent>
+      </Card>
+    </TabsContent>
+  </Tabs>
+
+  <div className="border-t pt-6 text-right">
+    <Button variant="destructive">Delete Account</Button>
+  </div>
+</div>
+
+); };
 
 export default AccountPage;
+
