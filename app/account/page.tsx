@@ -36,12 +36,13 @@ export default function CustomersPage() {
               <th className="px-6 py-4 text-left">Customer Name</th>
               <th className="px-6 py-4 text-left">Phone Number</th>
               <th className="px-6 py-4 text-left">Product Link(s)</th>
+              <th className="px-6 py-4 text-left">Supplier Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {customers.length === 0 ? (
               <tr>
-                <td colSpan={3} className="text-center py-8 text-gray-400 italic">
+                <td colSpan={4} className="text-center py-8 text-gray-400 italic">
                   No customer data found.
                 </td>
               </tr>
@@ -63,7 +64,7 @@ export default function CustomersPage() {
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block text-xs bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-full shadow transition duration-150 ease-in-out"
+                            className="inline-block text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full shadow-sm transition duration-150 ease-in-out"
                           >
                             Product Link {index + 1}
                           </a>
@@ -72,6 +73,13 @@ export default function CustomersPage() {
                         <span className="text-gray-400 italic">No links</span>
                       )}
                     </div>
+                  </td>
+                  <td className="px-6 py-5 align-top">
+                    <select className="border border-gray-300 rounded-md text-sm px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                      <option value="">Select</option>
+                      <option value="have">I have</option>
+                      <option value="dont-have">I don't have</option>
+                    </select>
                   </td>
                 </tr>
               ))
@@ -82,3 +90,4 @@ export default function CustomersPage() {
     </div>
   );
 }
+
