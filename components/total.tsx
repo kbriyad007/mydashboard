@@ -1,9 +1,11 @@
+'use client';
+
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export async function getTotalPrice(): Promise<number> {
-  const querySnapshot = await getDocs(collection(db, 'user_request'));
   let total = 0;
+  const querySnapshot = await getDocs(collection(db, 'user_request'));
 
   querySnapshot.forEach((doc) => {
     const data = doc.data();
