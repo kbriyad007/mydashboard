@@ -107,22 +107,33 @@ const Dashboard = () => {
         <main className="p-3 sm:p-5 space-y-4 sm:space-y-6">
           {/* Total Price and Recent Price */}
           <div className="flex space-x-4 mb-6">
-            <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
-              <h3 className="text-lg font-semibold">Total Price</h3>
+            {/* Total Price */}
+            <div className="bg-gradient-to-r from-blue-500 to-teal-400 p-6 rounded-2xl shadow-lg w-full">
+              <h3 className="text-xl font-semibold text-white mb-4">Total Price</h3>
               {/* Add a check for loading data */}
               {isDataLoading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center text-white">
+                  <p>Loading...</p>
+                </div>
               ) : (
-                <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
+                <div className="text-4xl font-bold text-white">
+                  <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
+                </div>
               )}
             </div>
-            <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
-              <h3 className="text-lg font-semibold">Recent Price</h3>
+
+            {/* Recent Price */}
+            <div className="bg-gradient-to-r from-yellow-400 to-red-500 p-6 rounded-2xl shadow-lg w-full">
+              <h3 className="text-xl font-semibold text-white mb-4">Recent Price</h3>
               {/* Add a check for loading data */}
               {isDataLoading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center text-white">
+                  <p>Loading...</p>
+                </div>
               ) : (
-                <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
+                <div className="text-4xl font-bold text-white">
+                  <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
+                </div>
               )}
             </div>
           </div>
