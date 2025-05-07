@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -10,11 +11,13 @@ type CustomerData = {
   'Phone-Number': string;
   'Product-Links': string[];
   supplierStatus?: string;
+  Price?: string | number;
 };
 
 export default function CustomersPage() {
   const [customers, setCustomers] = useState<CustomerData[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +26,15 @@ export default function CustomersPage() {
         id: doc.id,
         ...(doc.data() as Omit<CustomerData, 'id'>),
       }));
+
+      // Calculate total price
+      const total = data.reduce((sum, customer) => {
+        const price = parseFloat(customer.Price as string);
+        return !isNaN(price) ? sum + price : sum;
+      }, 0);
+
       setCustomers(data);
+      setTotalPrice(total);
     };
 
     fetchData();
@@ -32,9 +43,7 @@ export default function CustomersPage() {
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
       const docRef = doc(db, 'user_request', id);
-      await updateDoc(docRef, {
-        supplierStatus: newStatus,
-      });
+      await updateDoc(docRef, { supplierStatus: newStatus });
 
       setCustomers((prev) =>
         prev.map((customer) =>
@@ -47,11 +56,18 @@ export default function CustomersPage() {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar isCollapsed={isCollapsed} toggleSidebar={() => setIsCollapsed(!isCollapsed)} />
 
       <div className={`flex-1 p-6 transition-all duration-300 ${isCollapsed ? 'ml-16' : 'ml-64'}`}>
-        <h1 className="text-2xl font-semibold mb-6">Customer Requests</h1>
+        <h1 className="text-2xl font-semibold mb-4">Customer Requests</h1>
+
+        {/* Total Price Summary Box */}
+        <div className="mb-6 p-4 rounded-lg bg-white shadow border border-gray-200">
+          <span className="text-gray-600 font-medium">Total Price of All Orders:</span>{' '}
+          <span className="text-green-600 font-bold text-lg">${totalPrice.toFixed(2)}</span>
+        </div>
+
         <div className="overflow-x-auto rounded-xl bg-white shadow border border-gray-200">
           <table className="min-w-full text-sm text-gray-700">
             <thead className="bg-gray-50 text-xs uppercase text-gray-600">
