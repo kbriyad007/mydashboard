@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import UserRequests from '@/components/UserRequests';
 
 export default function TotalPage() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -33,7 +32,6 @@ export default function TotalPage() {
       <div className="mb-6 text-lg text-gray-800">
         ✅ <strong>Total Price of All Orders:</strong> ${totalPrice.toFixed(2)}
       </div>
-      <UserRequests />
     </div>
   );
 }
