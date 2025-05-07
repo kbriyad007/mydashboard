@@ -7,6 +7,7 @@ import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
+import Total from "@/components/total"; // Capitalized import for React component
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -98,11 +99,23 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col sm:flex-row min-h-screen bg-gradient-to-br from-muted/30 via-background to-muted/50">
       <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)} />
-      <div className={`transition-all duration-300 w-full ${isSidebarCollapsed ? "sm:ml-20" : "sm:ml-64"} flex-1`}>
+      <div className={transition-all duration-300 w-full ${isSidebarCollapsed ? "sm:ml-20" : "sm:ml-64"} flex-1}>
         <main className="p-3 sm:p-5 space-y-4 sm:space-y-6">
+          {/* Total Price and Recent Price */}
+          <div className="flex space-x-4 mb-6">
+            <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
+              <h3 className="text-lg font-semibold">Total Price</h3>
+              <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
+            </div>
+            <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
+              <h3 className="text-lg font-semibold">Recent Price</h3>
+              <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {/* Chart */}
-            <div className={`${boxStyle} xl:col-span-2`}>
+            <div className={${boxStyle} xl:col-span-2}>
               <div className="absolute top-3 right-3 flex gap-2">
                 <button
                   onClick={() => setShowWeekly(!showWeekly)}
@@ -134,7 +147,7 @@ const Dashboard = () => {
             </div>
 
             {/* User Requests */}
-            <div className={`${boxStyle} md:col-span-2 xl:col-span-3`}>
+            <div className={${boxStyle} md:col-span-2 xl:col-span-3}>
               <div className="absolute top-3 right-3">
                 {showRequests ? (
                   <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowRequests(false)} />
@@ -146,7 +159,7 @@ const Dashboard = () => {
             </div>
 
             {/* Top Products */}
-            <div className={`${boxStyle} xl:col-span-2`}>
+            <div className={${boxStyle} xl:col-span-2}>
               <div className="absolute top-3 right-3">
                 {showTopProducts ? (
                   <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowTopProducts(false)} />
@@ -170,5 +183,3 @@ const Dashboard = () => {
     </div>
   );
 };
-
-export default Dashboard;
