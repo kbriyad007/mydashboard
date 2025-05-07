@@ -64,7 +64,7 @@ export default function CustomersPage() {
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full shadow-sm transition duration-150 ease-in-out"
+                            className="inline-block text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full shadow-sm transition"
                           >
                             Product Link {index + 1}
                           </a>
@@ -78,7 +78,7 @@ export default function CustomersPage() {
                     <select className="border border-gray-300 rounded-md text-sm px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500">
                       <option value="">Select</option>
                       <option value="have">I have</option>
-                      <option value="dont-have">I don't have</option>
+                      <option value="dont-have">I don&apos;t have</option>
                     </select>
                   </td>
                 </tr>
@@ -90,4 +90,5 @@ export default function CustomersPage() {
     </div>
   );
 }
+
 
