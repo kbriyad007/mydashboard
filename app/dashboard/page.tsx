@@ -9,7 +9,7 @@ import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
 import Total from "@/components/total";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../../firebase";
 
 type TotalType = {
@@ -21,6 +21,7 @@ type OrderData = {
   "Product-Price"?: string | number;
   Quantity: number | string;
   Time?: { seconds: number };
+  Name?: string;
 };
 
 const getDayStartDate = (date: Date) => {
@@ -49,6 +50,7 @@ const Dashboard = () => {
   const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
   const [showWeekly, setShowWeekly] = useState(false);
   const [isDataLoading, setIsDataLoading] = useState(true);
+  const [recentOrders, setRecentOrders] = useState<OrderData[]>([]);
 
   useEffect(() => {
     if (localStorage.getItem("isAdmin") !== "true") {
@@ -90,7 +92,23 @@ const Dashboard = () => {
       }
     };
 
+    const fetchRecentOrders = async () => {
+      try {
+        const q = query(
+          collection(db, "user_request"),
+          orderBy("Time", "desc"),
+          limit(5)
+        );
+        const snapshot = await getDocs(q);
+        const recent = snapshot.docs.map((doc) => doc.data()) as OrderData[];
+        setRecentOrders(recent);
+      } catch (err) {
+        console.error("Failed to fetch recent orders:", err);
+      }
+    };
+
     fetchTotals();
+    fetchRecentOrders();
   }, []);
 
   const iconStyle =
@@ -231,12 +249,33 @@ const Dashboard = () => {
               {showTopProducts && <TopProducts />}
             </div>
 
-            {/* Extra Box */}
+            {/* Recent Orders (recentdata) */}
             <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 <MdVisibility size={20} className={iconStyle} />
               </div>
-              <p className="text-muted-foreground text-sm">Box 6</p>
+              <h3 className="text-lg font-semibold mb-3">Recent Orders</h3>
+              <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                {recentOrders.map((order, i) => (
+                  <div
+                    key={i}
+                    className="border-b border-zinc-200 dark:border-zinc-700 pb-2 text-sm"
+                  >
+                    <p>
+                      <strong>Name:</strong> {order.Name || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Price:</strong> {order["Product-Price"] || 0}
+                    </p>
+                    <p>
+                      <strong>Quantity:</strong> {order.Quantity}
+                    </p>
+                  </div>
+                ))}
+                {recentOrders.length === 0 && (
+                  <p className="text-sm text-muted-foreground">No recent orders.</p>
+                )}
+              </div>
             </div>
           </div>
         </main>
