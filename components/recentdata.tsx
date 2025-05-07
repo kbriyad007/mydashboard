@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../firebase";
 
 type Order = {
   Name?: string;
