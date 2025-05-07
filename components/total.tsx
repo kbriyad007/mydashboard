@@ -1,36 +1,17 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import Total from './Total'; // adjust path as needed
 
-export default function TotalPage() {
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+export async function getTotalPrice(): Promise<number> {
+  const querySnapshot = await getDocs(collection(db, 'user_request'));
+  let total = 0;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, 'user_request'));
-      let sum = 0;
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const price = parseFloat(data.Price);
+    if (!isNaN(price)) {
+      total += price;
+    }
+  });
 
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const price = parseFloat(data.Price);
-        if (!isNaN(price)) {
-          sum += price;
-        }
-      });
-
-      setTotalPrice(sum);
-    };
-
-    fetchData();
-  }, []);
-
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">All User Requests</h1>
-      <Total total={totalPrice} />
-    </div>
-  );
+  return total;
 }
