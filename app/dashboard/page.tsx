@@ -7,7 +7,7 @@ import AppBarChart from "@/components/AppBarChart";
 import Card from "@/components/CardList";
 import UserRequests from "@/components/UserRequests";
 import TopProducts from "@/components/TopProducts";
-import Total from "@/components/total"; // ✅ Changed to PascalCase
+import total from "@/components/total"; // ✅ Changed to lowercase `total`
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -105,11 +105,12 @@ const Dashboard = () => {
           <div className="flex space-x-4 mb-6">
             <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
               <h3 className="text-lg font-semibold">Total Price</h3>
-              <Total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
+              {/* Pass total price as prop */}
+              <total total={dailyTotals.reduce((acc, curr) => acc + curr.total, 0)} />
             </div>
             <div className="bg-gray-200 p-4 rounded-lg shadow-md w-full">
               <h3 className="text-lg font-semibold">Recent Price</h3>
-              <Total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
+              <total total={dailyTotals.length ? dailyTotals[dailyTotals.length - 1].total : 0} />
             </div>
           </div>
 
