@@ -21,7 +21,7 @@ type OrderData = {
   "Product-Price"?: string | number;
   Quantity: number | string;
   Time?: { seconds: number };
-  Name?: string;
+  ["Customer-Name"]?: string;
   Address?: string;
 };
 
@@ -253,7 +253,7 @@ const Dashboard = () => {
                 ) : (
                   recentData.map((item, idx) => (
                     <div key={idx} className="text-sm border-b pb-2">
-                      <p><strong>Name:</strong> {item.Name || "N/A"}</p>
+                      <p><strong>Name:</strong> {item["Customer-Name"] || "N/A"}</p>
                       <p><strong>Address:</strong> {item.Address || "N/A"}</p>
                       <p><strong>Price:</strong> {item["Product-Price"] || "N/A"}</p>
                       <p><strong>Qty:</strong> {item.Quantity}</p>
