@@ -242,21 +242,36 @@ const Dashboard = () => {
             </div>
 
             {/* Recent Data Display */}
-            <div className={boxStyle}>
+            <div
+              className={`${boxStyle} border-t-4 border-primary/60 bg-gradient-to-tl from-primary/30 to-primary/0 shadow-xl hover:shadow-2xl transition-all duration-300`}
+            >
               <div className="absolute top-3 right-3">
                 <MdVisibility size={20} className={iconStyle} />
               </div>
               <div id="recentdata" className="space-y-2">
-                <h3 className="text-lg font-semibold mb-2">Recent Orders</h3>
+                <h3 className="text-lg font-semibold mb-2 text-zinc-700 dark:text-zinc-100">
+                  Recent Orders
+                </h3>
                 {recentData.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No recent data</p>
                 ) : (
                   recentData.map((item, idx) => (
-                    <div key={idx} className="text-sm border-b pb-2">
-                      <p><strong>Name:</strong> {item["Customer-Name"] || "N/A"}</p>
-                      <p><strong>Address:</strong> {item.Address || "N/A"}</p>
-                      <p><strong>Price:</strong> {item["Product-Price"] || "N/A"}</p>
-                      <p><strong>Qty:</strong> {item.Quantity}</p>
+                    <div
+                      key={idx}
+                      className="text-sm border-b pb-2 hover:bg-primary/10 rounded-lg p-2"
+                    >
+                      <p>
+                        <strong>Name:</strong> {item["Customer-Name"] || "N/A"}
+                      </p>
+                      <p>
+                        <strong>Address:</strong> {item.Address || "N/A"}
+                      </p>
+                      <p>
+                        <strong>Price:</strong> {item["Product-Price"] || "N/A"}
+                      </p>
+                      <p>
+                        <strong>Qty:</strong> {item.Quantity}
+                      </p>
                     </div>
                   ))
                 )}
