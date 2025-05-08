@@ -108,9 +108,6 @@ const Dashboard = () => {
   const boxStyle =
     "bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm p-5 rounded-2xl relative";
 
-  const statCardStyle =
-    "p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow bg-white/80 dark:bg-zinc-900/60 backdrop-blur";
-
   return (
     <div className="flex flex-col sm:flex-row min-h-screen bg-background">
       <Sidebar
@@ -126,7 +123,10 @@ const Dashboard = () => {
           {/* Stat Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {["Total Price", "Recent Price"].map((label, idx) => (
-              <div key={label} className={statCardStyle}>
+              <div
+                key={label}
+                className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow bg-white/80 dark:bg-zinc-900/60 backdrop-blur"
+              >
                 <h3 className="text-lg font-semibold text-zinc-700 dark:text-zinc-200 mb-2">
                   {label}
                 </h3>
@@ -241,41 +241,43 @@ const Dashboard = () => {
               {showTopProducts && <TopProducts />}
             </div>
 
-            {/* Recent Data Display */}
-            <div
-              className={`${boxStyle} border-t-4 border-primary/60 bg-gradient-to-tl from-primary/30 to-primary/0 shadow-xl hover:shadow-2xl transition-all duration-300`}
-            >
-              <div className="absolute top-3 right-3">
-                <MdVisibility size={20} className={iconStyle} />
-              </div>
-              <div id="recentdata" className="space-y-2">
-                <h3 className="text-lg font-semibold mb-2 text-zinc-700 dark:text-zinc-100">
+            {/* Modern Black Recent Orders Box */}
+            <div className="bg-black text-white rounded-2xl shadow-lg p-6 space-y-4 xl:col-span-1">
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-semibold tracking-wide">
                   Recent Orders
                 </h3>
-                {recentData.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No recent data</p>
-                ) : (
-                  recentData.map((item, idx) => (
+                <MdVisibility size={20} className="text-white/50" />
+              </div>
+              {recentData.length === 0 ? (
+                <p className="text-sm text-gray-400">No recent data</p>
+              ) : (
+                <div className="space-y-4">
+                  {recentData.map((item, idx) => (
                     <div
                       key={idx}
-                      className="text-sm border-b pb-2 hover:bg-primary/10 rounded-lg p-2"
+                      className="border-b border-white/20 pb-3 last:border-b-0"
                     >
-                      <p>
-                        <strong>Name:</strong> {item["Customer-Name"] || "N/A"}
+                      <p className="text-sm">
+                        <span className="font-medium">Name:</span>{" "}
+                        {item["Customer-Name"] || "N/A"}
                       </p>
-                      <p>
-                        <strong>Address:</strong> {item.Address || "N/A"}
+                      <p className="text-sm">
+                        <span className="font-medium">Address:</span>{" "}
+                        {item.Address || "N/A"}
                       </p>
-                      <p>
-                        <strong>Price:</strong> {item["Product-Price"] || "N/A"}
+                      <p className="text-sm">
+                        <span className="font-medium">Price:</span>{" "}
+                        {item["Product-Price"] || "N/A"}
                       </p>
-                      <p>
-                        <strong>Qty:</strong> {item.Quantity}
+                      <p className="text-sm">
+                        <span className="font-medium">Qty:</span>{" "}
+                        {item.Quantity}
                       </p>
                     </div>
-                  ))
-                )}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </main>
