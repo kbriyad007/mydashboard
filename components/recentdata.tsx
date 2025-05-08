@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
+// Updated type to support both Name and "Customer-Name"
 type Order = {
   Name?: string;
+  ["Customer-Name"]?: string;
   Mobile?: string;
   Address?: string;
   Quantity?: number;
@@ -42,11 +44,17 @@ const RecentData = () => {
       <ul className="space-y-3">
         {recentOrders.map((order, index) => (
           <li key={index} className="bg-gray-100 p-3 rounded shadow">
-            <p><strong>Name:</strong> {order.Name}</p>
-            <p><strong>Mobile:</strong> {order.Mobile}</p>
-            <p><strong>Price:</strong> {order["Product-Price"]}</p>
-            <p><strong>Qty:</strong> {order.Quantity}</p>
-            <p><strong>Time:</strong> {order.Time?.seconds ? new Date(order.Time.seconds * 1000).toLocaleString() : "N/A"}</p>
+            <p><strong>Name:</strong> {order.Name || order["Customer-Name"] || "N/A"}</p>
+            <p><strong>Mobile:</strong> {order.Mobile || "N/A"}</p>
+            <p><strong>Address:</strong> {order.Address || "N/A"}</p>
+            <p><strong>Price:</strong> {order["Product-Price"] ?? "N/A"}</p>
+            <p><strong>Qty:</strong> {order.Quantity ?? "N/A"}</p>
+            <p>
+              <strong>Time:</strong>{" "}
+              {order.Time?.seconds
+                ? new Date(order.Time.seconds * 1000).toLocaleString()
+                : "N/A"}
+            </p>
           </li>
         ))}
       </ul>
