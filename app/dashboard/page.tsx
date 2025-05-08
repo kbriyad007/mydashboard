@@ -106,7 +106,7 @@ const Dashboard = () => {
   const iconStyle =
     "text-muted-foreground hover:text-primary transition duration-200 cursor-pointer";
   const boxStyle =
-    "bg-white/80 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm p-5 rounded-2xl relative";
+    "bg-white dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm p-5 rounded-2xl relative";
 
   return (
     <div className="flex flex-col sm:flex-row min-h-screen bg-background">
@@ -125,7 +125,7 @@ const Dashboard = () => {
             {["Total Price", "Recent Price"].map((label, idx) => (
               <div
                 key={label}
-                className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow bg-white/80 dark:bg-zinc-900/60 backdrop-blur"
+                className="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow bg-white dark:bg-zinc-900/60 backdrop-blur"
               >
                 <h3 className="text-lg font-semibold text-zinc-700 dark:text-zinc-200 mb-2">
                   {label}
@@ -241,37 +241,35 @@ const Dashboard = () => {
               {showTopProducts && <TopProducts />}
             </div>
 
-            {/* Modern Black Recent Orders Box */}
-            <div className="bg-black text-white rounded-2xl shadow-lg p-6 space-y-4 xl:col-span-1">
+            {/* Modern White Recent Orders Box */}
+            <div className="bg-white text-zinc-800 rounded-2xl shadow-md p-6 space-y-4 xl:col-span-1 border border-zinc-200">
               <div className="flex justify-between items-center">
-                <h3 className="text-xl font-semibold tracking-wide">
-                  Recent Orders
-                </h3>
-                <MdVisibility size={20} className="text-white/50" />
+                <h3 className="text-xl font-semibold tracking-tight">Recent Orders</h3>
+                <MdVisibility size={20} className="text-zinc-400" />
               </div>
               {recentData.length === 0 ? (
-                <p className="text-sm text-gray-400">No recent data</p>
+                <p className="text-sm text-zinc-500">No recent data</p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-4 text-sm font-medium">
                   {recentData.map((item, idx) => (
                     <div
                       key={idx}
-                      className="border-b border-white/20 pb-3 last:border-b-0"
+                      className="border-b border-zinc-100 pb-3 last:border-b-0"
                     >
-                      <p className="text-sm">
-                        <span className="font-medium">Name:</span>{" "}
+                      <p>
+                        <span className="text-zinc-500">Name:</span>{" "}
                         {item["Customer-Name"] || "N/A"}
                       </p>
-                      <p className="text-sm">
-                        <span className="font-medium">Address:</span>{" "}
+                      <p>
+                        <span className="text-zinc-500">Address:</span>{" "}
                         {item.Address || "N/A"}
                       </p>
-                      <p className="text-sm">
-                        <span className="font-medium">Price:</span>{" "}
+                      <p>
+                        <span className="text-zinc-500">Price:</span>{" "}
                         {item["Product-Price"] || "N/A"}
                       </p>
-                      <p className="text-sm">
-                        <span className="font-medium">Qty:</span>{" "}
+                      <p>
+                        <span className="text-zinc-500">Qty:</span>{" "}
                         {item.Quantity}
                       </p>
                     </div>
