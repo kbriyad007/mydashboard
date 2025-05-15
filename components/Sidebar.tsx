@@ -82,13 +82,13 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
               {!isCollapsed && <span>My Account</span>}
             </Button>
           </Link>
-          <Link href="/settings">
+          <Link href="/finance">
             <Button
               variant="ghost"
               className="w-full justify-start text-sm px-2 py-2 hover:bg-blue-700 rounded-lg transition-all"
             >
               <Settings2 className="w-5 h-5 mr-2" />
-              {!isCollapsed && <span>Settings</span>}
+              {!isCollapsed && <span>Finance</span>}
             </Button>
           </Link>
         </nav>
