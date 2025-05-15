@@ -1,13 +1,9 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import AppBarChart from "@/components/AppBarChart";
-import Card from "@/components/CardList";
-import UserRequests from "@/components/UserRequests";
-import TopProducts from "@/components/TopProducts";
 import Total from "@/components/total";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { collection, getDocs } from "firebase/firestore";
@@ -22,8 +18,6 @@ type OrderData = {
   "Product-Price"?: string | number;
   Quantity: number | string;
   Time?: { seconds: number };
-  ["Customer-Name"]?: string;
-  Address?: string;
 };
 
 const getDayStartDate = (date: Date) => {
@@ -45,14 +39,10 @@ const Dashboard = () => {
   const router = useRouter();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showChart, setShowChart] = useState(true);
-  const [showCard, setShowCard] = useState(true);
-  const [showRequests, setShowRequests] = useState(true);
-  const [showTopProducts, setShowTopProducts] = useState(true);
   const [dailyTotals, setDailyTotals] = useState<TotalType[]>([]);
   const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
   const [showWeekly, setShowWeekly] = useState(false);
   const [isDataLoading, setIsDataLoading] = useState(true);
-  const [recentData, setRecentData] = useState<OrderData[]>([]);
 
   useEffect(() => {
     if (localStorage.getItem("isAdmin") !== "true") {
@@ -87,13 +77,6 @@ const Dashboard = () => {
 
         setDailyTotals(dailyArray.sort((a, b) => a.day.localeCompare(b.day)));
         setWeeklyTotals(weeklyArray.sort((a, b) => a.day.localeCompare(b.day)));
-
-        const sortedRecent = data
-          .filter((order) => order.Time?.seconds)
-          .sort((a, b) => (b.Time!.seconds || 0) - (a.Time!.seconds || 0))
-          .slice(0, 5);
-
-        setRecentData(sortedRecent);
       } catch (err) {
         console.error("Failed to fetch totals:", err);
       } finally {
@@ -150,134 +133,34 @@ const Dashboard = () => {
             ))}
           </div>
 
-          {/* Chart + Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {/* Chart */}
-            <div className={`${boxStyle} xl:col-span-2`}>
-              <div className="absolute top-3 right-3 flex gap-2">
-                <button
-                  onClick={() => setShowWeekly(!showWeekly)}
-                  className="text-xs sm:text-sm bg-primary text-white px-2 py-1 rounded-lg shadow hover:bg-primary/90"
-                >
-                  {showWeekly ? "Show Daily" : "Show Weekly"}
-                </button>
-                {showChart ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowChart(false)}
-                  />
-                ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowChart(true)}
-                  />
-                )}
-              </div>
-              {showChart && (
-                <AppBarChart
-                  dailyTotals={showWeekly ? weeklyTotals : dailyTotals}
+          {/* Financial Chart */}
+          <div className={`${boxStyle}`}>
+            <div className="absolute top-3 right-3 flex gap-2">
+              <button
+                onClick={() => setShowWeekly(!showWeekly)}
+                className="text-xs sm:text-sm bg-primary text-white px-2 py-1 rounded-lg shadow hover:bg-primary/90"
+              >
+                {showWeekly ? "Show Daily" : "Show Weekly"}
+              </button>
+              {showChart ? (
+                <MdVisibilityOff
+                  size={20}
+                  className={iconStyle}
+                  onClick={() => setShowChart(false)}
+                />
+              ) : (
+                <MdVisibility
+                  size={20}
+                  className={iconStyle}
+                  onClick={() => setShowChart(true)}
                 />
               )}
             </div>
-
-            {/* Card */}
-            <div className={boxStyle}>
-              <div className="absolute top-3 right-3">
-                {showCard ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowCard(false)}
-                  />
-                ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowCard(true)}
-                  />
-                )}
-              </div>
-              {showCard && <Card />}
-            </div>
-
-            {/* User Requests */}
-            <div className={`${boxStyle} md:col-span-2 xl:col-span-3`}>
-              <div className="absolute top-3 right-3">
-                {showRequests ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowRequests(false)}
-                  />
-                ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowRequests(true)}
-                  />
-                )}
-              </div>
-              {showRequests && <UserRequests />}
-            </div>
-
-            {/* Top Products */}
-            <div className={`${boxStyle} xl:col-span-2`}>
-              <div className="absolute top-3 right-3">
-                {showTopProducts ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowTopProducts(false)}
-                  />
-                ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowTopProducts(true)}
-                  />
-                )}
-              </div>
-              {showTopProducts && <TopProducts />}
-            </div>
-
-            {/* Modern White Recent Orders Box */}
-            <div className="bg-white text-zinc-800 rounded-2xl shadow-md p-6 space-y-4 xl:col-span-1 border border-zinc-200">
-              <div className="flex justify-between items-center">
-                <h3 className="text-xl font-semibold tracking-tight">Recent Orders</h3>
-                <MdVisibility size={20} className="text-zinc-400" />
-              </div>
-              {recentData.length === 0 ? (
-                <p className="text-sm text-zinc-500">No recent data</p>
-              ) : (
-                <div className="space-y-4 text-sm font-medium">
-                  {recentData.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="border-b border-zinc-100 pb-3 last:border-b-0"
-                    >
-                      <p>
-                        <span className="text-zinc-500">Name:</span>{" "}
-                        {item["Customer-Name"] || "N/A"}
-                      </p>
-                      <p>
-                        <span className="text-zinc-500">Address:</span>{" "}
-                        {item.Address || "N/A"}
-                      </p>
-                      <p>
-                        <span className="text-zinc-500">Price:</span>{" "}
-                        {item["Product-Price"] || "N/A"}
-                      </p>
-                      <p>
-                        <span className="text-zinc-500">Qty:</span>{" "}
-                        {item.Quantity}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {showChart && (
+              <AppBarChart
+                dailyTotals={showWeekly ? weeklyTotals : dailyTotals}
+              />
+            )}
           </div>
         </main>
       </div>
@@ -286,4 +169,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
