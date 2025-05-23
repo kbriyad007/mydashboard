@@ -47,6 +47,7 @@ const Dashboard = () => {
   const [showCard, setShowCard] = useState(true);
   const [showRequests, setShowRequests] = useState(true);
   const [showTopProducts, setShowTopProducts] = useState(true);
+  const [showRecentOrders, setShowRecentOrders] = useState(true);
   const [dailyTotals, setDailyTotals] = useState<TotalType[]>([]);
   const [weeklyTotals, setWeeklyTotals] = useState<TotalType[]>([]);
   const [showWeekly, setShowWeekly] = useState(false);
@@ -66,8 +67,8 @@ const Dashboard = () => {
         const snapshot = await getDocs(collection(db, "user_request"));
         const data: OrderData[] = snapshot.docs.map((doc) => doc.data()) as OrderData[];
 
-        const dailyMap: { [day: string]: number } = {};
-        const weeklyMap: { [week: string]: number } = {};
+        const dailyMap: Record<string, number> = {};
+        const weeklyMap: Record<string, number> = {};
 
         data.forEach((order) => {
           const price = parseFloat(order["Product-Price"] as string) || 0;
@@ -149,7 +150,7 @@ const Dashboard = () => {
             ))}
           </div>
 
-          {/* Chart + Cards */}
+          {/* Chart + Cards + Requests + Products + Recent Orders */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {/* Chart */}
             <div className={`${boxStyle} xl:col-span-2`}>
@@ -161,23 +162,13 @@ const Dashboard = () => {
                   {showWeekly ? "Show Daily" : "Show Weekly"}
                 </button>
                 {showChart ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowChart(false)}
-                  />
+                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowChart(false)} />
                 ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowChart(true)}
-                  />
+                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowChart(true)} />
                 )}
               </div>
               {showChart && (
-                <AppBarChart
-                  dailyTotals={showWeekly ? weeklyTotals : dailyTotals}
-                />
+                <AppBarChart dailyTotals={showWeekly ? weeklyTotals : dailyTotals} />
               )}
             </div>
 
@@ -185,17 +176,9 @@ const Dashboard = () => {
             <div className={boxStyle}>
               <div className="absolute top-3 right-3">
                 {showCard ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowCard(false)}
-                  />
+                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowCard(false)} />
                 ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowCard(true)}
-                  />
+                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowCard(true)} />
                 )}
               </div>
               {showCard && <Card />}
@@ -205,17 +188,9 @@ const Dashboard = () => {
             <div className={`${boxStyle} md:col-span-2 xl:col-span-3`}>
               <div className="absolute top-3 right-3">
                 {showRequests ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowRequests(false)}
-                  />
+                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowRequests(false)} />
                 ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowRequests(true)}
-                  />
+                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowRequests(true)} />
                 )}
               </div>
               {showRequests && <UserRequests />}
@@ -225,55 +200,38 @@ const Dashboard = () => {
             <div className={`${boxStyle} xl:col-span-2`}>
               <div className="absolute top-3 right-3">
                 {showTopProducts ? (
-                  <MdVisibilityOff
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowTopProducts(false)}
-                  />
+                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowTopProducts(false)} />
                 ) : (
-                  <MdVisibility
-                    size={20}
-                    className={iconStyle}
-                    onClick={() => setShowTopProducts(true)}
-                  />
+                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowTopProducts(true)} />
                 )}
               </div>
               {showTopProducts && <TopProducts />}
             </div>
 
-            {/* Modern White Recent Orders Box */}
-            <div className="bg-white text-zinc-800 rounded-2xl shadow-md p-6 space-y-4 xl:col-span-1 border border-zinc-200">
-              <div className="flex justify-between items-center">
-                <h3 className="text-xl font-semibold tracking-tight">Recent Orders</h3>
-                <MdVisibility size={20} className="text-zinc-400" />
+            {/* Recent Orders */}
+            <div className={`${boxStyle} xl:col-span-1`}>
+              <div className="absolute top-3 right-3">
+                {showRecentOrders ? (
+                  <MdVisibilityOff size={20} className={iconStyle} onClick={() => setShowRecentOrders(false)} />
+                ) : (
+                  <MdVisibility size={20} className={iconStyle} onClick={() => setShowRecentOrders(true)} />
+                )}
               </div>
-              {recentData.length === 0 ? (
-                <p className="text-sm text-zinc-500">No recent data</p>
-              ) : (
-                <div className="space-y-4 text-sm font-medium">
-                  {recentData.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="border-b border-zinc-100 pb-3 last:border-b-0"
-                    >
-                      <p>
-                        <span className="text-zinc-500">Name:</span>{" "}
-                        {item["Customer-Name"] || "N/A"}
-                      </p>
-                      <p>
-                        <span className="text-zinc-500">Address:</span>{" "}
-                        {item.Address || "N/A"}
-                      </p>
-                      <p>
-                        <span className="text-zinc-500">Price:</span>{" "}
-                        {item["Product-Price"] || "N/A"}
-                      </p>
-                      <p>
-                        <span className="text-zinc-500">Qty:</span>{" "}
-                        {item.Quantity}
-                      </p>
-                    </div>
-                  ))}
+              {showRecentOrders && (
+                <div className="space-y-4 text-sm font-medium text-zinc-800 dark:text-zinc-100">
+                  <h3 className="text-xl font-semibold tracking-tight">Recent Orders</h3>
+                  {recentData.length === 0 ? (
+                    <p className="text-sm text-zinc-500">No recent data</p>
+                  ) : (
+                    recentData.map((item, idx) => (
+                      <div key={idx} className="border-b border-zinc-100 dark:border-zinc-700 pb-3 last:border-b-0">
+                        <p><span className="text-zinc-500">Name:</span> {item["Customer-Name"] || "N/A"}</p>
+                        <p><span className="text-zinc-500">Address:</span> {item.Address || "N/A"}</p>
+                        <p><span className="text-zinc-500">Price:</span> {item["Product-Price"] || "N/A"}</p>
+                        <p><span className="text-zinc-500">Qty:</span> {item.Quantity}</p>
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>
