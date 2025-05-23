@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -21,11 +22,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-type SidebarProps = {
-  isCollapsed: boolean;
-  toggleSidebar: () => void;
-};
-
 const navItems = [
   {
     label: "Home",
@@ -44,8 +40,11 @@ const navItems = [
   },
 ];
 
-const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
+const Sidebar = () => {
   const router = useRouter();
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
   const handleSignOut = () => {
     localStorage.removeItem("isAdmin");
