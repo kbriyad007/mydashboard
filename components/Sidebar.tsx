@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -36,9 +37,9 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
 
   return (
     <motion.aside
-      className={fixed top-0 left-0 h-full ${
+      className={`fixed top-0 left-0 h-full ${
         isCollapsed ? "w-16" : "w-60"
-      } bg-gradient-to-br from-indigo-600 to-blue-600 text-white border-r shadow-lg py-5 px-4 flex flex-col justify-between transition-all duration-300 ease-in-out rounded-r-xl}
+      } bg-gradient-to-br from-indigo-600 to-blue-600 text-white border-r shadow-lg py-5 px-4 flex flex-col justify-between transition-all duration-300 ease-in-out rounded-r-xl`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -57,9 +58,9 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
 
       <div>
         <h2
-          className={text-xl font-bold mb-8 tracking-tight ${
+          className={`text-xl font-bold mb-8 tracking-tight ${
             isCollapsed ? "hidden" : "block"
-          } transition-opacity duration-200}
+          } transition-opacity duration-200`}
         >
           Dashboard
         </h2>
@@ -128,4 +129,4 @@ const Sidebar = ({ isCollapsed, toggleSidebar }: SidebarProps) => {
   );
 };
 
-export default Sidebar; 
+export default Sidebar;
