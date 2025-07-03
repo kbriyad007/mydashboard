@@ -1,5 +1,4 @@
-// app/page.tsx (Next.js 13 app dir)
-// or pages/index.tsx (Next.js pages dir)
+"use client";
 
 import React from "react";
 
